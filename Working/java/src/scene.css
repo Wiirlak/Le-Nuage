@@ -1,0 +1,17 @@
+.grid-pane{
+    -fx-padding: 2;
+    -fx-border-style: solid;
+    -fx-border-width: 2;
+    -fx-border-insets: 2;
+    -fx-border-color: black;
+}
+
+.grid-pane:odd{
+    -fx-background-color: blue;
+}
+
+.grid-pane:even{
+    -fx-background-color: purple;
+}
+
+
