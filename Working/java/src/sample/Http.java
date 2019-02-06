@@ -90,8 +90,7 @@ public class Http {
         con.setConnectTimeout(60000); //60 secs
         con.setReadTimeout(60000); //60 secs
         con.setRequestMethod("PUT");
-        //con.setRequestProperty("Content-Type", "application/json");
-        //con.setRequestProperty("Accept", "application/json");
+        con.setRequestProperty("Content-Type", "application/json");
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes("{\"name\":\""+name+"\",\"pepins\":"+pepins+"}");
         wr.flush();
