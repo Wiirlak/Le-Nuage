@@ -4,8 +4,14 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class Http {
     private static final String apiUrl = "http://localhost:3000";
@@ -27,16 +33,18 @@ public class Http {
         StringBuffer content = new StringBuffer();
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
+
         }
         in.close();
         con.disconnect();
         return content;
     }
 
-    public StringBuffer getApples() throws IOException {
+    public Apple[] getApples() throws IOException {
         URL url = new URL(apiUrl+"/pommes/");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
+        Apple[] answer = new Apple[0];
         con.setConnectTimeout(60000); //60 secs
         con.setReadTimeout(60000); //60 secs
         int status = con.getResponseCode();
@@ -46,10 +54,13 @@ public class Http {
         StringBuffer content = new StringBuffer();
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
+            answer = (new Gson()).fromJson(inputLine, Apple[].class);
         }
         in.close();
         con.disconnect();
-        return content;
+//        for(Object str:founderList)
+//            System.out.println(str);
+        return answer;
     }
 
     public boolean deleteApple(String id) throws IOException {
@@ -76,7 +87,6 @@ public class Http {
         wr.flush();
         wr.close();
         int status = con.getResponseCode();
-        System.out.println(status);
         if(status == 200)
             return true;
         else
@@ -95,9 +105,7 @@ public class Http {
         wr.writeBytes("{\"name\":\""+name+"\",\"pepins\":"+pepins+"}");
         wr.flush();
         wr.close();
-        System.out.println(con.getInputStream());
         int status = con.getResponseCode();
-        System.out.println(status);
         if(status == 200)
             return true;
         else

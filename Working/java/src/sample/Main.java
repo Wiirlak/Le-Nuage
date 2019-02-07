@@ -20,6 +20,10 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.stage.Window;
 
+import java.io.IOException;
+import java.util.Arrays;
+
+import com.google.gson.Gson;
 
 public class Main extends Application {
 
@@ -35,7 +39,20 @@ public class Main extends Application {
 
         //create a form
         GridPane gridPane = createForm();
-        addUIControls(gridPane);
+//        addUIControls(gridPane);
+        GridPane gridPane2 = new GridPane();
+        addMyUIControls(gridPane2);
+        addValue(gridPane2);
+
+
+        ScrollPane sp = new ScrollPane(gridPane2);
+        gridPane.add(sp, 0, 0);
+        sp.setFitToWidth(true);
+        ColumnConstraints columnOneConstraints = new ColumnConstraints(200, 200, Double.MAX_VALUE);
+        columnOneConstraints.setHgrow(Priority.ALWAYS);
+
+
+        gridPane2.getColumnConstraints().addAll(columnOneConstraints,columnOneConstraints,columnOneConstraints);
 
         //set title
         primaryStage.setTitle("Automacro");
@@ -45,12 +62,12 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Http test = new Http();
+//        Http test = new Http();
 //        System.out.println(test.getApple("5c5819ea0bbc7a1b444e9d9f"));
 //        System.out.println(test.getApples());
 //        System.out.println(test.deleteApple("5c5819ea0bbc7a1b444e9d9f"));
 //        System.out.println(test.createApple("Cookie",635));
-        System.out.println(test.updateApple("5c45f7c51d5463541812ddf4","Pasteque",115));
+//        System.out.println(test.updateApple("5c45f7c51d5463541812ddf4","Pasteque",115));
 
     }
 
@@ -90,13 +107,13 @@ public class Main extends Application {
         GridPane gridPane = new GridPane();
 
         // Position the pane at the center of the screen, both vertically and horizontally
-        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setAlignment(Pos.TOP_LEFT);
 
         // Set a padding of 20px on each side
         gridPane.setPadding(new Insets(40, 40, 40, 40));
 
         // Set the horizontal gap between columns
-        gridPane.setHgap(10);
+        //gridPane.setHgap(10);
 
         // Set the vertical gap between rows
         gridPane.setVgap(10);
@@ -104,14 +121,11 @@ public class Main extends Application {
         // Add Column Constraints
 
         // columnOneConstraints will be applied to all the nodes placed in column one.
-        ColumnConstraints columnOneConstraints = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-        columnOneConstraints.setHalignment(HPos.RIGHT);
+        ColumnConstraints columnOneConstraints = new ColumnConstraints(500, 500, Double.MAX_VALUE);
+        columnOneConstraints.setHgrow(Priority.ALWAYS);
 
-        // columnTwoConstraints will be applied to all the nodes placed in column two.
-        ColumnConstraints columnTwoConstrains = new ColumnConstraints(200,200, Double.MAX_VALUE);
-        columnTwoConstrains.setHgrow(Priority.ALWAYS);
 
-        gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
+        gridPane.getColumnConstraints().addAll(columnOneConstraints);
 
         return gridPane;
     }
@@ -194,5 +208,43 @@ public class Main extends Application {
         alert.setContentText(message);
         alert.initOwner(owner);
         alert.show();
+    }
+
+    private void addMyUIControls(GridPane gridPane) {
+
+        // Add Name Label
+        Label idLabel = new Label("_id");
+        gridPane.add(idLabel, 0,0);
+
+        // Add Email Label
+        Label nameLabel = new Label("Name");
+        gridPane.add(nameLabel, 1, 0);
+
+        // Add Password Label
+        Label pepinsLabel = new Label("Pepins");
+        gridPane.add(pepinsLabel, 2, 0);
+
+    }
+
+    private void addValue(GridPane gridPane) throws IOException {
+        Http request = new Http();
+        Apple[] response = request.getApples();
+        Label idLabel;
+        Label nameLabel;
+        Label pepinsLabel;
+        int i=1;
+        for (Apple apple : response){
+            idLabel = new Label(apple.get_id());
+            gridPane.add(idLabel, 0,i);
+
+            // Add Email Label
+            nameLabel = new Label(apple.getName());
+            gridPane.add(nameLabel, 1, i);
+
+            // Add Password Label
+            pepinsLabel = new Label(apple.getPepins());
+            gridPane.add(pepinsLabel, 2, i++);
+        }
+
     }
 }
