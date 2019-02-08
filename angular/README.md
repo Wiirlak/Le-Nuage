@@ -6,10 +6,10 @@ Un exemple
 
 ## Prérequis
 ### Installation Angular
-`npm install -g @angular/cli
+`npm install -g @angular/cli`
 
 ### Création Projet
-`ng new <ProjectName>
+`ng new <ProjectName>`
 
 ## Projet
 ### Etapes
@@ -32,7 +32,7 @@ Par défaut "localhost:4200"
 `ng g c <component name> --spec=false`
 Les components sont automatiquement enregistrés dans `app.module.ts`
 
-####Configurer routing des components
+#### Configurer routing des components
 Dans le fichier `app-routing.module.ts` ajouter :
 
 ```
