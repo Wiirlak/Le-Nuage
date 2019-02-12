@@ -8,6 +8,7 @@ exports.index = function (req, res) {
             res.json({
                 status: "error",
                 message: err,
+                dta: []
             });
         }
         res.json({
@@ -30,10 +31,12 @@ exports.new = function (req, res) {
         if (err) {
             res.json({
                 status: "error",
-                message: err
+                message: err,
+                data: []
             });
         }
         res.json({
+            status: "success",
             message: 'New contact created',
             data: user
         });
@@ -44,7 +47,11 @@ exports.new = function (req, res) {
 exports.view = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
         if (err) {
-            res.send(err);
+            res.json({
+                status: "error",
+                message: err,
+                data: []
+            });
         }
         res.json({
             message: 'User details loading...',
@@ -57,7 +64,11 @@ exports.view = function (req, res) {
 exports.update = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
         if (err) {
-            res.send(err);
+            res.json({
+                status: "error",
+                message: err,
+                data: []
+            });
         }
         user.name = req.body.name ? req.body.name : user.name;
         user.email = req.body.email;
@@ -66,7 +77,11 @@ exports.update = function (req, res) {
         //save the contact and check for erros
         user.save(function (err) {
             if (err) {
-                res.send(err);
+                res.json({
+                    status: "error",
+                    message: err,
+                    data: []
+                });
             }
             res.json({
                 message: 'User Info updated',
@@ -82,7 +97,11 @@ exports.delete = function (req, res) {
         _id: req.params.user_id
     }, function (err) {
         if (err) {
-            res.send(err);
+            res.json({
+                status: "error",
+                message: err,
+                data: []
+            });
         }
         res.json({
             status: "success",

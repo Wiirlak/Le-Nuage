@@ -3,21 +3,14 @@ var mongoose = require('mongoose');
 //Setup Schema
 var userSchema = mongoose.Schema({
     name: {
-        type: String,
-        require: true
+        type: String
     },
     email: {
-        type: String,
-        require: true
+        type: String
     },
-    password: String,
-    create_date: {
-        type: Date,
-        default: Date.now
-    }
+    password: String
 }, {
-    collection: 'user',
-    versionKey: false
+    collection: 'user'
 });
 
 //Export User Model

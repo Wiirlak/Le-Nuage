@@ -4,6 +4,8 @@ let express = require('express');
 let bodyParser = require('body-parser');
 //Import Mongoose
 let mongoose = require('mongoose');
+//Import Cors
+let cors = require('cors');
 //Initialize the app
 let app = express();
 
@@ -15,6 +17,7 @@ app.use(bodyParser.urlencoded({
     useNewUrlParser: true
 }));
 app.use(bodyParser.json());
+app.use(cors());
 
 var urlMongo = "mongodb://admin:admin@annuel3al-shard-00-00-iui8c.mongodb.net:27017,annuel3al-shard-00-01-iui8c.mongodb.net:27017,annuel3al-shard-00-02-iui8c.mongodb.net:27017/pierre?ssl=true&replicaSet=annuel3AL-shard-0&authSource=admin&retryWrites=true";
 
