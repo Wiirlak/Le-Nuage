@@ -33,7 +33,7 @@ Par défaut "localhost:4200"
 Les components sont automatiquement enregistrés dans `app.module.ts`
 
 #### Configurer routing des components
-Dans le fichier `app-routing.module.ts` ajouter :
+Dans le fichier `app-routing.module.ts` ajouter les components :
 
 ```
 // app-routing.module.ts
@@ -86,10 +86,10 @@ Dans `app.component.html`:
 ```
 
 #### Angular Loading Bar
-`npm install ng2-slim-loading-bar`
+`npm install ng2-slim-loading-bar--save` 
 
 Install following library to bridge the gap between Angular 7 and third-party package:
-`npm install rwjs-compat`
+`npm install rxjs-compat --save`
 
 Importer le SlimLoadingBarModule dans `app.module.ts`
 ```
@@ -180,6 +180,7 @@ Si vous avez un component d'ajout, dans `<name>.component.html` :
 #### Agular validation de fomulaire
 Utilisation de `ReactiveFormsModule`
 Ajouter dans `app.module.ts` :
+
 ```
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -226,7 +227,7 @@ Maintenant il faut ajouter les vérifications dans le fichier html `<component_n
     <form [formGroup]="angForm" novalidate>
       <div class="form-group">
         <label class="col-md-4"> <Name> </label>
-        <input type="text" class="form-control" formControlName="<field_name>"  />
+        <input type="text" class="form-control" formControlName="<field_name>" #<field_name> />
       </div>
       <div *ngIf="angForm.controls['<field_name>'].invalid && (angForm.controls['<field_name>'].dirty || angForm.controls['<field_name>'].touched)" class="alert alert-danger">
         <div *ngIf="angForm.controls['<field_name>'].errors.required">
@@ -235,7 +236,7 @@ Maintenant il faut ajouter les vérifications dans le fichier html `<component_n
       </div>
       <div class="form-group">
         <label class="col-md-4"> <Name> </label>
-        <input type="text" class="form-control" formControlName="<field_name>" />
+        <input type="text" class="form-control" formControlName="<field_name>" #<field_name> />
       </div>
       <div *ngIf="angForm.controls['<field_name>'].invalid && (angForm.controls['<field_name>'].dirty || angForm.controls['<field_name>'].touched)" class="alert alert-danger">
         <div *ngIf="angForm.controls['<field_name>'].errors.required">
@@ -275,7 +276,7 @@ export default class <Model_name> {
 #### Créer service Angular
 La commande suivant génère le fichier de service : `ng g service <service_name> --spec=false`
 
-Importer le service dans `app.module.service`:
+Importer le service dans `app.module.ts`:
 ```
 import { <service_class_name> } from './<service_name>.service';
 
@@ -357,6 +358,70 @@ export class GstAddComponent implements OnInit {
 
 }
 ```
+
+#### Affichage des données (frontend)
+Dans le component d'affichage `<component_name>.component.html`:
+```
+<table class="table table-hover">
+  <thead>
+  <tr>
+      <td><NAME></td>
+      <td><NAME></td>
+      <td colspan="2">Actions</td>
+  </tr>
+  </thead>
+
+  <tbody>
+      <tr *ngFor="let <data> of <datas>">
+          <td>{{ <data>.<data> }}</td>
+          <td>{{ <data>.<data> }}</td>
+          <td><a [routerLink]="['/edit', <data>._id]" class="btn btn-primary">Edit</a></td>
+          <td><a [routerLink]="" class="btn btn-danger">Delete</a></td>
+      </tr>
+  </tbody>
+</table>
+```
+
+Dans `<service_name>.service.ts`ajouter la request vers l'api
+```
+get<data>() {
+    return this
+           .http
+           .get(`${this.uri}`);
+  }
+```
+
+Maintenant il faut inclure le fichier de service et le model de classe dans `<component_name>.component.ts>`
+```
+import { Component, OnInit } from '@angular/core';
+import <model_name> from '<path>/<model>';
+import { <service_name> } from '<path>/<service>';
+
+@Component({
+  selector: 'app-gst-get',
+  templateUrl: './gst-get.component.html',
+  styleUrls: ['./gst-get.component.css']
+})
+export class GstGetComponent implements OnInit {
+
+  <var1>: <model>[];
+
+  constructor(private <var2>: <service>) { }
+
+  ngOnInit() {
+    this.<var2>
+      .get<data>()
+      .subscribe((data: <model>[]) => {
+        this.<var1> = data;
+    });
+  }
+}
+```
+
+#### Editer et Mettre à jour de données
+Tous d'abord il faut récupérer les données de bases dans `<component_name>.component.html`
+
+# LA FLEMME POUR L'INSTANT
 
 
 
