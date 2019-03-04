@@ -1,0 +1,19 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center" class="sidebar">
+  <h1>
+    {{ title | uppercase }}
+  </h1>
+  <nav>
+    <a routerLink="/dishs">Choose your food !</a>
+    <!--<a routerLink="/order">Order !</a>-->
+  </nav>
+</div>
+<router-outlet></router-outlet>
+<app-order></app-order>
+<ul class="dishes" *ngIf="apples">
+  <li *ngFor="let applea of apples"><span class="badge">{{applea.name}}</span><span>{{applea.pepins}}</span></li>
+</ul>
+<div *ngIf="apple">
+  <span class="badge">{{apple.name}}</span><span>{{apple.pepins}}</span>
+</div>
+

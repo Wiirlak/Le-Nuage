@@ -1,0 +1,8 @@
+<div>
+  <p>Your order</p>
+  <ul class="dishes">
+    <li *ngFor="let order of orders" (click)="onDisselect(order)">
+      <span class="badge">{{order.id}}</span> {{order.name}}  
+    </li>
+  </ul>
+</div>  

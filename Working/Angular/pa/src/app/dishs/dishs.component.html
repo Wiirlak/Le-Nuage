@@ -1,0 +1,7 @@
+<div>
+  <ul class="dishes">
+      <li *ngFor="let dish of dishs" (click)="onSelect(dish)">
+        <span class="badge">{{dish.id}}</span> {{dish.name}} / {{dish.description}}
+      </li>
+  </ul>
+</div>  
