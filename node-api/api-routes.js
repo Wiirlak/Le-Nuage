@@ -10,7 +10,10 @@ router.get('/', function (req, res) {
 });
 
 //Import user controller
-var userController = require('./controllers/userController');
+var userController = require('./controllers/user.controller');
+
+//Import file controller
+var fileController = require('./controllers/fileController');
 
 //User routes
 router.route('/user')
@@ -22,6 +25,17 @@ router.route('/user/:user_id')
     .patch(userController.update)
     .put(userController.update)
     .delete(userController.delete);
+
+//File route
+// router.route('/file')
+//     .get(fileController.index)
+//     .post(fileController.new);
+
+// route.route('/file/:file_id')
+//     .get(fileController.view)
+//     .patch(fileController.update)
+//     .put(fileController.update)
+//     .delete(fileController.delete);
 
 //Export API routes
 module.exports = router;
