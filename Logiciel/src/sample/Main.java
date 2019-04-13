@@ -12,7 +12,6 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.File;
 
-import static com.sun.org.apache.xalan.internal.utils.SecuritySupport.getResourceAsStream;
 
 
 public class Main extends Application {
@@ -22,7 +21,7 @@ public class Main extends Application {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Fmxl/index.fxml"));
         Parent root = loader.load();
-        ControllerIndex controllerIndex = (ControllerIndex) loader.getController();
+        ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(primaryStage);
         primaryStage.setTitle("Test JAVAFX");
         Scene scene = new Scene(root);
