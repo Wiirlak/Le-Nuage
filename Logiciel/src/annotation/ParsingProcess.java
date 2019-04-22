@@ -3,11 +3,19 @@ package annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ParsingProcess {
-    public void processParse(AnnotatedClass ac)
+    public void processParse(ArrayList<AnnotatedClass> ac){
+        //ac.stream().map(n -> processParse(n)).findAny();
+        for (AnnotatedClass a : ac) {
+            processParse(a);
+        }
+    }
+
+    public boolean processParse(AnnotatedClass ac)
     {
-        System.out.println("---- Annotation Parse ----\n");
         /*
         CLASS
         */
@@ -59,6 +67,6 @@ public class ParsingProcess {
             }
             System.out.println();
         }
-        System.out.println("---- END of Parsing ----");
+        return true;
     }
 }
