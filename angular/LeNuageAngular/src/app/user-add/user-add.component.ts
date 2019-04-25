@@ -21,8 +21,8 @@ export class UserAddComponent implements OnInit {
     });
   }
 
-  addUser(use_name, user_email, user_pwd) {
-    this.us.addUser(use_name, user_email, user_pwd);
+  addUser(userName, userEmail, userPwd) {
+    this.us.addUser(userName, userEmail, userPwd);
   }
 
   ngOnInit() {

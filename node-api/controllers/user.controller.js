@@ -1,25 +1,69 @@
 'use strict';
+
 //Import user model
 const User = require('../models').User;
 
-//Handle index actions
-exports.index = async (req, res) => {
-    const users = await User.find();
-        if (users.length > 0 && users !== undefined) {
-            return res.json(users);
+//Import lib for hash password
+const bcrypt = require('bcryptjs');
+
+
+class UserController {
+
+    async getAll() {
+        const users = await User.find();
+        if (users.length > 0 && users !== null) {
+            return users;
         }
-        res.status(404).end();
-};
+        return null;
+    }
+
+    async add(name, email, password) {
+        const hashedPassword = await bcrypt.hash(password, 8);
+
+        const user = new User();
+        user.name = name;
+        user.email = email;
+        user.password = hashedPassword;
+
+        try {
+            return await user.save();
+        } catch(err) {
+            return undefined;
+        }
+    }
+
+    async getById(id) {
+        try {
+            return await User.findById(id);
+        }catch(err) {
+            return undefined;
+        }
+    }
+
+    async getByEmail(email) {
+        const user = await User.findOne({ email: email });
+        if (user === null) {
+            return undefined;
+        }
+        return user;
+    }
+}
+
+module.exports = new UserController();
 
 //Handle create user actions
-exports.new = async (req, res) => {
+/*exports.new = async (req, res) => {
     if (!req.body.name || !req.body.email || !req.body.password) {
         return res.status(400).end();
     }
+
+    const hashedPaswword = bcrypt.hashSync(req.body.password);
+
     const user = new User();
     user.name = req.body.name;
     user.email = req.body.email;
-    user.password = req.body.password;
+    user.password = hashedPaswword;
+
 
     //save the user and check for errors
     try {
@@ -84,3 +128,4 @@ exports.delete = async (req, res) => {
         res.status(409).end();
     }
 };
+*/

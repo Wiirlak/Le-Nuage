@@ -2,5 +2,6 @@
 
 module.exports = {
     UserController: require('./user.controller'),
-    EntityController: require('./entity.controller')
+    EntityController: require('./entity.controller'),
+    AuthController: require('./auth.controller')
 };
