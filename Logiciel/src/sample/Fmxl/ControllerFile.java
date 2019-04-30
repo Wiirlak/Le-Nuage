@@ -1,5 +1,7 @@
 package sample.Fmxl;
 
+import annotation.AnnotatedClass;
+import annotation.Status;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -16,7 +18,10 @@ import java.io.FilenameFilter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class ControllerFile {
+@Status(author = "Krishan Class",
+        progression = 50,
+        version = 2.3)
+public class ControllerFile implements AnnotatedClass {
     public static Stage stage;
     @FXML
     public HBox resizable;
@@ -87,7 +92,7 @@ public class ControllerFile {
 
     public String getSizeOfFile(double size){
         NumberFormat nf = new DecimalFormat("0.##");
-        String data [] = {"B","KB","MB","GB","TB"};
+        String[] data = {"B", "KB", "MB", "GB", "TB"};
         int index = 0;
         while(size > 1024 ) {
             size /= 1024;
@@ -127,9 +132,7 @@ public class ControllerFile {
         //Filtre
         FilenameFilter fnf = (current, name) -> {
             File file = new File(current, name);
-            if(!file.isHidden() && !file.isDirectory())
-                return true;
-            return false;
+            return !file.isHidden() && !file.isDirectory();
 
         };
 
@@ -141,8 +144,8 @@ public class ControllerFile {
 
         //Deroulement
         File repertoire2 = new File(filename);
-        String liste[] = repertoire2.list(fnf);
-        File tmp[] = repertoire2.listFiles();
+        String[] liste = repertoire2.list(fnf);
+        File[] tmp = repertoire2.listFiles();
         for (int i = 0; i < liste.length; i++) {
             HBox hbox =  new HBox();
             hbox.setUserData(liste[i]);

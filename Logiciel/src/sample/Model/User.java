@@ -1,9 +1,16 @@
 package sample.Model;
 
+import annotation.AnnotatedClass;
+import annotation.Status;
+import annotation.Usage;
 import org.apache.commons.validator.routines.EmailValidator;
 
-public class User {
+@Status(author = "Krishan Class",
+        progression = 50,
+        version = 2.3)
+public class User implements AnnotatedClass {
 
+    @Usage(description = "Declaration du nom de l'User")
     private String nom;
     private String prenom;
     private String email;
@@ -22,6 +29,17 @@ public class User {
         this.check = check;
     }
 
+    public User() {
+        this.nom = "nom";
+        this.prenom = "prenom";
+        this.email = "email@free.fr";
+        this.date = "2019-02-12";
+        this.mdp = "mdp";
+        this.mdpc = "mdpc";
+        this.check = true;
+    }
+
+    @Usage(description = "Recuperation du nom de l'utilisateur")
     public String getNom() {
         return nom;
     }
@@ -85,6 +103,6 @@ public class User {
     }
 
     public boolean pwdEqual(){
-        return this.getMdp().equals(this.getMdpc()) ? true : false;
+        return this.getMdp().equals(this.getMdpc());
     }
 }
