@@ -12,11 +12,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import sample.Model.Nuage;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Status(author = "Krishan Class",
         progression = 50,
@@ -50,6 +55,7 @@ public class ControllerFile implements AnnotatedClass {
 
     public  String  url1;
     public  String  url2;
+    public  ArrayList<Nuage> nuageArray = new ArrayList<Nuage>();
 
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
@@ -61,9 +67,28 @@ public class ControllerFile implements AnnotatedClass {
 
         label1.setText(url1);
         label2.setText(url2);
-        for (int i = 0; i < 100; i++){
-            addNuage("/sample/LN.png", "My nuage "+i, "15/12/19");
+
+        for(int i = 0 ; i < 100; i++){
+            if(i % 5 == 0){
+                nuageArray.add(new Nuage("My nuage "+i, "/sample/LN.png", "15/12/19", "nuages"));
+            }else if( i % 5 == 1){
+                nuageArray.add(new Nuage("My nuage "+i, "/sample/LN.png", "15/12/19", "shareNuages"));
+            }else if( i % 5 == 2){
+                nuageArray.add(new Nuage("My nuage "+i, "/sample/LN.png", "15/12/19", "recent"));
+            }else if( i % 5 == 3){
+                nuageArray.add(new Nuage("My nuage "+i, "/sample/LN.png", "15/12/19", "favorit"));
+            }else if( i % 5 == 4){
+                nuageArray.add(new Nuage("My nuage "+i, "/sample/LN.png", "15/12/19", "trash"));
+            }else{
+                nuageArray.add(new Nuage("My nuage "+i, "/sample/LN.png", "15/12/19", "trash"));
+            }
+
+
         }
+        for(Nuage i : nuageArray){
+            addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
+        }
+
         //Nuage file
         listFile2(nuageFile,url2);
 
@@ -185,4 +210,53 @@ public class ControllerFile implements AnnotatedClass {
             listFileByFolder(myFiles,url1);
         }
     }
+
+
+    @FXML
+    public void orderbyNuage() {
+        setNewNuage("nuages");
+    }
+    @FXML
+    public void orderbyNuageShared(){
+        setNewNuage("shareNuages");
+    }
+
+    @FXML
+    public void orderbyLastEdit(){
+        setNewNuage("recent");
+    }
+
+    @FXML
+    public void orderbyFavorite(){
+        setNewNuage("favorit");
+    }
+
+    @FXML
+    public void orderbyTrash(){
+        setNewNuage("trash");
+    }
+
+    @FXML
+    public void setNewNuage(String content){
+        ArrayList<Nuage> nuageToPrint;
+        flowpane.getChildren().clear();
+        if(content == "nuages"){
+            nuageToPrint =  new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+        }else if(content == "shareNuages"){
+            nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+        }else if(content == "recent"){
+            nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+        }else if(content == "favorit"){
+            nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+        }else if(content == "trash"){
+            nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+        }else{
+            nuageToPrint = new ArrayList<Nuage>();
+        }
+        for(Nuage i : nuageToPrint){
+            addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
+        }
+    }
+
+
 }

@@ -69,5 +69,9 @@
     -fx-border-color: #000000;
 }
 
+.nuageFiles{
+    -fx-padding: 0 0 0 10;
+}
+
 
 
