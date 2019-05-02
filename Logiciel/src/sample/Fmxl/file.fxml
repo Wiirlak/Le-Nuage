@@ -44,7 +44,7 @@
                 <VBox spacing="10">
                     <Label text="Mon profil" minWidth="150"></Label>
                     <Label text="Mes options" minWidth="150"></Label>
-                    <Label text="Se déconnecter" minWidth="150"></Label>
+                    <Label text="Se déconnecter" minWidth="150" onMouseClicked="#disconnect"></Label>
                 </VBox>
                 <ImageView fitHeight="50" fitWidth="70">
                     <image >

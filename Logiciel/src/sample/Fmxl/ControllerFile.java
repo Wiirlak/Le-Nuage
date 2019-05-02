@@ -4,8 +4,10 @@ import annotation.AnnotatedClass;
 import annotation.Status;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +18,7 @@ import sample.Model.Nuage;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -256,6 +259,20 @@ public class ControllerFile implements AnnotatedClass {
         for(Nuage i : nuageToPrint){
             addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
         }
+    }
+
+
+    @FXML
+    public void disconnect() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("index.fxml"));
+        Scene scene = new Scene(loader.load());
+        ControllerIndex controllerIndex = loader.getController();
+        controllerIndex.setStage(stage);
+        stage.setResizable(true);
+        stage.setTitle("Le-Nuage");
+        stage.setScene(scene);
+        scene.getStylesheets().add("sample/stylesheet.css");
+        stage.show();
     }
 
 

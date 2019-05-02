@@ -36,6 +36,9 @@ public class ControllerIndex {
         //Load new FXML and assign it to scene
         Parent root;
         root = FXMLLoader.load(getClass().getResource("signUp.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("signUp.fxml"));
+        ControllerSignUp controllerSignUp = loader.getController();
+        controllerSignUp.setStage(stage);
         Scene scene = new Scene(root, 900, 700);
         stage.setTitle("Inscription");
         stage.setScene(scene);
@@ -57,12 +60,14 @@ public class ControllerIndex {
     public void login() throws IOException{
         Parent root;
         root = FXMLLoader.load(getClass().getResource("file.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("file.fxml"));
+        ControllerFile controllerFile = loader.getController();
+        controllerFile.setStage(stage);
         Scene scene = new Scene(root);
         stage.setResizable(true);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);
         scene.getStylesheets().add("sample/stylesheet.css");
-        stage.hide();
         stage.show();
     }
 

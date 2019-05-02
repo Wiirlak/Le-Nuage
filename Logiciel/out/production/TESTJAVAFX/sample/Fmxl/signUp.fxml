@@ -78,6 +78,9 @@
         <HBox alignment="CENTER">
             <Button text="S'inscrire" styleClass="btn-connect" onAction="#printData"></Button>
         </HBox>
+        <HBox alignment="CENTER">
+            <Button text="Retour" styleClass="btn-connect" onAction="#goBack"></Button>
+        </HBox>
         <HBox alignment="CENTER" spacing="150" styleClass="social-network">
             <ImageView fitHeight="56" fitWidth="56" onMouseClicked="#openFB" styleClass="hover">
                 <image>

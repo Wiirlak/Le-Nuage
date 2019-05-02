@@ -1,18 +1,24 @@
 package sample.Fmxl;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.CheckBox;
+import javafx.stage.Stage;
 import sample.Model.User;
 
 public class ControllerSignUp {
+
+    public static Stage stage;
 
     @FXML
     public TextField nom;
@@ -28,6 +34,11 @@ public class ControllerSignUp {
     public PasswordField mdpc;
     @FXML
     public CheckBox check;
+
+
+    public static void setStage(Stage primaryStage){
+        stage = primaryStage;
+    }
 
     @FXML
     public void openFB() throws Exception{
@@ -112,5 +123,18 @@ public class ControllerSignUp {
             System.out.println("Mot de passe :" + user.pwdEqual());
             System.out.println("CGU :" + user.getCheck());
         }
+    }
+
+    @FXML
+    public void goBack() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("index.fxml"));
+        Scene scene = new Scene(loader.load());
+        ControllerIndex controllerIndex = loader.getController();
+        controllerIndex.setStage(stage);
+        stage.setResizable(true);
+        stage.setTitle("Le-Nuage");
+        stage.setScene(scene);
+        scene.getStylesheets().add("sample/stylesheet.css");
+        stage.show();
     }
 }
