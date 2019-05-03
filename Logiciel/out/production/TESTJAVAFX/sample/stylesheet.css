@@ -69,5 +69,33 @@
     -fx-border-color: #000000;
 }
 
+.nuageFiles{
+    -fx-padding: 0 0 0 10;
+}
 
+
+.disgusting{
+    -fx-background-color: white;
+}
+
+.saveButton{
+    -fx-background-color:#3d94f6;
+    -fx-border-radius: 6;
+    -fx-border-color: #337fed;
+    -fx-border-style: solid;
+    -fx-padding: 6 24;
+}
+
+
+.inputProfile{
+    -fx-border-color: #3792F7;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+}
+
+.inputProfileCantEdit{
+    -fx-border-color: grey;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+}
 

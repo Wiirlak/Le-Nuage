@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Model.Nuage;
 
@@ -240,6 +241,11 @@ public class ControllerFile implements AnnotatedClass {
     }
 
     @FXML
+    public void orderbyNothing(){
+        setNewNuage("nothing");
+    }
+
+    @FXML
     public void setNewNuage(String content){
         ArrayList<Nuage> nuageToPrint;
         flowpane.getChildren().clear();
@@ -253,8 +259,8 @@ public class ControllerFile implements AnnotatedClass {
             nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
         }else if(content == "trash"){
             nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
-        }else{
-            nuageToPrint = new ArrayList<Nuage>();
+        }else {
+            nuageToPrint = nuageArray;
         }
         for(Nuage i : nuageToPrint){
             addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
@@ -273,6 +279,32 @@ public class ControllerFile implements AnnotatedClass {
         stage.setScene(scene);
         scene.getStylesheets().add("sample/stylesheet.css");
         stage.show();
+    }
+
+    @FXML
+    public void openProfile() throws IOException {
+        /*Stage subStage = new Stage();
+        subStage.setTitle("Mon profile");
+        subStage.setWidth(250);
+        subStage.setResizable(false);
+        subStage.getIcons().add(new Image("/sample/LN.png"));
+        subStage.setHeight(250);
+        subStage.initOwner(stage);
+        subStage.initModality(Modality.WINDOW_MODAL);
+        subStage.show();*/
+
+        Stage subStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile.fxml"));
+        Scene scene = new Scene(loader.load(),400,600);
+        ControllerProfile controllerProfile = loader.getController();
+        controllerProfile.setStage(subStage);
+        subStage.setResizable(false);
+        subStage.setTitle("Mon profile");
+        subStage.setScene(scene);
+        subStage.initOwner(stage);
+        subStage.initModality(Modality.WINDOW_MODAL);
+        scene.getStylesheets().add("sample/stylesheet.css");
+        subStage.show();
     }
 
 
