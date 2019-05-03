@@ -16,13 +16,13 @@
             fx:controller="sample.Fmxl.ControllerProfil"
             prefHeight="400.0" prefWidth="600.0">
     <VBox styleClass="disgusting" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600" minWidth="400" alignment="CENTER" spacing="25">
-        <VBox alignment="CENTER"  minWidth="350" HBox.hgrow="ALWAYS" maxWidth="450">
-            <ImageView fitHeight="128" fitWidth="128">
-                <image >
+        <VBox alignment="CENTER"  minWidth="350" HBox.hgrow="ALWAYS" maxWidth="450" fx:id="profilPicture">
+            <ImageView fitHeight="128" fitWidth="128" onMouseClicked="#openExplorer" >
+                <!--<image >
                     <Image url="@../profile-icon.png" />
-                </image>
+                </image>-->
             </ImageView>
-            <Label text="Modifier votre photo"></Label>
+            <Label text="Modifier votre photo" onMouseClicked="#openExplorer"></Label>
         </VBox>
 
         <VBox  minWidth="350" HBox.hgrow="ALWAYS" spacing="50" maxWidth="450">
@@ -36,7 +36,7 @@
             </VBox>
             <VBox>
                 <Label text="Email"></Label>
-                <TextField promptText="Email..." styleClass="inputProfile"></TextField>
+                <TextField promptText="Email..." styleClass="inputProfil"></TextField>
             </VBox>
         </VBox>
         <HBox alignment="CENTER"  minWidth="350" HBox.hgrow="ALWAYS">
