@@ -14,15 +14,19 @@
 <GridPane  xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="sample.Fmxl.ControllerProfil"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="600" prefWidth="400.0">
     <VBox styleClass="disgusting" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600" minWidth="400" alignment="CENTER" spacing="25">
-        <VBox alignment="CENTER"  minWidth="350" HBox.hgrow="ALWAYS" maxWidth="450" fx:id="profilPicture">
-            <ImageView fitHeight="128" fitWidth="128" onMouseClicked="#openExplorer" >
-                <!--<image >
+        <VBox alignment="CENTER"  minWidth="350" HBox.hgrow="ALWAYS" maxWidth="450" fx:id="profil" onMouseClicked="#openExplorer">
+            <!--<ImageView fitHeight="128" fitWidth="128" onMouseClicked="#openExplorer"  styleClass="rounded">
+                <image >
                     <Image url="@../profile-icon.png" />
-                </image>-->
-            </ImageView>
-            <Label text="Modifier votre photo" onMouseClicked="#openExplorer"></Label>
+                </image>
+                <image >
+                    <Image url="@../profile.jpg" />
+                </image>
+            </ImageView>-->
+            <Circle centerX="0" centerY="0" radius="64" fx:id="profilPicture"></Circle>
+            <Label text="Modifier votre photo"></Label>
         </VBox>
 
         <VBox  minWidth="350" HBox.hgrow="ALWAYS" spacing="50" maxWidth="450">
@@ -40,7 +44,7 @@
             </VBox>
         </VBox>
         <HBox alignment="CENTER"  minWidth="350" HBox.hgrow="ALWAYS">
-            <Button text="Sauvegarder" styleClass="saveButton"></Button>
+            <Button text="Sauvegarder" styleClass="saveButton" onAction="#close"></Button>
         </HBox>
     </VBox>
 
