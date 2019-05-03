@@ -87,15 +87,19 @@
 }
 
 
-.inputProfile{
+.inputProfil{
     -fx-border-color: #3792F7;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
 }
 
-.inputProfileCantEdit{
+.inputProfilCantEdit{
     -fx-border-color: grey;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
 }
 
+
+.whiteBg{
+    -fx-background-color: white;
+}

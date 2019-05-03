@@ -1,10 +1,12 @@
 package sample.Fmxl;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sample.Main;
 
 import java.awt.*;
@@ -69,6 +71,31 @@ public class ControllerIndex {
         stage.setScene(scene);
         scene.getStylesheets().add("sample/stylesheet.css");
         stage.show();
+    }
+
+
+    @FXML
+    public void loading() throws IOException, InterruptedException {
+        Parent root;
+        root = FXMLLoader.load(getClass().getResource("Loading.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Loading.fxml"));
+        ControllerLoading controllerLoading = loader.getController();
+        controllerLoading.setStage(stage);
+        Scene scene = new Scene(root);
+        stage.setResizable(true);
+        stage.setTitle("Le-Nuage");
+        stage.setScene(scene);
+        scene.getStylesheets().add("sample/stylesheet.css");
+        stage.show();
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished( event -> {
+            try {
+                login();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        delay.play();
     }
 
 }

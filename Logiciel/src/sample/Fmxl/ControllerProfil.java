@@ -2,11 +2,11 @@ package sample.Fmxl;
 
 import javafx.stage.Stage;
 
-public class ControllerProfile {
+public class ControllerProfil {
 
     public static Stage stage;
 
     public static void setStage(Stage stage) {
-        ControllerProfile.stage = stage;
+        ControllerProfil.stage = stage;
     }
 }

@@ -2,7 +2,6 @@ package sample.Fmxl;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -23,8 +22,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Status(author = "Krishan Class",
@@ -294,18 +291,35 @@ public class ControllerFile implements AnnotatedClass {
         subStage.show();*/
 
         Stage subStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profil.fxml"));
         Scene scene = new Scene(loader.load(),400,600);
-        ControllerProfile controllerProfile = loader.getController();
-        controllerProfile.setStage(subStage);
+        ControllerProfil controllerProfil = loader.getController();
+        controllerProfil.setStage(subStage);
         subStage.setResizable(false);
-        subStage.setTitle("Mon profile");
+        subStage.setTitle("Mon profil");
         subStage.setScene(scene);
         subStage.initOwner(stage);
         subStage.initModality(Modality.WINDOW_MODAL);
         scene.getStylesheets().add("sample/stylesheet.css");
         subStage.show();
     }
+
+    @FXML
+    public void openLoading() throws IOException {
+        Stage subStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Loading.fxml"));
+        Scene scene = new Scene(loader.load(),400,600);
+        ControllerLoading controllerLoading = loader.getController();
+        ControllerLoading.setStage(subStage);
+        subStage.setResizable(false);
+        subStage.setTitle("Mon profil");
+        subStage.setScene(scene);
+        subStage.initOwner(stage);
+        subStage.initModality(Modality.WINDOW_MODAL);
+        scene.getStylesheets().add("sample/stylesheet.css");
+        subStage.show();
+    }
+
 
 
 }

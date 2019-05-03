@@ -59,7 +59,7 @@
             <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input"></PasswordField>
         </HBox>
         <HBox alignment="CENTER">
-            <Button text="Se connecter" styleClass="btn-connect" onAction="#login" fx:id="signup"></Button>
+            <Button text="Se connecter" styleClass="btn-connect" onAction="#loading" fx:id="signup"></Button>
         </HBox>
         <HBox alignment="CENTER">
             <Label text="Mot de passe oublié ? " styleClass="clk-label"></Label>

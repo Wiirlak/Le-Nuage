@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.Stop?>
 <GridPane  xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.Fmxl.ControllerProfile"
+            fx:controller="sample.Fmxl.ControllerProfil"
             prefHeight="400.0" prefWidth="600.0">
     <VBox styleClass="disgusting" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600" minWidth="400" alignment="CENTER" spacing="25">
         <VBox alignment="CENTER"  minWidth="350" HBox.hgrow="ALWAYS" maxWidth="450">
@@ -28,11 +28,11 @@
         <VBox  minWidth="350" HBox.hgrow="ALWAYS" spacing="50" maxWidth="450">
             <VBox>
                 <Label text="Nom"></Label>
-                <TextField promptText="Nom..." editable="false" styleClass="inputProfileCantEdit" text="Henry" ></TextField>
+                <TextField promptText="Nom..." editable="false" styleClass="inputProfilCantEdit" text="Henry" ></TextField>
             </VBox>
                 <VBox>
                 <Label text="Prenom"></Label>
-                <TextField promptText="Prenom..." editable="false" styleClass="inputProfileCantEdit" text="Salvamalomous"></TextField>
+                <TextField promptText="Prenom..." editable="false" styleClass="inputProfilCantEdit" text="Salvamalomous"></TextField>
             </VBox>
             <VBox>
                 <Label text="Email"></Label>
