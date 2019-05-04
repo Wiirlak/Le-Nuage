@@ -2,20 +2,25 @@ package sample.Fmxl;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Model.Nuage;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -52,6 +57,12 @@ public class ControllerFile implements AnnotatedClass {
 
     @FXML
     public Label label2;
+
+    @FXML
+    public Label labelNuage;
+
+    @FXML
+    public TextField searchBar;
 
 
     public  String  url1;
@@ -113,6 +124,14 @@ public class ControllerFile implements AnnotatedClass {
         vbox.getChildren().add(imageView);
         vbox.getChildren().add(label1);
         vbox.getChildren().add(label2);
+
+        vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                labelNuage.setText(nuageName);
+            }
+        });
         flowpane.getChildren().add(vbox);
     }
 
@@ -271,7 +290,13 @@ public class ControllerFile implements AnnotatedClass {
         Scene scene = new Scene(loader.load());
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(stage);
-        stage.setResizable(true);
+        stage.setResizable(false);
+        stage.setWidth(900);
+        stage.setHeight(700);
+        stage.setMinWidth(900);
+        stage.setMinHeight(700);
+        stage.setMaxWidth(900);
+        stage.setMaxHeight(700);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);
         scene.getStylesheets().add("sample/stylesheet.css");
@@ -318,6 +343,18 @@ public class ControllerFile implements AnnotatedClass {
         subStage.initModality(Modality.WINDOW_MODAL);
         scene.getStylesheets().add("sample/stylesheet.css");
         subStage.show();
+    }
+
+    @FXML
+    public void  onEnter(){
+
+        ArrayList<Nuage> nuageToPrint;
+        nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getName().contains(searchBar.getText()) ).collect(Collectors.<Nuage>toList()));
+        flowpane.getChildren().clear();
+        for(Nuage i : nuageToPrint){
+            addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
+        }
+
     }
 
 

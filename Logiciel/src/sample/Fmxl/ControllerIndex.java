@@ -1,10 +1,14 @@
 package sample.Fmxl;
 
 import javafx.animation.PauseTransition;
+import javafx.application.Preloader;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.Main;
@@ -71,6 +75,7 @@ public class ControllerIndex {
         stage.setScene(scene);
         scene.getStylesheets().add("sample/stylesheet.css");
         stage.show();
+
     }
 
 
@@ -97,5 +102,7 @@ public class ControllerIndex {
         });
         delay.play();
     }
+
+
 
 }
