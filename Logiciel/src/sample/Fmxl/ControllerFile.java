@@ -333,7 +333,7 @@ public class ControllerFile implements AnnotatedClass {
     public void openLoading() throws IOException {
         Stage subStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Loading.fxml"));
-        Scene scene = new Scene(loader.load(),400,600);
+        Scene scene = new Scene(loader.load());
         ControllerLoading controllerLoading = loader.getController();
         ControllerLoading.setStage(subStage);
         subStage.setResizable(false);

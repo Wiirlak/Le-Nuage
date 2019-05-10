@@ -74,7 +74,7 @@
 }
 
 
-.disgusting{
+.grid{
     -fx-background-color: white;
 }
 
@@ -110,4 +110,9 @@
     -fx-background-radius: 50%;
 
     -fx-border-radius: 50%;
+}
+
+
+.tet{
+    -fx-background-color: white;
 }
