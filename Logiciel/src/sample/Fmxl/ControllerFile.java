@@ -349,7 +349,7 @@ public class ControllerFile implements AnnotatedClass {
     public void  onEnter(){
 
         ArrayList<Nuage> nuageToPrint;
-        nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getName().contains(searchBar.getText()) ).collect(Collectors.<Nuage>toList()));
+        nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getName().toLowerCase().contains(searchBar.getText().toLowerCase()) ).collect(Collectors.<Nuage>toList()));
         flowpane.getChildren().clear();
         for(Nuage i : nuageToPrint){
             addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
