@@ -1,4 +1,4 @@
-package sample.Fmxl;
+package sample.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -127,14 +127,14 @@ public class ControllerSignUp {
 
     @FXML
     public void goBack() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("index.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/index.fxml"));
         Scene scene = new Scene(loader.load());
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(stage);
         stage.setResizable(true);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);
-        scene.getStylesheets().add("sample/stylesheet.css");
+        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
         stage.show();
     }
 }

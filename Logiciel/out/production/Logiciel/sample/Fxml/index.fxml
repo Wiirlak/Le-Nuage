@@ -10,12 +10,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 
 <?import java.lang.Double?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.DatePicker?>
-<GridPane fx:controller="sample.Fmxl.ControllerSignUp"
+<GridPane fx:controller="sample.Controller.ControllerIndex"
           xmlns:fx="http://javafx.com/fxml" styleClass="tet">
 
     <!-- Bind data-->
@@ -47,47 +45,37 @@
         <!-- LEFT BOX -->
         <ImageView>
             <image>
-                <Image url="@../LNb.png" />
+                <Image url="@../pictures/LNb.png" />
             </image>
         </ImageView>
     </HBox>
     <VBox styleClass="right" GridPane.columnIndex="1" alignment="CENTER" spacing="20">
         <!-- RIGHT BOX -->
-        <Label text="Inscription" styleClass="connect" ></Label>
+        <Label text="Connexion" styleClass="connect" ></Label>
         <HBox alignment="CENTER">
-            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Nom..." styleClass="input" fx:id="nom" id="NomdeOuf" text="Nisole"></TextField>
+            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input"></TextField>
         </HBox>
         <HBox alignment="CENTER">
-            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Prenom..." styleClass="input" fx:id="prenom" text="Bastien"></TextField>
+            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input"></PasswordField>
         </HBox>
         <HBox alignment="CENTER">
-            <DatePicker editable="false" styleClass="input, datepicker" maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" fx:id="date"></DatePicker>
+            <Button text="Se connecter" styleClass="btn-connect" onAction="#loading" fx:id="signup"></Button>
         </HBox>
         <HBox alignment="CENTER">
-            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input" fx:id="email" text="dantonpif@hotmail.fr"></TextField>
+            <Label text="Mot de passe oublié ? " styleClass="clk-label"></Label>
         </HBox>
         <HBox alignment="CENTER">
-            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input" fx:id="mdp" text="Test"></PasswordField>
-        </HBox>
-        <HBox alignment="CENTER">
-            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Confirmation du mot de passe..." styleClass="input" fx:id="mdpc" text="Test"></PasswordField>
-        </HBox>
-        <HBox alignment="CENTER">
-            <CheckBox text="J'accepte les CGU's" fx:id="check" styleClass="boxe"></CheckBox>
-        </HBox>
-        <HBox alignment="CENTER" spacing="30">
-            <Button text="Retour" styleClass="btn-connect" onAction="#goBack"></Button>
-            <Button text="S'inscrire" styleClass="btn-connect" onAction="#printData"></Button>
+            <Label text="Pas de compte ? S'en créer un !" styleClass="clk-label" onMouseClicked="#signUp"></Label>
         </HBox>
         <HBox alignment="CENTER" spacing="150" styleClass="social-network">
             <ImageView fitHeight="56" fitWidth="56" onMouseClicked="#openFB" styleClass="hover">
                 <image>
-                    <Image url="@../facebook.png" preserveRatio="true"/>
+                    <Image url="@../pictures/facebook.png" preserveRatio="true"/>
                 </image>
             </ImageView>
             <ImageView fitHeight="56" fitWidth="56" onMouseClicked="#openTW" styleClass="hover">
                 <image>
-                    <Image url="@../twitter.png" preserveRatio="true"/>
+                    <Image url="@../pictures/twitter.png" preserveRatio="true"/>
                 </image>
             </ImageView>
 

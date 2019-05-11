@@ -1,18 +1,14 @@
-package sample.Fmxl;
+package sample.Controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class ControllerProfil {
@@ -31,7 +27,7 @@ public class ControllerProfil {
 
     @FXML
     public void initialize() {
-        profilPicture.setFill(new ImagePattern(new Image ("./sample/profile.jpg")));
+        profilPicture.setFill(new ImagePattern(new Image ("sample/pictures/profile.jpg")));
     }
 
     @FXML

@@ -1,16 +1,10 @@
-package sample.Fmxl;
+package sample.Controller;
 import java.io.File;
 import java.io.FilenameFilter;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.control.TreeItem;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-
-import javax.swing.*;
 
 /**
  * @author Alexander Bolte - Bolte Consulting (2010 - 2014).

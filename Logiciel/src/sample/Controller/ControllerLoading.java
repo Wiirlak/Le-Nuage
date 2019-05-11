@@ -1,4 +1,4 @@
-package sample.Fmxl;
+package sample.Controller;
 
 import javafx.stage.Stage;
 

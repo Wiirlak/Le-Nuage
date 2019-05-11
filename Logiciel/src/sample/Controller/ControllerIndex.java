@@ -1,23 +1,16 @@
-package sample.Fmxl;
+package sample.Controller;
 
 import javafx.animation.PauseTransition;
-import javafx.application.Preloader;
-import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sample.Main;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 public class ControllerIndex {
     public Stage stage;
@@ -41,14 +34,14 @@ public class ControllerIndex {
     public void loadSecondFxml()throws  IOException{
         //Load new FXML and assign it to scene
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("signUp.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("signUp.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../Fxml/signUp.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/signUp.fxml"));
         ControllerSignUp controllerSignUp = loader.getController();
         controllerSignUp.setStage(stage);
         Scene scene = new Scene(root, 900, 700);
         stage.setTitle("Inscription");
         stage.setScene(scene);
-        scene.getStylesheets().add("sample/stylesheet.css");
+        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
         stage.show();
     }
 
@@ -65,15 +58,15 @@ public class ControllerIndex {
     @FXML
     public void login() throws IOException{
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("file.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("file.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../Fxml/file.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/file.fxml"));
         ControllerFile controllerFile = loader.getController();
         controllerFile.setStage(stage);
         Scene scene = new Scene(root);
         stage.setResizable(true);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);
-        scene.getStylesheets().add("sample/stylesheet.css");
+        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
         stage.show();
 
     }
@@ -82,15 +75,15 @@ public class ControllerIndex {
     @FXML
     public void loading() throws IOException, InterruptedException {
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("Loading.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Loading.fxml"));
+        root = FXMLLoader.load(getClass().getResource("../Fxml/Loading.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/Loading.fxml"));
         ControllerLoading controllerLoading = loader.getController();
         controllerLoading.setStage(stage);
         Scene scene = new Scene(root);
         stage.setResizable(true);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);
-        scene.getStylesheets().add("sample/stylesheet.css");
+        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
         stage.show();
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished( event -> {
