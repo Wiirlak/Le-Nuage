@@ -42,9 +42,9 @@
             </HBox>
             <HBox alignment="CENTER"  minWidth="150" maxWidth="200" HBox.hgrow="ALWAYS">
                 <VBox spacing="10">
-                    <Label text="Mon profil" minWidth="150"></Label>
-                    <Label text="Mes options" minWidth="150"></Label>
-                    <Label text="Se déconnecter" minWidth="150"></Label>
+                    <Label text="Mon profil" minWidth="150" onMouseClicked="#openProfile"></Label>
+                    <Label text="Mes options" minWidth="150" onMouseClicked="#openLoading"></Label>
+                    <Label text="Se déconnecter" minWidth="150" onMouseClicked="#disconnect"></Label>
                 </VBox>
                 <ImageView fitHeight="50" fitWidth="70">
                     <image >
@@ -54,11 +54,12 @@
             </HBox>
         </HBox>
         <HBox GridPane.rowIndex="1" spacing="25" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
-            <Label text="Mes nuages"></Label>
-            <Label text="Mes nuages partagés"></Label>
-            <Label text="Récents"></Label>
-            <Label text="Favoris"></Label>
-            <Label text="Corbeille"></Label>
+            <Label text="Mes nuages" onMouseClicked="#orderbyNuage" ></Label>
+            <Label text="Mes nuages partagés" onMouseClicked="#orderbyNuageShared"></Label>
+            <Label text="Récents" onMouseClicked="#orderbyLastEdit"></Label>
+            <Label text="Favoris" onMouseClicked="#orderbyFavorite"></Label>
+            <Label text="Corbeille" onMouseClicked="#orderbyTrash"></Label>
+            <Label text="Tous" onMouseClicked="#orderbyNothing"></Label>
         </HBox>
         <HBox GridPane.rowIndex="2"  fx:id="hroot" alignment="CENTER">
             <SplitPane orientation="VERTICAL" HBox.hgrow="ALWAYS" dividerPositions="0.1">
@@ -76,7 +77,7 @@
                             <VBox HBox.hgrow="ALWAYS" minHeight="100" fx:id="sized">
                                 <Label styleClass="dossier" fx:id="label1"></Label>
                                 <ScrollPane>
-                                    <VBox fx:id="myFiles" prefWidth="${sized.width-25}" >
+                                    <VBox fx:id="myFiles" prefWidth="${sized.width-25}" styleClass="nuageFiles" >
 
                                     </VBox>
                                 </ScrollPane>
@@ -86,10 +87,10 @@
                             <VBox minHeight="100" fx:id="nuageFile">
                                 <Label text="Les fichiers de votre nuage" alignment="CENTER"></Label>
                             </VBox>
-                            <VBox HBox.hgrow="ALWAYS" minHeight="100" fx:id="sized2">
+                            <VBox HBox.hgrow="ALWAYS" minHeight="100" fx:id="sized2" >
                                 <Label styleClass="dossier" fx:id="label2"></Label>
                                 <ScrollPane>
-                                    <VBox fx:id="nuageFiles" prefWidth="${sized2.width-25}" >
+                                    <VBox fx:id="nuageFiles" prefWidth="${sized2.width-25}" styleClass="nuageFiles" >
 
                                     </VBox>
                                 </ScrollPane>
