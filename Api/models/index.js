@@ -1,5 +1,11 @@
-'use script';
+'use strict';
 
 module.exports = {
-    Sample: require('./sample')
-};
+    User: require('./user.model'),
+    database: require('./database'),
+    Nuage: require('./nuage.model'),
+    Version: require('./version.model'),
+    Entity: require('./entity.model'),
+    Type: require('./type.model'),
+    ParentOf: require('./parentof.model')
+}
