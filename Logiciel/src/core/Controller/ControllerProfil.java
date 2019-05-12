@@ -1,4 +1,4 @@
-package sample.Controller;
+package core.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -27,7 +27,7 @@ public class ControllerProfil {
 
     @FXML
     public void initialize() {
-        profilPicture.setFill(new ImagePattern(new Image ("sample/pictures/profile.jpg")));
+        profilPicture.setFill(new ImagePattern(new Image ("assets/pictures/profile.jpg")));
     }
 
     @FXML

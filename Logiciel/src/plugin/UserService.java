@@ -1,6 +1,5 @@
 package plugin;
 
-import java.util.Iterator;
 import java.util.ServiceLoader;
 
 public class UserService {
@@ -8,7 +7,7 @@ public class UserService {
         ServiceLoader<Service> loader = ServiceLoader.load(Service.class);
         for (Service plugin : loader) {
             System.out.println(plugin.toString());
-            System.out.println("\t" + plugin.getId());
+
         }
     }
 }

@@ -1,4 +1,4 @@
-package sample;
+package core;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,8 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import plugin.Service;
 import plugin.UserService;
-import sample.Controller.ControllerIndex;
+import core.Controller.ControllerIndex;
 
 import java.awt.*;
 
@@ -28,11 +29,11 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setWidth(900);
         primaryStage.setHeight(700);
-        primaryStage.getIcons().add(new Image("/sample/pictures/LN.png"));
+        primaryStage.getIcons().add(new Image("/assets/pictures/LN.png"));
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         primaryStage.setMaxWidth(screenSize.getWidth());
         primaryStage.setMaxHeight(screenSize.getHeight());
-        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         primaryStage.show();
     }
 
@@ -40,5 +41,9 @@ public class Main extends Application {
         UserService us = new UserService();
         us.useService();
         //launch(args);
+    }
+
+    public String getId() {
+        return "main";
     }
 }

@@ -1,4 +1,4 @@
-package sample.Controller;
+package core.Controller;
 
 import javafx.stage.Stage;
 

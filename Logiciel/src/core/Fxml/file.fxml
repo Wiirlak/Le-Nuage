@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.stage.Screen?>
 <?import javafx.scene.control.Button?>
-<HBox fx:controller="sample.Controller.ControllerFile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="900" minWidth="700" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:controller="core.Controller.ControllerFile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="900" minWidth="700" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane xmlns:fx="http://javafx.com/fxml" styleClass="tet" HBox.hgrow="ALWAYS">
         <!-- Bind data-->
         <fx:define>
@@ -31,7 +31,7 @@
             <HBox minWidth="100" maxWidth="150" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
                 <ImageView fitHeight="70" fitWidth="110">
                     <image >
-                        <Image url="@../pictures/LNb.png" />
+                        <Image url="@../../assets/pictures/LNb.png" />
                     </image>
                 </ImageView>
             </HBox>
@@ -47,7 +47,7 @@
                 </VBox>
                 <ImageView fitHeight="50" fitWidth="70">
                     <image >
-                        <Image url="@../pictures/profile.jpg" />
+                        <Image url="@../../assets/pictures/profile.jpg" />
                     </image>
                 </ImageView>
             </HBox>

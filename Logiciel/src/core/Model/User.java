@@ -1,4 +1,4 @@
-package sample.Model;
+package core.Model;
 
 import annotation.AnnotatedClass;
 import annotation.Status;

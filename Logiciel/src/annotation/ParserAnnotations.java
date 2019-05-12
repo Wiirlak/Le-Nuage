@@ -1,7 +1,7 @@
 package annotation;
 
-import sample.Controller.ControllerFile;
-import sample.Model.User;
+import core.Controller.ControllerFile;
+import core.Model.User;
 
 import java.util.ArrayList;
 

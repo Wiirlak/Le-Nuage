@@ -1,4 +1,4 @@
-package sample.Controller;
+package core.Controller;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
@@ -41,7 +41,7 @@ public class ControllerIndex {
         Scene scene = new Scene(root, 900, 700);
         stage.setTitle("Inscription");
         stage.setScene(scene);
-        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         stage.show();
     }
 
@@ -66,7 +66,7 @@ public class ControllerIndex {
         stage.setResizable(true);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);
-        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         stage.show();
 
     }
@@ -83,7 +83,7 @@ public class ControllerIndex {
         stage.setResizable(true);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);
-        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         stage.show();
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished( event -> {

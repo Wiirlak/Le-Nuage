@@ -1,4 +1,4 @@
-package sample.Controller;
+package core.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
-import sample.Model.User;
+import core.Model.User;
 
 public class ControllerSignUp {
 
@@ -134,7 +134,7 @@ public class ControllerSignUp {
         stage.setResizable(true);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);
-        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         stage.show();
     }
 }

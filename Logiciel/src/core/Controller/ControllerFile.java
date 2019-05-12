@@ -1,4 +1,4 @@
-package sample.Controller;
+package core.Controller;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
@@ -17,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.Model.Nuage;
+import core.Model.Nuage;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -80,17 +80,17 @@ public class ControllerFile implements AnnotatedClass {
 
         for(int i = 0 ; i < 100; i++){
             if(i % 5 == 0){
-                nuageArray.add(new Nuage("My nuage "+i, "/sample/pictures/LN.png", "15/12/19", "nuages"));
+                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "nuages"));
             }else if( i % 5 == 1){
-                nuageArray.add(new Nuage("My nuage "+i, "/sample/pictures/LN.png", "15/12/19", "shareNuages"));
+                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "shareNuages"));
             }else if( i % 5 == 2){
-                nuageArray.add(new Nuage("My nuage "+i, "/sample/pictures/LN.png", "15/12/19", "recent"));
+                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "recent"));
             }else if( i % 5 == 3){
-                nuageArray.add(new Nuage("My nuage "+i, "/sample/pictures/LN.png", "15/12/19", "favorit"));
+                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "favorit"));
             }else if( i % 5 == 4){
-                nuageArray.add(new Nuage("My nuage "+i, "/sample/pictures/LN.png", "15/12/19", "trash"));
+                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "trash"));
             }else{
-                nuageArray.add(new Nuage("My nuage "+i, "/sample/pictures/LN.png", "15/12/19", "trash"));
+                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "trash"));
             }
 
 
@@ -180,7 +180,7 @@ public class ControllerFile implements AnnotatedClass {
         };
 
         ImageView img = new ImageView();
-        img.setImage(new Image("/sample/pictures/file.png"));
+        img.setImage(new Image("/assets/pictures/file.png"));
         img.setFitHeight(40);
         img.setFitWidth(40);
         img.setPreserveRatio(true);
@@ -297,7 +297,7 @@ public class ControllerFile implements AnnotatedClass {
         stage.setMaxHeight(700);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);
-        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         stage.show();
     }
 
@@ -323,7 +323,7 @@ public class ControllerFile implements AnnotatedClass {
         subStage.setScene(scene);
         subStage.initOwner(stage);
         subStage.initModality(Modality.WINDOW_MODAL);
-        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         subStage.show();
     }
 
@@ -339,7 +339,7 @@ public class ControllerFile implements AnnotatedClass {
         subStage.setScene(scene);
         subStage.initOwner(stage);
         subStage.initModality(Modality.WINDOW_MODAL);
-        scene.getStylesheets().add("sample/StyleSheet/stylesheet.css");
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         subStage.show();
     }
 

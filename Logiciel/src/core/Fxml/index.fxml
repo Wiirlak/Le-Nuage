@@ -13,7 +13,7 @@
 <?import javafx.scene.control.PasswordField?>
 
 <?import java.lang.Double?>
-<GridPane fx:controller="sample.Controller.ControllerIndex"
+<GridPane fx:controller="core.Controller.ControllerIndex"
           xmlns:fx="http://javafx.com/fxml" styleClass="tet">
 
     <!-- Bind data-->
@@ -45,7 +45,7 @@
         <!-- LEFT BOX -->
         <ImageView>
             <image>
-                <Image url="@../pictures/LNb.png" />
+                <Image url="@../../assets/pictures/LNb.png" />
             </image>
         </ImageView>
     </HBox>
@@ -70,12 +70,12 @@
         <HBox alignment="CENTER" spacing="150" styleClass="social-network">
             <ImageView fitHeight="56" fitWidth="56" onMouseClicked="#openFB" styleClass="hover">
                 <image>
-                    <Image url="@../pictures/facebook.png" preserveRatio="true"/>
+                    <Image url="@../../assets/pictures/facebook.png" preserveRatio="true"/>
                 </image>
             </ImageView>
             <ImageView fitHeight="56" fitWidth="56" onMouseClicked="#openTW" styleClass="hover">
                 <image>
-                    <Image url="@../pictures/twitter.png" preserveRatio="true"/>
+                    <Image url="@../../assets/pictures/twitter.png" preserveRatio="true"/>
                 </image>
             </ImageView>
 

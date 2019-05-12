@@ -1,4 +1,4 @@
-package sample.Model;
+package core.Model;
 
 public class Nuage {
     private String name;
