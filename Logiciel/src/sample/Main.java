@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import plugin.UserService;
 import sample.Controller.ControllerIndex;
 
 import java.awt.*;
@@ -36,6 +37,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        UserService us = new UserService();
+        us.useService();
+        //launch(args);
     }
 }
