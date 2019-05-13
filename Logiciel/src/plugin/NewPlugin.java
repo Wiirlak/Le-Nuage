@@ -6,4 +6,8 @@ public class NewPlugin implements Service {
         public String getId() {
             return name;
         }
+
+    public String getName() {
+        return name;
+    }
 }

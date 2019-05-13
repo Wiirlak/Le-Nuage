@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.collections.FXCollections?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="core.Controller.ControllerPlugin"
             prefHeight="400.0" prefWidth="600.0">
     <Label text="Plugin"></Label>
-
+    <TableView fx:id="tvPlugin">
+        <columns>
+            <TableColumn prefWidth="135.0" text="Nom">
+                <cellValueFactory>
+                    <PropertyValueFactory property="newPlugin"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="135.0" text="Activer" fx:id="activated">
+                <graphic>
+                    <CheckBox></CheckBox>
+                </graphic>
+                <cellValueFactory><PropertyValueFactory property="activated"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="135.0" text="Supprimer" fx:id="deleted">
+                <cellValueFactory><PropertyValueFactory property="deleted"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="135.0" text="Modifier" fx:id="edited">
+                <cellValueFactory><PropertyValueFactory property="edited"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+               <!--<PluginFxml></PluginFxml>
+               <PluginFxml></PluginFxml>
+               <PluginFxml></PluginFxml>
+               <PluginFxml></PluginFxml>-->
+            </FXCollections>
+        </items>
+    </TableView>
 </AnchorPane>
