@@ -4,38 +4,36 @@
 
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.collections.FXCollections?>
-<AnchorPane xmlns="http://javafx.com/javafx"
+<GridPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="core.Controller.ControllerPlugin"
-            prefHeight="400.0" prefWidth="600.0">
-    <Label text="Plugin"></Label>
-    <TableView fx:id="tvPlugin">
+            minHeight="500.0" maxWidth="780.0">
+    <HBox GridPane.rowIndex="0" minHeight="200" spacing="50">
+        <Label text="Plugin" alignment="TOP_LEFT"></Label>
+        <Label text="Ajouter un plugin" alignment="CENTER_RIGHT" onMouseClicked="#openExplorer" ></Label>
+    </HBox>
+
+    <TableView fx:id="tvPlugin" maxHeight="300.0" GridPane.rowIndex="1">
         <columns>
-            <TableColumn prefWidth="135.0" text="Nom">
+            <TableColumn prefWidth="200.0" text="Nom">
                 <cellValueFactory>
                     <PropertyValueFactory property="newPlugin"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="135.0" text="Activer" fx:id="activated">
+            <TableColumn prefWidth="200.0" text="Activer" fx:id="activated">
                 <graphic>
-                    <CheckBox></CheckBox>
+                    <CheckBox fx:id="checkAll" onMouseClicked="#tickedNoTicked"></CheckBox>
                 </graphic>
                 <cellValueFactory><PropertyValueFactory property="activated"/></cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="135.0" text="Supprimer" fx:id="deleted">
+            <TableColumn prefWidth="200.0" text="Supprimer" fx:id="deleted">
                 <cellValueFactory><PropertyValueFactory property="deleted"/></cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="135.0" text="Modifier" fx:id="edited">
+            <TableColumn prefWidth="200.0" text="Modifier" fx:id="edited">
                 <cellValueFactory><PropertyValueFactory property="edited"/></cellValueFactory>
             </TableColumn>
         </columns>
         <items>
-            <FXCollections fx:factory="observableArrayList">
-               <!--<PluginFxml></PluginFxml>
-               <PluginFxml></PluginFxml>
-               <PluginFxml></PluginFxml>
-               <PluginFxml></PluginFxml>-->
-            </FXCollections>
         </items>
     </TableView>
-</AnchorPane>
+</GridPane>

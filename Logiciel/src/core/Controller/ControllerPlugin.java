@@ -2,8 +2,17 @@ package core.Controller;
 
 import core.Model.PluginFxml;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class ControllerPlugin {
 
@@ -16,17 +25,43 @@ public class ControllerPlugin {
     @FXML
     public TableView tvPlugin;
 
+    @FXML
+    public CheckBox checkAll;
+
+    public ArrayList<PluginFxml> pluginFxmls;
+
 
     @FXML
     public void initialize(){
-        PluginFxml pluginFxml =  new PluginFxml();
-        PluginFxml pluginFxml2 =  new PluginFxml();
-        PluginFxml pluginFxml3 =  new PluginFxml();
+        pluginFxmls = new ArrayList<>();
+        for(int i = 0 ; i< 50; i ++){
+            pluginFxmls.add(new PluginFxml());
+        }
 
-        tvPlugin.getItems().add(pluginFxml);
-        tvPlugin.getItems().add(pluginFxml2);
-        tvPlugin.getItems().add(pluginFxml3);
+        tvPlugin.getItems().addAll(pluginFxmls);
 
-        pluginFxml2.getActivated().setSelected(true);
+        pluginFxmls.get(2).getActivated().setSelected(true);
+    }
+
+    public void tickedNoTicked(){
+        if(checkAll.isSelected()){
+            pluginFxmls.forEach(c -> c.activated.setSelected(true));
+        }else{
+            pluginFxmls.forEach(c -> c.activated.setSelected(false));
+        }
+    }
+
+    @FXML
+    public void openExplorer() throws IOException {
+        //Desktop.getDesktop().open(new File("C:\\"));
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Sélectionner un fichier à ajouter");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("JAR", "*.jar")
+        );
+        File selected = fileChooser.showOpenDialog(stage);
+        if(selected != null){
+            System.out.println(selected.toURI().toString());
+        }
     }
 }
