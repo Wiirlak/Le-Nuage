@@ -38,9 +38,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        UserService us = new UserService();
-        us.useService();
-        //launch(args);
+        //UserService us = new UserService();
+        //us.useService();
+        launch(args);
     }
 
     public String getId() {

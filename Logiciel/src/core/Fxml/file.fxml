@@ -42,7 +42,7 @@
             <HBox alignment="CENTER"  minWidth="150" maxWidth="200" HBox.hgrow="ALWAYS">
                 <VBox spacing="10">
                     <Label text="Mon profil" minWidth="150" onMouseClicked="#openProfile"></Label>
-                    <Label text="Mes options" minWidth="150" onMouseClicked="#openLoading"></Label>
+                    <Label text="Mes options" minWidth="150" onMouseClicked="#openOptions"></Label>
                     <Label text="Se déconnecter" minWidth="150" onMouseClicked="#disconnect"></Label>
                 </VBox>
                 <ImageView fitHeight="50" fitWidth="70">

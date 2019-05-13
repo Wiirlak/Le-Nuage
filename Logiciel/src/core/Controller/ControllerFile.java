@@ -343,6 +343,25 @@ public class ControllerFile implements AnnotatedClass {
         subStage.show();
     }
 
+
+
+    @FXML
+    public void openOptions() throws IOException {
+        Stage subStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/options.fxml"));
+        Scene scene = new Scene(loader.load());
+        ControllerOption controllerOption = loader.getController();
+        controllerOption.setStage(subStage);
+        subStage.setResizable(false);
+        subStage.setTitle("Options");
+        subStage.setScene(scene);
+        subStage.initOwner(stage);
+        subStage.initModality(Modality.WINDOW_MODAL);
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
+        subStage.show();
+    }
+
+
     @FXML
     public void  onEnter(){
 
