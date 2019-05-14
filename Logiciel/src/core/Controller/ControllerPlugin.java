@@ -33,6 +33,7 @@ public class ControllerPlugin {
 
     @FXML
     public void initialize(){
+        tvPlugin.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pluginFxmls = new ArrayList<>();
         for(int i = 0 ; i< 50; i ++){
             pluginFxmls.add(new PluginFxml());
@@ -64,4 +65,13 @@ public class ControllerPlugin {
             System.out.println(selected.toURI().toString());
         }
     }
+
+    public void save(){
+        exit();
+    }
+
+    public void exit(){
+        stage.close();
+    }
 }
+
