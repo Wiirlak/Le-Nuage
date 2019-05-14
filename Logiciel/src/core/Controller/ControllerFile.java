@@ -284,7 +284,7 @@ public class ControllerFile implements AnnotatedClass {
 
     @FXML
     public void disconnect() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/index.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("index.fxml"));
         Scene scene = new Scene(loader.load());
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(stage);
@@ -314,7 +314,7 @@ public class ControllerFile implements AnnotatedClass {
         subStage.show();*/
 
         Stage subStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/profil.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("profil.fxml"));
         Scene scene = new Scene(loader.load(),400,600);
         ControllerProfil controllerProfil = loader.getController();
         controllerProfil.setStage(subStage);
@@ -330,7 +330,7 @@ public class ControllerFile implements AnnotatedClass {
     @FXML
     public void openLoading() throws IOException {
         Stage subStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/Loading.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Loading.fxml"));
         Scene scene = new Scene(loader.load());
         ControllerLoading controllerLoading = loader.getController();
         ControllerLoading.setStage(subStage);
@@ -348,7 +348,7 @@ public class ControllerFile implements AnnotatedClass {
     @FXML
     public void openOptions() throws IOException {
         Stage subStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/options.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("options.fxml"));
         Scene scene = new Scene(loader.load());
         ControllerOption controllerOption = loader.getController();
         controllerOption.setStage(subStage);

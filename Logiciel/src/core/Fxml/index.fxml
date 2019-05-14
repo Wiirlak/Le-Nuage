@@ -45,7 +45,7 @@
         <!-- LEFT BOX -->
         <ImageView>
             <image>
-                <Image url="@../../assets/pictures/LNb.png" />
+                <Image url="@pictures/LNb.png" />
             </image>
         </ImageView>
     </HBox>
@@ -70,12 +70,12 @@
         <HBox alignment="CENTER" spacing="150" styleClass="social-network">
             <ImageView fitHeight="56" fitWidth="56" onMouseClicked="#openFB" styleClass="hover">
                 <image>
-                    <Image url="@../../assets/pictures/facebook.png" preserveRatio="true"/>
+                    <Image url="@pictures/facebook.png" preserveRatio="true"/>
                 </image>
             </ImageView>
             <ImageView fitHeight="56" fitWidth="56" onMouseClicked="#openTW" styleClass="hover">
                 <image>
-                    <Image url="@../../assets/pictures/twitter.png" preserveRatio="true"/>
+                    <Image url="@pictures/twitter.png" preserveRatio="true"/>
                 </image>
             </ImageView>
 

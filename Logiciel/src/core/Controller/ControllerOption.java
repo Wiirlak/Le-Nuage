@@ -19,7 +19,7 @@ public class ControllerOption {
     @FXML
     public void openplugins() throws IOException {
         Stage subStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/plugin.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("plugin.fxml"));
         Scene scene = new Scene(loader.load());
         ControllerPlugin controllerPlugin = loader.getController();
         controllerPlugin.setStage(subStage);

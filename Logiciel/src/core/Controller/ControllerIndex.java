@@ -34,8 +34,8 @@ public class ControllerIndex {
     public void loadSecondFxml()throws  IOException{
         //Load new FXML and assign it to scene
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("../Fxml/signUp.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/signUp.fxml"));
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("signUp.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("signUp.fxml"));
         ControllerSignUp controllerSignUp = loader.getController();
         controllerSignUp.setStage(stage);
         Scene scene = new Scene(root, 900, 700);
@@ -58,8 +58,8 @@ public class ControllerIndex {
     @FXML
     public void login() throws IOException{
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("../Fxml/file.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/file.fxml"));
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("file.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("file.fxml"));
         ControllerFile controllerFile = loader.getController();
         controllerFile.setStage(stage);
         Scene scene = new Scene(root);
@@ -75,8 +75,8 @@ public class ControllerIndex {
     @FXML
     public void loading() throws IOException, InterruptedException {
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("../Fxml/Loading.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/Loading.fxml"));
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("Loading.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Loading.fxml"));
         ControllerLoading controllerLoading = loader.getController();
         controllerLoading.setStage(stage);
         Scene scene = new Scene(root);

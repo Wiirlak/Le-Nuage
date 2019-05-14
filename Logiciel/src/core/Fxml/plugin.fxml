@@ -21,7 +21,7 @@
             <Pane  onMouseClicked="#openExplorer" style="-fx-cursor: hand" >
                 <ImageView>
                     <image>
-                        <Image url="@../../assets/pictures/add-plugin.png" preserveRatio="true" requestedHeight="40" requestedWidth="40"></Image>
+                        <Image url="@pictures/add-plugin.png" preserveRatio="true" requestedHeight="40" requestedWidth="40"></Image>
                     </image>
                 </ImageView>
             </Pane>
