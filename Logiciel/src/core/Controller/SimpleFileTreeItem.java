@@ -1,6 +1,10 @@
 package core.Controller;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -84,7 +88,9 @@ public class SimpleFileTreeItem extends TreeItem<File> {
 
         FilenameFilter fnf = (current, name) -> {
             File file = new File(current, name);
-            if( file.isDirectory() && !file.isHidden() && file.canRead())
+            Path path = Paths.get(current+"\\"+name);
+            //System.out.println(path.toString()+" : "+Files.isReadable(path));
+            if(file.isDirectory() && !file.isHidden() && file.canRead() && Files.isReadable(path))
                 return true;
             return false;
 
@@ -111,4 +117,5 @@ public class SimpleFileTreeItem extends TreeItem<File> {
     private boolean isFirstTimeChildren = true;
     private boolean isFirstTimeLeaf = true;
     private boolean isLeaf;
+
 }
