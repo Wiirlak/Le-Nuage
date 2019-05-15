@@ -14,7 +14,7 @@
 
 <?import java.lang.Double?>
 <GridPane fx:controller="core.Controller.ControllerIndex"
-          xmlns:fx="http://javafx.com/fxml" styleClass="tet">
+          xmlns:fx="http://javafx.com/fxml" styleClass="tet" >
 
     <!-- Bind data-->
     <fx:define>

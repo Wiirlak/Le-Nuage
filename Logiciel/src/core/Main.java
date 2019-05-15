@@ -1,5 +1,7 @@
 package core;
 
+import com.sun.javafx.application.LauncherImpl;
+import core.preloader.Preload;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Fxml/index.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("index.fxml"));
         Parent root = loader.load();
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(primaryStage);
@@ -29,7 +31,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setWidth(900);
         primaryStage.setHeight(700);
-        primaryStage.getIcons().add(new Image("/assets/pictures/LN.png"));
+        primaryStage.getIcons().add(new Image("pictures/LN.png"));
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         primaryStage.setMaxWidth(screenSize.getWidth());
         primaryStage.setMaxHeight(screenSize.getHeight());
@@ -40,7 +42,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         //UserService us = new UserService();
         //us.useService();
-        launch(args);
+        //launch(args);
+        LauncherImpl.launchApplication(Main.class, Preload.class, args);
     }
 
     public String getId() {
