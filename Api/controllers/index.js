@@ -1,5 +1,7 @@
 'use strict';
 
 module.exports = {
-    SampleController: require('./sample.controller')
+    UserController: require('./user.controller'),
+    EntityController: require('./entity.controller'),
+    AuthController: require('./auth.controller')
 };
