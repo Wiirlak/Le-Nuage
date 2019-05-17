@@ -6,9 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import plugin.Service;
-import plugin.UserService;
 import core.Controller.ControllerIndex;
+import plugin.PluginManager;
 
 import java.awt.*;
 
@@ -38,8 +37,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        UserService us = new UserService();
-        us.useService();
+        PluginManager a = new PluginManager();
+        System.out.println(a.mydoc);
         //launch(args);
     }
 
