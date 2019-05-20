@@ -32,7 +32,11 @@ const userSchema = mongoose.Schema({
     capacity_usage: {
         default: 0,
         type: Number
-    }
+    },
+    nuages: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Nuage',
+    }],
 });
 
 //Export User Model

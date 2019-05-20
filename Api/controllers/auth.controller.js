@@ -14,6 +14,8 @@ class AuthController {
         if (user === undefined) {
             return undefined;
         }
+
+
         const token = this.generateToken(user._id);
 
         return {auth: true, token: token};
