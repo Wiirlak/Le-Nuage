@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
@@ -129,7 +130,14 @@ public class ControllerFile implements AnnotatedClass {
         vbox.getChildren().add(imageView);
         vbox.getChildren().add(label1);
         vbox.getChildren().add(label2);
+        vbox.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
+            @Override
+            public void handle(ContextMenuEvent event) {
+
+                createRightClickMenu().show(vbox, event.getScreenX(), event.getScreenY());
+            }
+        });
         vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
             @Override
@@ -137,7 +145,20 @@ public class ControllerFile implements AnnotatedClass {
                 labelNuage.setText(nuageName);
             }
         });
+
+
+
         flowpane.getChildren().add(vbox);
+    }
+
+    public ContextMenu createRightClickMenu(){
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("Rejoindre");
+        MenuItem item2 = new MenuItem("Propriété");
+        MenuItem item3 = new MenuItem("Quitter");
+        MenuItem item4 = new MenuItem("Supprimer");
+        contextMenu.getItems().addAll(item1, item2,item3,item4);
+        return contextMenu;
     }
 
     public String getSizeOfFile(double size){
