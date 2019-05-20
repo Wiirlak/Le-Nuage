@@ -1,6 +1,7 @@
 package core;
 
 import com.sun.javafx.application.LauncherImpl;
+import core.Model.Data;
 import core.preloader.Preload;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +13,9 @@ import plugin.Service;
 import plugin.UserService;
 import core.Controller.ControllerIndex;
 
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
-
+import java.io.File;
 
 
 public class Main extends Application {
@@ -37,12 +39,16 @@ public class Main extends Application {
         primaryStage.setMaxHeight(screenSize.getHeight());
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         primaryStage.show();
+        controllerIndex.setData(new Data());
     }
 
     public static void main(String[] args) {
         //UserService us = new UserService();
         //us.useService();
         //launch(args);
+        System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
+        File folder =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/Lenuage/Plugin");
+        folder.mkdirs();
         LauncherImpl.launchApplication(Main.class, Preload.class, args);
     }
 

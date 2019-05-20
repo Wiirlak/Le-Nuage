@@ -2,6 +2,7 @@ package core.Controller;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
+import core.Model.Data;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,6 +67,12 @@ public class ControllerFile implements AnnotatedClass {
     public  String  url1;
     public  String  url2;
     public  ArrayList<Nuage> nuageArray = new ArrayList<Nuage>();
+
+    public Data data;
+
+    public void setData(Data datap) {
+        data = datap;
+    }
 
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
@@ -312,12 +319,12 @@ public class ControllerFile implements AnnotatedClass {
         subStage.initOwner(stage);
         subStage.initModality(Modality.WINDOW_MODAL);
         subStage.show();*/
-
         Stage subStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("profil.fxml"));
-        Scene scene = new Scene(loader.load(),400,600);
+        Scene scene = new Scene(loader.load(),400,700);
         ControllerProfil controllerProfil = loader.getController();
         controllerProfil.setStage(subStage);
+        controllerProfil.setData(data);
         subStage.setResizable(false);
         subStage.setTitle("Mon profil");
         subStage.setScene(scene);

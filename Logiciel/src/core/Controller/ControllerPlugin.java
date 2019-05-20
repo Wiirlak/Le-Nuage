@@ -1,5 +1,6 @@
 package core.Controller;
 
+import core.Model.Data;
 import core.Model.PluginFxml;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -30,6 +31,11 @@ public class ControllerPlugin {
 
     public ArrayList<PluginFxml> pluginFxmls;
 
+    public static Data data;
+
+    public  static void setData(Data datap) {
+        data = datap;
+    }
 
     @FXML
     public void initialize(){

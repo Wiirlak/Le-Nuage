@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -98,6 +99,9 @@ public class SimpleFileTreeItem extends TreeItem<File> {
         File f = TreeItem.getValue();
         if (f != null && f.isDirectory()) {
             File[] files = f.listFiles(fnf);
+            /*File[] tmp =
+            System.out.println(fnf.toString());
+            System.out.println(Arrays.toString(files));*/
             if (files != null) {
                 ObservableList<TreeItem<File>> children = FXCollections
                         .observableArrayList();
