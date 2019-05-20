@@ -3,6 +3,7 @@ package core.Controller;
 import annotation.AnnotatedClass;
 import annotation.Status;
 import core.Model.Data;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
@@ -131,17 +133,14 @@ public class ControllerFile implements AnnotatedClass {
         vbox.getChildren().add(label1);
         vbox.getChildren().add(label2);
         vbox.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-
             @Override
             public void handle(ContextMenuEvent event) {
-
-                createRightClickMenu().show(vbox, event.getScreenX(), event.getScreenY());
+                createRightClickMenu(nuageName).show(vbox, event.getScreenX(), event.getScreenY());
             }
         });
-        vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
+        vbox.setOnMouseClicked(event -> {
+            MouseButton button = event.getButton();
+            if(button== MouseButton.PRIMARY){
                 labelNuage.setText(nuageName);
             }
         });
@@ -151,12 +150,19 @@ public class ControllerFile implements AnnotatedClass {
         flowpane.getChildren().add(vbox);
     }
 
-    public ContextMenu createRightClickMenu(){
+    public ContextMenu createRightClickMenu(String nuageName){
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem("Rejoindre");
-        MenuItem item2 = new MenuItem("Propriété");
-        MenuItem item3 = new MenuItem("Quitter");
-        MenuItem item4 = new MenuItem("Supprimer");
+        MenuItem item1 = new MenuItem("S'envoler");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                labelNuage.setText(nuageName);
+            }
+        });
+        MenuItem item2 = new MenuItem("Voir sa composition");
+        MenuItem item3 = new MenuItem("Tomber");
+        MenuItem item4 = new MenuItem("Souffler le nuage");
         contextMenu.getItems().addAll(item1, item2,item3,item4);
         return contextMenu;
     }
