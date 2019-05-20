@@ -42,7 +42,7 @@ public class ControllerIndex {
 
     @FXML
     private void signUp() throws IOException {
-        System.out.println("Sign in");
+        //System.out.println("Sign in");
         loadSecondFxml();
 
     }

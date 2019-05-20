@@ -192,7 +192,7 @@ public class ControllerFile implements AnnotatedClass {
     }
 
     public void listFile2(VBox vbox, String filename ){
-        TreeView<File> fileViewMine = new TreeView<File>(
+        /*TreeView<File> fileViewMine = new TreeView<File>(
                 new SimpleFileTreeItem(new File(filename)));
         vbox.getChildren().add(fileViewMine);
         fileViewMine.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -200,8 +200,23 @@ public class ControllerFile implements AnnotatedClass {
             nuageFiles.getChildren().removeAll();
             listFileByFolder(nuageFiles,url2);
             label2.setText(url2);
-        });
+        });*/
 
+        TreeItem<String> distant = new TreeItem<String>("wowow");
+        TreeItem<String> rootItem = new TreeItem<String>("salade");
+
+        // JSP Item
+        TreeItem<String> itemJSP = new TreeItem<String>("tomate");
+
+        // Spring Item
+        TreeItem<String> itemSpring = new TreeItem<>("oignon");
+
+        // Add to Root
+        distant.getChildren().addAll(rootItem, itemJSP, itemSpring);
+
+        TreeView<String> tree = new TreeView<String>(distant);
+
+        vbox.getChildren().add(tree);
     }
 
 
@@ -239,7 +254,7 @@ public class ControllerFile implements AnnotatedClass {
 
     public void setUrlFromOs(){
         if( System.getProperty("os.name").contains("Windows")){//Windows
-            url1 = "C:\\";
+            //url1 = "C:\\";
             url2 = "D:\\";
             TreeItem t = new TreeItem("Ordinateur");
             for(File file : File.listRoots()){

@@ -46,7 +46,7 @@ public class Main extends Application {
         //UserService us = new UserService();
         //us.useService();
         //launch(args);
-        System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
+        //System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
         File folder =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/Lenuage/Plugin");
         folder.mkdirs();
         LauncherImpl.launchApplication(Main.class, Preload.class, args);

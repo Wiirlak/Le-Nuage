@@ -47,7 +47,7 @@ public class ControllerLoading {
         //controllerFile.setData(data);
         controllerFile.setStage(stage);
         //data
-        System.out.println(data.user.getEmail());
+        //System.out.println(data.user.getEmail());
         //data.user.setEmail(emailIndex.getText());
         //data.user.setMdp(passwordIndex.getText());
         //endData
