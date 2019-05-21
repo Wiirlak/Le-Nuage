@@ -25,12 +25,13 @@
                     </image>
                 </ImageView>
             </Pane>
+            <Button text="Rafraichir" onAction="#refresh"></Button>
         </HBox>
         <TableView fx:id="tvPlugin" maxHeight="300.0" minWidth="600.0">
             <columns>
                 <TableColumn text="Nom">
                     <cellValueFactory>
-                        <PropertyValueFactory property="newPlugin"/>
+                        <PropertyValueFactory property="name"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn text="Activer" fx:id="activated">

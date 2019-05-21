@@ -11,11 +11,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class PluginManager {
-    private File f;
+    public File pluginPath;
     public String mydoc;
     public File[] listPlugins;
     public URLClassLoader load;
@@ -24,7 +26,7 @@ public class PluginManager {
     public PluginManager() {
         mydoc = new JFileChooser().getFileSystemView().getDefaultDirectory().getPath();
         checkPluginFolder("Le-Nuage");
-        findAllJar(this.f);
+        findAllJar(this.pluginPath);
     }
 
     public boolean checkPluginFolder(String name){
@@ -34,7 +36,7 @@ public class PluginManager {
                 return false;
             }
         }
-        this.f = test;
+        this.pluginPath = test;
         return true;
     }
 
@@ -58,12 +60,36 @@ public class PluginManager {
         }
     }
 
-    public void runJar(String fp) throws IOException {
+    public static void runJar(String fp) throws IOException {
         JarFile jar = new JarFile(fp);
         jar.getClass();
         //runJar(jar);
-        Runtime r = Runtime.getRuntime();
-        r.exec("java -jar "+ fp );
+        /*Runtime r = Runtime.getRuntime();
+        Process p = r.exec("java -jar "+ fp );
+        try {
+            p.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(p.exitValue());*/
+        ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
+
+        exec.schedule(() -> {
+            Runtime r = Runtime.getRuntime();
+            Process p = null;
+            try {
+                p = r.exec("java -jar "+ fp );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                p.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(p.exitValue());
+        }, 1, TimeUnit.SECONDS);
+
     }
 
     public void openJarFile(File name) throws IOException {
@@ -72,8 +98,14 @@ public class PluginManager {
         runJar(name.getAbsolutePath());
     }
 
-    public void openJarUrl(String name) throws IOException {
+    public static void openJarUrl(String name) throws IOException {
         runJar(name);
+    }
+
+    public void openJarFiles() throws IOException {
+        for(File f: listPlugins){
+            openJarFile(f);
+        }
     }
 
 

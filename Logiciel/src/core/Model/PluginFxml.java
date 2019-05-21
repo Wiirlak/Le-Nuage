@@ -5,11 +5,19 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import plugin.NewPlugin;
+import plugin.Plugin;
+import plugin.PluginManager;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+//import plugin.NewPlugin;
 
 public class PluginFxml {
-    @FXML
-    public NewPlugin newPlugin = new NewPlugin();
+    /*@FXML
+    public NewPlugin newPlugin = new NewPlugin();*/
+
+    public File name;
 
     @FXML
     public CheckBox activated = new CheckBox();
@@ -18,14 +26,17 @@ public class PluginFxml {
     public Button deleted = new Button("deleted");
 
     @FXML
-    public Button edited = new Button("edited");
+    public Button edited = new Button("edited2");
 
-    public PluginFxml() {
+
+    public PluginFxml(File named){
+        this.name = named;
         deleted.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("deleted");
-                System.out.println(getNewPlugin());
+                System.out.println(name.getName());
+                name.delete();
             }
         });
 
@@ -33,6 +44,11 @@ public class PluginFxml {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("activated");
+                try {
+                    PluginManager.openJarUrl(name.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -44,8 +60,13 @@ public class PluginFxml {
         });
     }
 
-    public String getNewPlugin() {
+
+    /*public String getNewPlugin() {
         return newPlugin.getName();
+    }*/
+
+    public String getName() {
+        return name.getName();
     }
 
     public CheckBox getActivated() {

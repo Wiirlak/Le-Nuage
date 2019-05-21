@@ -10,10 +10,16 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import plugin.PluginManager;
 
+import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerPlugin {
 
@@ -33,6 +39,8 @@ public class ControllerPlugin {
 
     public static Data data;
 
+    public PluginManager pluginManager = new PluginManager();
+
     public  static void setData(Data datap) {
         data = datap;
     }
@@ -40,19 +48,25 @@ public class ControllerPlugin {
     @FXML
     public void initialize(){
         tvPlugin.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        pluginFxmls = new ArrayList<>();
-        for(int i = 0 ; i< 50; i ++){
-            pluginFxmls.add(new PluginFxml());
+        pluginFxmls =  new ArrayList<PluginFxml>();
+        for(File f : pluginManager.listPlugins){
+            pluginFxmls.add(new PluginFxml(f));
         }
+        /*pluginFxmls = new ArrayList<>();
+        for(int i = 0 ; i< 50; i ++){
+            pluginList.add(new PluginFxml());
+        }*/
 
         tvPlugin.getItems().addAll(pluginFxmls);
 
-        pluginFxmls.get(2).getActivated().setSelected(true);
+        //pluginFxmls.get(2).getActivated().setSelected(true);
     }
 
-    public void tickedNoTicked(){
+    public void tickedNoTicked() throws IOException {
         if(checkAll.isSelected()){
             pluginFxmls.forEach(c -> c.activated.setSelected(true));
+            pluginManager.openJarFiles();
+
         }else{
             pluginFxmls.forEach(c -> c.activated.setSelected(false));
         }
@@ -69,6 +83,8 @@ public class ControllerPlugin {
         File selected = fileChooser.showOpenDialog(stage);
         if(selected != null){
             System.out.println(selected.toURI().toString());
+            Files.copy(selected.toPath(), Paths.get(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/Le-Nuage/plugins/"+selected.getName()));
+            refresh();
         }
     }
 
@@ -79,5 +95,18 @@ public class ControllerPlugin {
     public void exit(){
         stage.close();
     }
+
+    public void refresh(){
+        tvPlugin.getItems().clear();
+        pluginManager.findAllJar(pluginManager.pluginPath);
+        pluginFxmls =  new ArrayList<PluginFxml>();
+        for(File f : pluginManager.listPlugins){
+            pluginFxmls.add(new PluginFxml(f));
+        }
+        tvPlugin.getItems().addAll(pluginFxmls);
+    }
+
+
+
 }
 

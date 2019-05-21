@@ -43,14 +43,14 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws IOException {
-        PluginManager a = new PluginManager();
+        /*PluginManager a = new PluginManager();
         System.out.println(a.mydoc);
 
-        a.openJarFile(a.listPlugins[1]);
+        a.openJarFile(a.listPlugins[0]);*/
         //launch(args);
         //System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
-        File folder =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/Lenuage/Plugin");
-        folder.mkdirs();
+        /*File folder =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/Lenuage/Plugin");
+        folder.mkdirs();*/
         LauncherImpl.launchApplication(Main.class, Preload.class, args);
     }
 
