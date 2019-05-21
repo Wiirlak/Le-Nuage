@@ -1,5 +1,8 @@
 package plugin;
 
+import com.sun.org.apache.bcel.internal.classfile.ClassParser;
+import com.sun.org.apache.bcel.internal.classfile.JavaClass;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.FilenameFilter;
@@ -7,6 +10,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class PluginManager {
@@ -14,6 +19,7 @@ public class PluginManager {
     public String mydoc;
     public File[] listPlugins;
     public URLClassLoader load;
+    public JarFile[] jars;
 
     public PluginManager() {
         mydoc = new JFileChooser().getFileSystemView().getDefaultDirectory().getPath();
@@ -40,14 +46,37 @@ public class PluginManager {
         }
     }
 
-    private void runJar(){
-
+    public void runJar2(JarFile jf) throws IOException {
+        Enumeration<JarEntry> je = jf.entries();
+        while (je.hasMoreElements()) {
+            JarEntry entry = je.nextElement();
+            if (entry.getName().endsWith(".class")) {
+                System.out.println("ok");
+                if (entry.getName() == "start.class"){
+                }
+            }
+        }
     }
 
-    private void openJarFile(File name) throws IOException {
+    public void runJar(String fp) throws IOException {
+        JarFile jar = new JarFile(fp);
+        jar.getClass();
+        //runJar(jar);
+        Runtime r = Runtime.getRuntime();
+        r.exec("java -jar "+ fp );
+    }
+
+    public void openJarFile(File name) throws IOException {
         URL extra = name.toURL();
         load = new URLClassLoader(new URL[] {extra});
-        JarFile jar = new JarFile(name.getAbsolutePath());
-        jar.getClass();
+        runJar(name.getAbsolutePath());
     }
+
+    public void openJarUrl(String name) throws IOException {
+        runJar(name);
+    }
+
+
+
+
 }

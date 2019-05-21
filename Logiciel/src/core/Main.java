@@ -10,7 +10,7 @@ import core.Controller.ControllerIndex;
 import plugin.PluginManager;
 
 import java.awt.*;
-
+import java.io.IOException;
 
 
 public class Main extends Application {
@@ -36,9 +36,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         PluginManager a = new PluginManager();
         System.out.println(a.mydoc);
+
+        a.openJarFile(a.listPlugins[1]);
         //launch(args);
     }
 
