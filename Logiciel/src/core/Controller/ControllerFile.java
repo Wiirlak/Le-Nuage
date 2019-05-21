@@ -2,6 +2,8 @@ package core.Controller;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
+import core.Model.Data;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
@@ -66,6 +70,12 @@ public class ControllerFile implements AnnotatedClass {
     public  String  url1;
     public  String  url2;
     public  ArrayList<Nuage> nuageArray = new ArrayList<Nuage>();
+
+    public Data data;
+
+    public void setData(Data datap) {
+        data = datap;
+    }
 
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
@@ -122,15 +132,39 @@ public class ControllerFile implements AnnotatedClass {
         vbox.getChildren().add(imageView);
         vbox.getChildren().add(label1);
         vbox.getChildren().add(label2);
-
-        vbox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
+        vbox.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(ContextMenuEvent event) {
+                createRightClickMenu(nuageName).show(vbox, event.getScreenX(), event.getScreenY());
+            }
+        });
+        vbox.setOnMouseClicked(event -> {
+            MouseButton button = event.getButton();
+            if(button== MouseButton.PRIMARY){
                 labelNuage.setText(nuageName);
             }
         });
+
+
+
         flowpane.getChildren().add(vbox);
+    }
+
+    public ContextMenu createRightClickMenu(String nuageName){
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("S'envoler");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                labelNuage.setText(nuageName);
+            }
+        });
+        MenuItem item2 = new MenuItem("Voir sa composition");
+        MenuItem item3 = new MenuItem("Tomber");
+        MenuItem item4 = new MenuItem("Souffler le nuage");
+        contextMenu.getItems().addAll(item1, item2,item3,item4);
+        return contextMenu;
     }
 
     public String getSizeOfFile(double size){
@@ -158,7 +192,7 @@ public class ControllerFile implements AnnotatedClass {
     }
 
     public void listFile2(VBox vbox, String filename ){
-        TreeView<File> fileViewMine = new TreeView<File>(
+        /*TreeView<File> fileViewMine = new TreeView<File>(
                 new SimpleFileTreeItem(new File(filename)));
         vbox.getChildren().add(fileViewMine);
         fileViewMine.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -166,8 +200,23 @@ public class ControllerFile implements AnnotatedClass {
             nuageFiles.getChildren().removeAll();
             listFileByFolder(nuageFiles,url2);
             label2.setText(url2);
-        });
+        });*/
 
+        TreeItem<String> distant = new TreeItem<String>("wowow");
+        TreeItem<String> rootItem = new TreeItem<String>("salade");
+
+        // JSP Item
+        TreeItem<String> itemJSP = new TreeItem<String>("tomate");
+
+        // Spring Item
+        TreeItem<String> itemSpring = new TreeItem<>("oignon");
+
+        // Add to Root
+        distant.getChildren().addAll(rootItem, itemJSP, itemSpring);
+
+        TreeView<String> tree = new TreeView<String>(distant);
+
+        vbox.getChildren().add(tree);
     }
 
 
@@ -205,7 +254,7 @@ public class ControllerFile implements AnnotatedClass {
 
     public void setUrlFromOs(){
         if( System.getProperty("os.name").contains("Windows")){//Windows
-            url1 = "C:\\";
+            //url1 = "C:\\";
             url2 = "D:\\";
             TreeItem t = new TreeItem("Ordinateur");
             for(File file : File.listRoots()){
@@ -284,7 +333,7 @@ public class ControllerFile implements AnnotatedClass {
 
     @FXML
     public void disconnect() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/index.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("index.fxml"));
         Scene scene = new Scene(loader.load());
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(stage);
@@ -312,12 +361,12 @@ public class ControllerFile implements AnnotatedClass {
         subStage.initOwner(stage);
         subStage.initModality(Modality.WINDOW_MODAL);
         subStage.show();*/
-
         Stage subStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/profil.fxml"));
-        Scene scene = new Scene(loader.load(),400,600);
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("profil.fxml"));
+        Scene scene = new Scene(loader.load(),400,700);
         ControllerProfil controllerProfil = loader.getController();
         controllerProfil.setStage(subStage);
+        controllerProfil.setData(data);
         subStage.setResizable(false);
         subStage.setTitle("Mon profil");
         subStage.setScene(scene);
@@ -330,7 +379,7 @@ public class ControllerFile implements AnnotatedClass {
     @FXML
     public void openLoading() throws IOException {
         Stage subStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/Loading.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Loading.fxml"));
         Scene scene = new Scene(loader.load());
         ControllerLoading controllerLoading = loader.getController();
         ControllerLoading.setStage(subStage);
@@ -342,6 +391,25 @@ public class ControllerFile implements AnnotatedClass {
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         subStage.show();
     }
+
+
+
+    @FXML
+    public void openOptions() throws IOException {
+        Stage subStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("options.fxml"));
+        Scene scene = new Scene(loader.load());
+        ControllerOption controllerOption = loader.getController();
+        controllerOption.setStage(subStage);
+        subStage.setResizable(false);
+        subStage.setTitle("Options");
+        subStage.setScene(scene);
+        subStage.initOwner(stage);
+        subStage.initModality(Modality.WINDOW_MODAL);
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
+        subStage.show();
+    }
+
 
     @FXML
     public void  onEnter(){
