@@ -1,6 +1,5 @@
 package core.Controller;
 
-import core.Model.Data;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -35,12 +34,6 @@ public class ControllerSignUp {
     public PasswordField mdpc;
     @FXML
     public CheckBox check;
-
-    public static Data data;
-
-    public static void setData(Data datap) {
-        data = datap;
-    }
 
 
     public static void setStage(Stage primaryStage){
@@ -134,11 +127,10 @@ public class ControllerSignUp {
 
     @FXML
     public void goBack() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("index.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/index.fxml"));
         Scene scene = new Scene(loader.load());
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(stage);
-        controllerIndex.setData(data);
         stage.setResizable(true);
         stage.setTitle("Le-Nuage");
         stage.setScene(scene);

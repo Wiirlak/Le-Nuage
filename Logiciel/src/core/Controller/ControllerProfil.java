@@ -1,9 +1,6 @@
 package core.Controller;
 
-import core.Model.Data;
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
@@ -11,20 +8,12 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 public class ControllerProfil {
 
     public static Stage stage;
-
-    public Data data;
-
-    public void setData(Data datap) {
-        data = datap;
-    }
 
     @FXML
     public VBox profil;
@@ -32,39 +21,13 @@ public class ControllerProfil {
     @FXML
     public Circle profilPicture;
 
-    @FXML
-    public TextField email;
-
-    @FXML
-    public TextField name;
-
-    @FXML
-    public TextField surname;
-
-    @FXML
-    public TextField birthdate;
-
-    @FXML
-    public PasswordField password;
-
-    public static void setStage(Stage stagep) {
-        stage = stagep;
+    public static void setStage(Stage stage) {
+        ControllerProfil.stage = stage;
     }
 
     @FXML
     public void initialize() {
         profilPicture.setFill(new ImagePattern(new Image ("assets/pictures/profile.jpg")));
-
-
-    }
-
-    @FXML
-    public void printOutput(){
-        name.setText(data.user.getNom());
-        email.setText(data.user.getEmail());
-        surname.setText(data.user.getPrenom());
-        birthdate.setText(data.user.getDate());
-        password.setText(data.user.getMdp());
     }
 
     @FXML
@@ -92,12 +55,6 @@ public class ControllerProfil {
             profil.getChildren().add(0,cir2);
 
         }
-    }
-
-
-    @FXML
-    public void updatePwd() throws Exception{
-        Desktop.getDesktop().browse(new URL("http://localhost:3000/user/123123156/reset").toURI());
     }
 
     @FXML

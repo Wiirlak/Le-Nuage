@@ -14,7 +14,7 @@
           prefHeight="400.0" prefWidth="600.0" alignment="CENTER" styleClass="whiteBg">
     <ImageView fitHeight="142" fitWidth="400">
         <image >
-            <Image url="@pictures/loading.gif" />
+            <Image url="@../../assets/pictures/loading.gif" />
         </image>
     </ImageView>
 

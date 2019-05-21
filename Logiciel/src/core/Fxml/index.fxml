@@ -14,7 +14,7 @@
 
 <?import java.lang.Double?>
 <GridPane fx:controller="core.Controller.ControllerIndex"
-          xmlns:fx="http://javafx.com/fxml" styleClass="tet" >
+          xmlns:fx="http://javafx.com/fxml" styleClass="tet">
 
     <!-- Bind data-->
     <fx:define>
@@ -45,7 +45,7 @@
         <!-- LEFT BOX -->
         <ImageView>
             <image>
-                <Image url="@pictures/LNb.png" />
+                <Image url="@../../assets/pictures/LNb.png" />
             </image>
         </ImageView>
     </HBox>
@@ -53,10 +53,10 @@
         <!-- RIGHT BOX -->
         <Label text="Connexion" styleClass="connect" ></Label>
         <HBox alignment="CENTER">
-            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input" fx:id="emailIndex"></TextField>
+            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input"></TextField>
         </HBox>
         <HBox alignment="CENTER">
-            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input" fx:id="passwordIndex"></PasswordField>
+            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input"></PasswordField>
         </HBox>
         <HBox alignment="CENTER">
             <Button text="Se connecter" styleClass="btn-connect" onAction="#loading" fx:id="signup"></Button>
@@ -70,12 +70,12 @@
         <HBox alignment="CENTER" spacing="150" styleClass="social-network">
             <ImageView fitHeight="56" fitWidth="56" onMouseClicked="#openFB" styleClass="hover">
                 <image>
-                    <Image url="@pictures/facebook.png" preserveRatio="true"/>
+                    <Image url="@../../assets/pictures/facebook.png" preserveRatio="true"/>
                 </image>
             </ImageView>
             <ImageView fitHeight="56" fitWidth="56" onMouseClicked="#openTW" styleClass="hover">
                 <image>
-                    <Image url="@pictures/twitter.png" preserveRatio="true"/>
+                    <Image url="@../../assets/pictures/twitter.png" preserveRatio="true"/>
                 </image>
             </ImageView>
 

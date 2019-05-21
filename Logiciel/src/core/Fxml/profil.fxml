@@ -31,28 +31,19 @@
         <VBox  minWidth="350" HBox.hgrow="ALWAYS" spacing="50" maxWidth="450">
             <VBox>
                 <Label text="Nom"></Label>
-                <TextField promptText="Nom..." editable="false" styleClass="inputProfilCantEdit" fx:id="name"></TextField>
+                <TextField promptText="Nom..." editable="false" styleClass="inputProfilCantEdit" text="Henry" ></TextField>
             </VBox>
                 <VBox>
                 <Label text="Prenom"></Label>
-                <TextField promptText="Prenom..." editable="false" styleClass="inputProfilCantEdit" fx:id="surname"></TextField>
+                <TextField promptText="Prenom..." editable="false" styleClass="inputProfilCantEdit" text="Salvamalomous"></TextField>
             </VBox>
             <VBox>
                 <Label text="Email"></Label>
-                <TextField promptText="Email..." styleClass="inputProfil" fx:id="email"></TextField>
-            </VBox>
-            <VBox>
-                <Label text="Date de naissance"></Label>
-                <TextField promptText="Birthdate" editable="false" styleClass="inputProfilCantEdit" fx:id="birthdate"></TextField>
-            </VBox>
-            <VBox>
-                <Label text="Mot de passe"></Label>
-                <PasswordField promptText="Mot de passe" styleClass="inputProfil" fx:id="password"></PasswordField>
-                <Label text="Changer votre mot de passe" onMouseClicked="#updatePwd" style="-fx-cursor:HAND"></Label>
+                <TextField promptText="Email..." styleClass="inputProfil"></TextField>
             </VBox>
         </VBox>
         <HBox alignment="CENTER"  minWidth="350" HBox.hgrow="ALWAYS">
-            <Button text="Sauvegarder" styleClass="saveButton" onAction="#close" ></Button>
+            <Button text="Sauvegarder" styleClass="saveButton" onAction="#close"></Button>
         </HBox>
     </VBox>
 
