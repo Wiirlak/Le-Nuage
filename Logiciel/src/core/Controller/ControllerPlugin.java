@@ -52,11 +52,6 @@ public class ControllerPlugin {
         for(File f : pluginManager.listPlugins){
             pluginFxmls.add(new PluginFxml(f));
         }
-        /*pluginFxmls = new ArrayList<>();
-        for(int i = 0 ; i< 50; i ++){
-            pluginList.add(new PluginFxml());
-        }*/
-
         tvPlugin.getItems().addAll(pluginFxmls);
 
         //pluginFxmls.get(2).getActivated().setSelected(true);
@@ -64,11 +59,11 @@ public class ControllerPlugin {
 
     public void tickedNoTicked() throws IOException {
         if(checkAll.isSelected()){
-            pluginFxmls.forEach(c -> c.activated.setSelected(true));
-            pluginManager.openJarFiles();
+            pluginFxmls.forEach(c -> c.deleted.setSelected(true));
+            //pluginManager.openJarFiles();
 
         }else{
-            pluginFxmls.forEach(c -> c.activated.setSelected(false));
+            pluginFxmls.forEach(c -> c.deleted.setSelected(false));
         }
     }
 
@@ -106,6 +101,16 @@ public class ControllerPlugin {
         tvPlugin.getItems().addAll(pluginFxmls);
     }
 
+
+    public void delete(){
+        for( PluginFxml pgxml: pluginFxmls){
+            if(pgxml.deleted.isSelected()){
+                pgxml.name.delete();
+            }
+        }
+        refresh();
+        //pluginFxmls.forEach(c -> c.deleted.setSelected(true));
+    }
 
 
 }

@@ -8,6 +8,7 @@ import javafx.scene.control.CheckBox;
 import plugin.Plugin;
 import plugin.PluginManager;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,13 +21,13 @@ public class PluginFxml {
     public File name;
 
     @FXML
-    public CheckBox activated = new CheckBox();
+    public Button activated = new Button("Lancer");
 
     @FXML
-    public Button deleted = new Button("deleted");
+    public CheckBox deleted = new CheckBox();
 
     @FXML
-    public Button edited = new Button("edited2");
+    public Button edited = new Button("Ouvrir");
 
 
     public PluginFxml(File named){
@@ -55,7 +56,11 @@ public class PluginFxml {
         edited.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("edited");
+                try {
+                    Desktop.getDesktop().open(new File(name.getParent()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -69,11 +74,11 @@ public class PluginFxml {
         return name.getName();
     }
 
-    public CheckBox getActivated() {
+    public Button getActivated() {
         return activated;
     }
 
-    public Button getDeleted() {
+    public CheckBox getDeleted() {
         return deleted;
     }
 
