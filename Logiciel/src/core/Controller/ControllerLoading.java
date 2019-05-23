@@ -1,6 +1,5 @@
 package core.Controller;
 
-import core.Model.Data;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +16,6 @@ public class ControllerLoading {
 
     public static void setStage(Stage stagep) {
         stage = stagep;
-    }
-
-    public static Data data;
-
-    public static void setData(Data datap) {
-        data = datap;
     }
 
     @FXML

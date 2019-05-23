@@ -1,7 +1,7 @@
 package core;
 
 import com.sun.javafx.application.LauncherImpl;
-import core.Model.Data;
+import core.Model.AuthService;
 import core.preloader.Preload;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,12 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import core.Controller.ControllerIndex;
-import plugin.PluginManager;
 
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.IOException;
-import java.io.File;
 
 
 public class Main extends Application {
@@ -39,7 +36,6 @@ public class Main extends Application {
         primaryStage.setMaxHeight(screenSize.getHeight());
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         primaryStage.show();
-        controllerIndex.setData(new Data());
     }
 
     public static void main(String[] args) throws IOException {
@@ -51,6 +47,8 @@ public class Main extends Application {
         //System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
         /*File folder =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/Lenuage/Plugin");
         folder.mkdirs();*/
+        AuthService.getUser().setNom("slamai");
+        System.out.println(AuthService.getUser().getNom());
         LauncherImpl.launchApplication(Main.class, Preload.class, args);
     }
 

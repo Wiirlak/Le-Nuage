@@ -2,7 +2,7 @@ package core.Controller;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
-import core.Model.Data;
+import core.Model.AuthService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -71,18 +71,13 @@ public class ControllerFile implements AnnotatedClass {
     public  String  url2;
     public  ArrayList<Nuage> nuageArray = new ArrayList<Nuage>();
 
-    public Data data;
-
-    public void setData(Data datap) {
-        data = datap;
-    }
-
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
     }
 
     public  void initialize() {
 
+        System.out.println(AuthService.getUser().getEmail());
         setUrlFromOs();
 
         label1.setText(url1);
@@ -366,7 +361,6 @@ public class ControllerFile implements AnnotatedClass {
         Scene scene = new Scene(loader.load(),400,700);
         ControllerProfil controllerProfil = loader.getController();
         controllerProfil.setStage(subStage);
-        controllerProfil.setData(data);
         subStage.setResizable(false);
         subStage.setTitle("Mon profil");
         subStage.setScene(scene);

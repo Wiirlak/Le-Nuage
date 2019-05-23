@@ -1,6 +1,6 @@
 package core.Controller;
 
-import core.Model.Data;
+import core.Model.AuthService;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -19,12 +19,6 @@ import java.net.URL;
 public class ControllerProfil {
 
     public static Stage stage;
-
-    public Data data;
-
-    public void setData(Data datap) {
-        data = datap;
-    }
 
     @FXML
     public VBox profil;
@@ -54,17 +48,18 @@ public class ControllerProfil {
     @FXML
     public void initialize() {
         profilPicture.setFill(new ImagePattern(new Image ("assets/pictures/profile.jpg")));
-
+        printOutput();
 
     }
 
     @FXML
     public void printOutput(){
-        name.setText(data.user.getNom());
-        email.setText(data.user.getEmail());
-        surname.setText(data.user.getPrenom());
-        birthdate.setText(data.user.getDate());
-        password.setText(data.user.getMdp());
+        System.out.println(AuthService.getUser().getNom());
+        name.setText(AuthService.getUser().getNom());
+        email.setText(AuthService.getUser().getEmail());
+        surname.setText(AuthService.getUser().getPrenom());
+        birthdate.setText(AuthService.getUser().getDate());
+        password.setText(AuthService.getUser().getMdp());
     }
 
     @FXML

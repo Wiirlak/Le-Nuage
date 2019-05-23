@@ -1,7 +1,6 @@
 package core.Controller;
 
-import core.Model.Data;
-import javafx.animation.PauseTransition;
+import core.Model.AuthService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.IOException;
@@ -20,13 +18,6 @@ public class ControllerIndex {
 
     public void setStage(Stage primaryStage){
         this.stage = primaryStage;
-    }
-
-
-    public Data data;
-
-    public void setData(Data datap) {
-        data = datap;
     }
 
     @FXML
@@ -54,7 +45,6 @@ public class ControllerIndex {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("signUp.fxml"));
         ControllerSignUp controllerSignUp = loader.getController();
         controllerSignUp.setStage(stage);
-        controllerSignUp.setData(data);
         Scene scene = new Scene(root, 900, 700);
         stage.setTitle("Inscription");
         stage.setScene(scene);
@@ -75,12 +65,15 @@ public class ControllerIndex {
 
     @FXML
     public void loading() throws IOException, InterruptedException {
+        AuthService.getUser().setEmail(emailIndex.getText());
+        AuthService.getUser().setMdp(passwordIndex.getText());
+
+
         Parent root;
         root = FXMLLoader.load(getClass().getClassLoader().getResource("Loading.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Loading.fxml"));
         ControllerLoading controllerLoading = loader.getController();
         controllerLoading.setStage(stage);
-        controllerLoading.setData(data);
         Scene scene = new Scene(root);
         stage.setResizable(true);
         stage.setTitle("Le-Nuage");

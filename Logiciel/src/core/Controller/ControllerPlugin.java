@@ -1,13 +1,9 @@
 package core.Controller;
 
-import core.Model.Data;
 import core.Model.PluginFxml;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import plugin.PluginManager;
@@ -16,10 +12,8 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ControllerPlugin {
 
@@ -37,13 +31,7 @@ public class ControllerPlugin {
 
     public ArrayList<PluginFxml> pluginFxmls;
 
-    public static Data data;
-
     public PluginManager pluginManager = new PluginManager();
-
-    public  static void setData(Data datap) {
-        data = datap;
-    }
 
     @FXML
     public void initialize(){
