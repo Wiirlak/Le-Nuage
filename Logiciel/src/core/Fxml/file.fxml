@@ -59,6 +59,14 @@
             <Label text="Favoris" onMouseClicked="#orderbyFavorite" style="-fx-cursor:HAND"></Label>
             <Label text="Corbeille" onMouseClicked="#orderbyTrash" style="-fx-cursor:HAND"></Label>
             <Label text="Tous" onMouseClicked="#orderbyNothing" style="-fx-cursor:HAND"></Label>
+            <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                <ImageView onMouseClicked="#reload" style="-fx-cursor:HAND" fitHeight="50" fitWidth="70" fx:id="reloaded">
+                    <image>
+                        <Image url="@pictures/reload.jpg"></Image>
+                    </image>
+                </ImageView>
+                <!--<Label text="Rafraichir" onMouseClicked="#orderbyNothing" style="-fx-cursor:HAND" ></Label>-->
+            </HBox>
         </HBox>
         <HBox GridPane.rowIndex="2"  fx:id="hroot" alignment="CENTER">
             <SplitPane orientation="VERTICAL" HBox.hgrow="ALWAYS" dividerPositions="0.1">

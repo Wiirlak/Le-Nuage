@@ -31,4 +31,9 @@ public class ControllerOption {
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         subStage.show();
     }
+
+    public void leave(){
+        Stage close = (Stage) stage.getOwner().getScene().getWindow();
+        close.close();
+    }
 }

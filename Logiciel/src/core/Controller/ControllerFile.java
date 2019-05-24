@@ -5,6 +5,7 @@ import annotation.Status;
 import core.Http.Apple.Apple;
 import core.Http.Apple.HttpApple;
 import core.Model.AuthService;
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,6 +25,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import core.Model.Nuage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -31,6 +33,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Status(author = "Krishan Class",
@@ -67,6 +70,9 @@ public class ControllerFile implements AnnotatedClass {
 
     @FXML
     public TextField searchBar;
+
+    @FXML
+    public ImageView reloaded;
 
 
     public  String  url1;
@@ -107,7 +113,7 @@ public class ControllerFile implements AnnotatedClass {
         }
 
         //Nuage file
-        listFile2(nuageFile,url2);
+        listFile2(nuageFile);
 
         // Fichier d'un dossier courant local
        //listFileByFolder(myFiles,url1);
@@ -198,7 +204,7 @@ public class ControllerFile implements AnnotatedClass {
 
     }
 
-    public void listFile2(VBox vbox, String filename ){
+    public void listFile2(VBox vbox){
         /*TreeView<File> fileViewMine = new TreeView<File>(
                 new SimpleFileTreeItem(new File(filename)));
         vbox.getChildren().add(fileViewMine);
@@ -220,6 +226,7 @@ public class ControllerFile implements AnnotatedClass {
 
         // Add to Root
         //distant.getChildren().addAll(rootItem, itemJSP, itemSpring);
+        vbox.getChildren().clear();
         TreeView<String> tree;
         TreeItem<String> distant = new TreeItem<String>("Pommes");
         try {
@@ -443,6 +450,20 @@ public class ControllerFile implements AnnotatedClass {
             addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
         }
 
+    }
+
+    @FXML
+    public void reload() throws InterruptedException {
+        /*for(int i = 0 ; i < 360 ; i++){
+            reloaded.setRotate(reloaded.getRotate() + i);
+            TimeUnit.MILLISECONDS.sleep(25);
+        }*/
+        RotateTransition rt = new RotateTransition(Duration.millis(3000),reloaded);
+        rt.setByAngle(360);
+        rt.setCycleCount(1);
+        rt.setAutoReverse(true);
+        rt.play();
+        listFile2(nuageFile);
     }
 
 
