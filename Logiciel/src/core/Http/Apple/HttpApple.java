@@ -4,14 +4,10 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class HttpApple {
     private static final String apiUrl = "http://localhost:3000";
@@ -21,46 +17,55 @@ public class HttpApple {
     }
 
     public StringBuffer getApple(String id) throws IOException {
-        URL url = new URL(apiUrl+"/pommes/"+id);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        con.setConnectTimeout(60000); //60 secs
-        con.setReadTimeout(60000); //60 secs
-        int status = con.getResponseCode();
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
+        try{
+            URL url = new URL(apiUrl+"/pommes/"+id);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setConnectTimeout(60000); //60 secs
+            con.setReadTimeout(60000); //60 secs
+            int status = con.getResponseCode();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
 
+            }
+            in.close();
+            con.disconnect();
+            return content;
+        }catch(ConnectException e ){
+            return null;
         }
-        in.close();
-        con.disconnect();
-        return content;
+
     }
 
     public Apple[] getApples() throws IOException {
-        URL url = new URL(apiUrl+"/pommes/");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        Apple[] answer = new Apple[0];
-        con.setConnectTimeout(60000); //60 secs
-        con.setReadTimeout(60000); //60 secs
-        int status = con.getResponseCode();
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-            answer = (new Gson()).fromJson(inputLine, Apple[].class);
+        try{
+            URL url = new URL(apiUrl+"/pommes/");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            Apple[] answer = new Apple[0];
+            con.setConnectTimeout(60000); //60 secs
+            con.setReadTimeout(60000); //60 secs
+            int status = con.getResponseCode();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+                answer = (new Gson()).fromJson(inputLine, Apple[].class);
+            }
+            in.close();
+            con.disconnect();
+    //        for(Object str:founderList)
+    //            System.out.println(str);
+            return answer;
+        }catch(ConnectException e ){
+            return new Apple[0];
         }
-        in.close();
-        con.disconnect();
-//        for(Object str:founderList)
-//            System.out.println(str);
-        return answer;
     }
 
     public boolean deleteApple(String id) throws IOException {

@@ -227,6 +227,7 @@ public class ControllerFile implements AnnotatedClass {
         // Add to Root
         //distant.getChildren().addAll(rootItem, itemJSP, itemSpring);
         vbox.getChildren().clear();
+        vbox.getChildren().add(labelNuage);
         TreeView<String> tree;
         TreeItem<String> distant = new TreeItem<String>("Pommes");
         try {
