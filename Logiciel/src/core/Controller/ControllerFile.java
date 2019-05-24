@@ -2,6 +2,7 @@ package core.Controller;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
+import core.Http.Apple.HttpApple;
 import core.Model.AuthService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -111,6 +112,26 @@ public class ControllerFile implements AnnotatedClass {
        //listFileByFolder(myFiles,url1);
         // Fichier d'un dossier courant distant
        //listFileByFolder(nuageFiles,url2);
+
+
+
+
+        /* **********
+
+            Call API
+
+
+         */
+        try {
+            HttpApple test = new HttpApple();
+            //System.out.println(test.getApple("5c5819ea0bbc7a1b444e9d9f"));
+            System.out.println(test.getApples()[1].get_id());
+           // System.out.println(test.deleteApple("5c5819ea0bbc7a1b444e9d9f"));
+            //System.out.println(test.createApple("Cookie",635));
+            //System.out.println(test.updateApple("5c45f7c51d5463541812ddf4","Pasteque",115));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
