@@ -2,6 +2,7 @@ package core.Controller;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
+import core.Http.Apple.Apple;
 import core.Http.Apple.HttpApple;
 import core.Model.AuthService;
 import javafx.event.ActionEvent;
@@ -122,16 +123,6 @@ public class ControllerFile implements AnnotatedClass {
 
 
          */
-        try {
-            HttpApple test = new HttpApple();
-            //System.out.println(test.getApple("5c5819ea0bbc7a1b444e9d9f"));
-            System.out.println(test.getApples()[1].get_id());
-           // System.out.println(test.deleteApple("5c5819ea0bbc7a1b444e9d9f"));
-            //System.out.println(test.createApple("Cookie",635));
-            //System.out.println(test.updateApple("5c45f7c51d5463541812ddf4","Pasteque",115));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
     }
 
@@ -218,20 +209,36 @@ public class ControllerFile implements AnnotatedClass {
             label2.setText(url2);
         });*/
 
-        TreeItem<String> distant = new TreeItem<String>("wowow");
+        /*TreeItem<String> distant = new TreeItem<String>("wowow");
         TreeItem<String> rootItem = new TreeItem<String>("salade");
 
         // JSP Item
         TreeItem<String> itemJSP = new TreeItem<String>("tomate");
 
         // Spring Item
-        TreeItem<String> itemSpring = new TreeItem<>("oignon");
+        TreeItem<String> itemSpring = new TreeItem<>("oignon");*/
 
         // Add to Root
-        distant.getChildren().addAll(rootItem, itemJSP, itemSpring);
+        //distant.getChildren().addAll(rootItem, itemJSP, itemSpring);
+        TreeView<String> tree;
+        TreeItem<String> distant = new TreeItem<String>("Pommes");
+        try {
+            HttpApple test = new HttpApple();
+            //System.out.println(test.getApple("5c5819ea0bbc7a1b444e9d9f"));
+            //System.out.println(test.getApples()[1].get_id());
+            // System.out.println(test.deleteApple("5c5819ea0bbc7a1b444e9d9f"));
+            //System.out.println(test.createApple("Cookie",635));
+            //System.out.println(test.updateApple("5c45f7c51d5463541812ddf4","Pasteque",115));
+            for(Apple a :test.getApples() ){
+                distant.getChildren().add(new TreeItem<>(a.getName()+" - "+a.getPepins()));
+            }
 
-        TreeView<String> tree = new TreeView<String>(distant);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
+
+        tree = new TreeView<String>(distant);
         vbox.getChildren().add(tree);
     }
 
