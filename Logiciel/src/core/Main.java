@@ -46,9 +46,9 @@ public class Main extends Application {
         folder.mkdirs();*/
         /*
         AuthService.getUser().setNom("slamai");
-        System.out.println(AuthService.getUser().getNom());
+        System.out.println(AuthService.getUser().getNom());*/
         LauncherImpl.launchApplication(Main.class, Preload.class, args);
-        */
+
         PluginManager a = new PluginManager();
         a.openJarFile(a.listPlugins[1]);
     }
