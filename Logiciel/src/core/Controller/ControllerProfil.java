@@ -1,6 +1,9 @@
 package core.Controller;
 
+import core.Model.AuthService;
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
@@ -8,8 +11,10 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class ControllerProfil {
 
@@ -21,13 +26,40 @@ public class ControllerProfil {
     @FXML
     public Circle profilPicture;
 
-    public static void setStage(Stage stage) {
-        ControllerProfil.stage = stage;
+    @FXML
+    public TextField email;
+
+    @FXML
+    public TextField name;
+
+    @FXML
+    public TextField surname;
+
+    @FXML
+    public TextField birthdate;
+
+    @FXML
+    public PasswordField password;
+
+    public static void setStage(Stage stagep) {
+        stage = stagep;
     }
 
     @FXML
     public void initialize() {
         profilPicture.setFill(new ImagePattern(new Image ("assets/pictures/profile.jpg")));
+        printOutput();
+
+    }
+
+    @FXML
+    public void printOutput(){
+        System.out.println(AuthService.getUser().getNom());
+        name.setText(AuthService.getUser().getNom());
+        email.setText(AuthService.getUser().getEmail());
+        surname.setText(AuthService.getUser().getPrenom());
+        birthdate.setText(AuthService.getUser().getDate());
+        password.setText(AuthService.getUser().getMdp());
     }
 
     @FXML
@@ -55,6 +87,12 @@ public class ControllerProfil {
             profil.getChildren().add(0,cir2);
 
         }
+    }
+
+
+    @FXML
+    public void updatePwd() throws Exception{
+        Desktop.getDesktop().browse(new URL("http://localhost:3000/user/123123156/reset").toURI());
     }
 
     @FXML

@@ -1,12 +1,13 @@
 package core.Controller;
 
-import javafx.animation.PauseTransition;
+import core.Model.AuthService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.IOException;
@@ -20,13 +21,19 @@ public class ControllerIndex {
     }
 
     @FXML
+    public TextField emailIndex;
+
+    @FXML
+    public PasswordField passwordIndex;
+
+    @FXML
     private void log(){
         System.out.println("Logger");
     }
 
     @FXML
     private void signUp() throws IOException {
-        System.out.println("Sign in");
+        //System.out.println("Sign in");
         loadSecondFxml();
 
     }
@@ -34,8 +41,8 @@ public class ControllerIndex {
     public void loadSecondFxml()throws  IOException{
         //Load new FXML and assign it to scene
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("../Fxml/signUp.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/signUp.fxml"));
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("signUp.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("signUp.fxml"));
         ControllerSignUp controllerSignUp = loader.getController();
         controllerSignUp.setStage(stage);
         Scene scene = new Scene(root, 900, 700);
@@ -55,28 +62,16 @@ public class ControllerIndex {
         Desktop.getDesktop().browse(new URL("https://stackoverflow.com/questions/23032253/how-to-change-the-current-scene-to-another-in-javafx").toURI());
     }
 
-    @FXML
-    public void login() throws IOException{
-        Parent root;
-        root = FXMLLoader.load(getClass().getResource("../Fxml/file.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/file.fxml"));
-        ControllerFile controllerFile = loader.getController();
-        controllerFile.setStage(stage);
-        Scene scene = new Scene(root);
-        stage.setResizable(true);
-        stage.setTitle("Le-Nuage");
-        stage.setScene(scene);
-        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
-        stage.show();
-
-    }
-
 
     @FXML
     public void loading() throws IOException, InterruptedException {
+        AuthService.getUser().setEmail(emailIndex.getText());
+        AuthService.getUser().setMdp(passwordIndex.getText());
+
+
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("../Fxml/Loading.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/Loading.fxml"));
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("Loading.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Loading.fxml"));
         ControllerLoading controllerLoading = loader.getController();
         controllerLoading.setStage(stage);
         Scene scene = new Scene(root);
@@ -85,17 +80,13 @@ public class ControllerIndex {
         stage.setScene(scene);
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         stage.show();
-        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-        delay.setOnFinished( event -> {
-            try {
-                login();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        delay.play();
+
     }
 
+    public boolean canConnect(){
+
+        return true;
+    }
 
 
 }

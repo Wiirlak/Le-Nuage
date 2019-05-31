@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="core.Controller.ControllerPlugin"
+          maxHeight="600.0" maxWidth="780.0" alignment="CENTER">
+    <rowConstraints>
+        <RowConstraints maxHeight="20"></RowConstraints>
+        <RowConstraints></RowConstraints>
+    </rowConstraints>
+    <VBox spacing="20" alignment="CENTER" GridPane.rowIndex="2">
+
+        <HBox maxHeight="30" spacing="50" alignment="CENTER">
+            <Label text="Plugin" alignment="CENTER_LEFT"></Label>
+            <Pane  onMouseClicked="#openExplorer" style="-fx-cursor: hand" >
+                <ImageView>
+                    <image>
+                        <Image url="@pictures/add-plugin.png" preserveRatio="true" requestedHeight="40" requestedWidth="40"></Image>
+                    </image>
+                </ImageView>
+            </Pane>
+            <Button text="Rafraichir" onAction="#refresh"></Button>
+            <Button text="Supprimer" onAction="#delete"></Button>
+        </HBox>
+        <TableView fx:id="tvPlugin" maxHeight="300.0" minWidth="600.0">
+            <columns>
+                <TableColumn text="Nom">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="name"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Lancer" fx:id="activated">
+                    <cellValueFactory><PropertyValueFactory property="activated"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Supprimer" fx:id="deleted">
+                    <graphic>
+                        <CheckBox fx:id="checkAll" onMouseClicked="#tickedNoTicked"></CheckBox>
+                    </graphic>
+                    <cellValueFactory><PropertyValueFactory property="deleted"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Ouvrir" fx:id="edited">
+                    <cellValueFactory><PropertyValueFactory property="edited"/></cellValueFactory>
+                </TableColumn>
+            </columns>
+            <items>
+            </items>
+        </TableView>
+        <Button text="Sauvegarder" onMouseClicked="#save"></Button>
+    </VBox>
+</GridPane>

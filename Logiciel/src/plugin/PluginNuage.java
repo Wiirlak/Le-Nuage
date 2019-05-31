@@ -1,5 +1,5 @@
 package plugin;
 
-public interface Service {
+public interface PluginNuage {
     String getId();
 }

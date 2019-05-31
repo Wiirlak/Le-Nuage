@@ -35,7 +35,6 @@ public class ControllerSignUp {
     @FXML
     public CheckBox check;
 
-
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
     }
@@ -127,7 +126,7 @@ public class ControllerSignUp {
 
     @FXML
     public void goBack() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../Fxml/index.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("index.fxml"));
         Scene scene = new Scene(loader.load());
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(stage);

@@ -18,6 +18,7 @@ public class User implements AnnotatedClass {
     private String mdp;
     private String mdpc;
     private Boolean check;
+    private String token;
 
     public User(String nom, String prenom, String email, String date, String mdp, String mdpc, Boolean check) {
         this.nom = nom;
