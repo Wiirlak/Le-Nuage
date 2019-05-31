@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Type = require('../models').Type;
 
 const entitySchema = mongoose.Schema({
     name: {
@@ -11,8 +10,9 @@ const entitySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Type'
     },
-    path: {
-        type: String
+    parent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Entity'
     },
     is_deleted: {
         type: Boolean,
