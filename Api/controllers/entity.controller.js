@@ -2,36 +2,68 @@
 
 const Entity = require('../models').Entity;
 const Type = require('../models').Type;
+const Nuage = require('../models').Nuage;
+const fs = require('fs-extra');
+const path = require('path');
 
 class EntityController {
 
     async getAll() {
-        const entities = await Entity.find();
+        const entities = await Entity.find().populate('type');
 
-        if (entities.length > 0 && entities !== undefined) {
+        if (entities.length > 0 && entities !== null) {
             return entities;
         }
         return undefined;
     }
 
-    async add(name, type, path) {
+    async add(parentId, name, type) {
+        //let nuage;
         const entity = new Entity();
         entity.name = name;
-        entity.path = path;
+        if (type === 'nuage') {
+            entity.parent = parentId;
+        } else {
+            entity.parent = await Entity.findOne({ _id: parentId });
+        }
 
-        try {
-            entity.type = await Type.findOne({ name: type });
-        }catch (err) {
+        if (entity.parent === null) {
+            return undefined;
+        }
+
+        //console.log(nuage);
+
+        //if (nuage === null) {
+        //    return undefined;
+        //}
+
+        entity.type = await Type.findOne({ name: type });
+
+        if (entity.type === null) {
             return undefined;
         }
 
         try {
-            await entity.save();
-            return entity;
+            return await entity.save();
+            //nuage.entities.push(entity);
+            //await nuage.save();
+            //console.log(nuage);
+            //return entity;
         } catch (err) {
             return undefined;
         }
 
     }
+
+    //moves the $file to $dir2
+    async moveFile(src, dest) {
+        try {
+            await fs.move(src, dest);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
 }
 module.exports = new EntityController();

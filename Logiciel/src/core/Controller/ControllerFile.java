@@ -2,7 +2,10 @@ package core.Controller;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
-import core.Model.Data;
+import core.Http.Apple.Apple;
+import core.Http.Apple.HttpApple;
+import core.Model.AuthService;
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +25,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import core.Model.Nuage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -29,6 +33,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Status(author = "Krishan Class",
@@ -66,16 +71,13 @@ public class ControllerFile implements AnnotatedClass {
     @FXML
     public TextField searchBar;
 
+    @FXML
+    public ImageView reloaded;
+
 
     public  String  url1;
     public  String  url2;
     public  ArrayList<Nuage> nuageArray = new ArrayList<Nuage>();
-
-    public Data data;
-
-    public void setData(Data datap) {
-        data = datap;
-    }
 
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
@@ -83,6 +85,7 @@ public class ControllerFile implements AnnotatedClass {
 
     public  void initialize() {
 
+        System.out.println(AuthService.getUser().getEmail());
         setUrlFromOs();
 
         label1.setText(url1);
@@ -110,12 +113,22 @@ public class ControllerFile implements AnnotatedClass {
         }
 
         //Nuage file
-        listFile2(nuageFile,url2);
+        listFile2(nuageFile);
 
         // Fichier d'un dossier courant local
        //listFileByFolder(myFiles,url1);
         // Fichier d'un dossier courant distant
        //listFileByFolder(nuageFiles,url2);
+
+
+
+
+        /* **********
+
+            Call API
+
+
+         */
 
     }
 
@@ -191,7 +204,7 @@ public class ControllerFile implements AnnotatedClass {
 
     }
 
-    public void listFile2(VBox vbox, String filename ){
+    public void listFile2(VBox vbox){
         /*TreeView<File> fileViewMine = new TreeView<File>(
                 new SimpleFileTreeItem(new File(filename)));
         vbox.getChildren().add(fileViewMine);
@@ -202,20 +215,38 @@ public class ControllerFile implements AnnotatedClass {
             label2.setText(url2);
         });*/
 
-        TreeItem<String> distant = new TreeItem<String>("wowow");
+        /*TreeItem<String> distant = new TreeItem<String>("wowow");
         TreeItem<String> rootItem = new TreeItem<String>("salade");
 
         // JSP Item
         TreeItem<String> itemJSP = new TreeItem<String>("tomate");
 
         // Spring Item
-        TreeItem<String> itemSpring = new TreeItem<>("oignon");
+        TreeItem<String> itemSpring = new TreeItem<>("oignon");*/
 
         // Add to Root
-        distant.getChildren().addAll(rootItem, itemJSP, itemSpring);
+        //distant.getChildren().addAll(rootItem, itemJSP, itemSpring);
+        vbox.getChildren().clear();
+        vbox.getChildren().add(labelNuage);
+        TreeView<String> tree;
+        TreeItem<String> distant = new TreeItem<String>("Pommes");
+        try {
+            HttpApple test = new HttpApple();
+            //System.out.println(test.getApple("5c5819ea0bbc7a1b444e9d9f"));
+            //System.out.println(test.getApples()[1].get_id());
+            // System.out.println(test.deleteApple("5c5819ea0bbc7a1b444e9d9f"));
+            //System.out.println(test.createApple("Cookie",635));
+            //System.out.println(test.updateApple("5c45f7c51d5463541812ddf4","Pasteque",115));
+            for(Apple a :test.getApples() ){
+                distant.getChildren().add(new TreeItem<>(a.getName()+" - "+a.getPepins()));
+            }
 
-        TreeView<String> tree = new TreeView<String>(distant);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
+
+        tree = new TreeView<String>(distant);
         vbox.getChildren().add(tree);
     }
 
@@ -366,7 +397,6 @@ public class ControllerFile implements AnnotatedClass {
         Scene scene = new Scene(loader.load(),400,700);
         ControllerProfil controllerProfil = loader.getController();
         controllerProfil.setStage(subStage);
-        controllerProfil.setData(data);
         subStage.setResizable(false);
         subStage.setTitle("Mon profil");
         subStage.setScene(scene);
@@ -421,6 +451,20 @@ public class ControllerFile implements AnnotatedClass {
             addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
         }
 
+    }
+
+    @FXML
+    public void reload() throws InterruptedException {
+        /*for(int i = 0 ; i < 360 ; i++){
+            reloaded.setRotate(reloaded.getRotate() + i);
+            TimeUnit.MILLISECONDS.sleep(25);
+        }*/
+        RotateTransition rt = new RotateTransition(Duration.millis(3000),reloaded);
+        rt.setByAngle(360);
+        rt.setCycleCount(1);
+        rt.setAutoReverse(true);
+        rt.play();
+        listFile2(nuageFile);
     }
 
 

@@ -2,6 +2,7 @@
 
 //Import user model
 const User = require('../models').User;
+const NuageController = require('./nuage.controller');
 
 //Import lib for hash password
 const bcrypt = require('bcryptjs');
@@ -20,10 +21,17 @@ class UserController {
     async add(name, email, password) {
         const hashedPassword = await bcrypt.hash(password, 8);
 
+        const nuage = await NuageController.add('Default', null);
+
+        if (nuage === undefined) {
+            return undefined;
+        }
+
         const user = new User();
         user.name = name;
         user.email = email;
         user.password = hashedPassword;
+        user.nuages.push(nuage);
 
         try {
             return await user.save();

@@ -1,6 +1,5 @@
 package core.Controller;
 
-import core.Model.Data;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,11 +15,6 @@ public class ControllerOption {
         stage = primaryStage;
     }
 
-    public Data data;
-
-    public void setData(Data data) {
-        this.data = data;
-    }
 
     @FXML
     public void openplugins() throws IOException {
@@ -36,5 +30,10 @@ public class ControllerOption {
         subStage.initModality(Modality.WINDOW_MODAL);
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         subStage.show();
+    }
+
+    public void leave(){
+        Stage close = (Stage) stage.getOwner().getScene().getWindow();
+        close.close();
     }
 }

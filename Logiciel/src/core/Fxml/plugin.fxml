@@ -25,24 +25,26 @@
                     </image>
                 </ImageView>
             </Pane>
+            <Button text="Rafraichir" onAction="#refresh"></Button>
+            <Button text="Supprimer" onAction="#delete"></Button>
         </HBox>
         <TableView fx:id="tvPlugin" maxHeight="300.0" minWidth="600.0">
             <columns>
                 <TableColumn text="Nom">
                     <cellValueFactory>
-                        <PropertyValueFactory property="newPlugin"/>
+                        <PropertyValueFactory property="name"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Activer" fx:id="activated">
-                    <graphic>
-                        <CheckBox fx:id="checkAll" onMouseClicked="#tickedNoTicked"></CheckBox>
-                    </graphic>
+                <TableColumn text="Lancer" fx:id="activated">
                     <cellValueFactory><PropertyValueFactory property="activated"/></cellValueFactory>
                 </TableColumn>
                 <TableColumn text="Supprimer" fx:id="deleted">
+                    <graphic>
+                        <CheckBox fx:id="checkAll" onMouseClicked="#tickedNoTicked"></CheckBox>
+                    </graphic>
                     <cellValueFactory><PropertyValueFactory property="deleted"/></cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Modifier" fx:id="edited">
+                <TableColumn text="Ouvrir" fx:id="edited">
                     <cellValueFactory><PropertyValueFactory property="edited"/></cellValueFactory>
                 </TableColumn>
             </columns>

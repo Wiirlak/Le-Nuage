@@ -11,5 +11,8 @@
             fx:controller="core.Controller.ControllerOption"
             prefHeight="400.0" prefWidth="600.0">
     <Label text="Ok"></Label>
-    <Button text="Plugins" onMouseClicked="#openplugins"></Button>
+    <VBox>
+        <Button text="Plugins" onMouseClicked="#openplugins"></Button>
+        <Button text="Quitter" onMouseClicked="#leave"></Button>
+    </VBox>
 </AnchorPane>
