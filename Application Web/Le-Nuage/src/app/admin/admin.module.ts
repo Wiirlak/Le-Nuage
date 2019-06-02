@@ -1,13 +1,11 @@
 import {NgModule} from '@angular/core';
 import {AuthentificationService} from './services/authentification/authentification.service';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { BackofficeComponent } from './backoffice/backoffice.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { BackOfficeComponent } from './components/back-office/back-office.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent,
-    BackofficeComponent
+    BackOfficeComponent
   ],
   imports: [
     AdminRoutingModule

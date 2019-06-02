@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import {BackofficeComponent} from './backoffice/backoffice.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './guard/auth/auth.guard';
+import {BackOfficeComponent} from './components/back-office/back-office.component';
 
 const routes: Routes = [
   {
@@ -10,11 +10,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: BackofficeComponent
+        component: BackOfficeComponent
       },
       {
         path: ':firstname/:lastname',
-        component: BackofficeComponent
+        component: BackOfficeComponent
       }
     ]
   },
