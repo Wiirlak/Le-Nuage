@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import core.Controller.ControllerIndex;
+import plugin.PluginManager;
 
 import java.awt.*;
 import java.io.IOException;
@@ -38,18 +39,18 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) throws IOException {
-        /*PluginManager a = new PluginManager();
-        System.out.println(a.mydoc);
-
-        a.openJarFile(a.listPlugins[0]);*/
+    public static void main(String[] args) throws Exception {
         //launch(args);
         //System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
         /*File folder =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/Lenuage/Plugin");
         folder.mkdirs();*/
+        /*
         AuthService.getUser().setNom("slamai");
-        System.out.println(AuthService.getUser().getNom());
+        System.out.println(AuthService.getUser().getNom());*/
         LauncherImpl.launchApplication(Main.class, Preload.class, args);
+
+        PluginManager a = new PluginManager();
+        a.openJarFile(a.listPlugins[1]);
     }
 
     public String getId() {

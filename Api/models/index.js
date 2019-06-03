@@ -6,6 +6,5 @@ module.exports = {
     Nuage: require('./nuage.model'),
     Version: require('./version.model'),
     Entity: require('./entity.model'),
-    Type: require('./type.model'),
-    ParentOf: require('./parentof.model')
-}
+    Type: require('./type.model')
+};

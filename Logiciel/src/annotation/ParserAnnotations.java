@@ -7,8 +7,7 @@ import java.util.ArrayList;
 
 public class ParserAnnotations
 {
-    public static void main(String[] args) {
-
+    public ParserAnnotations() {
         System.out.println("---- Annotation Parse ----\n");
         ArrayList<AnnotatedClass> test = new ArrayList<>();
         test.add(new User());
@@ -19,6 +18,6 @@ public class ParserAnnotations
         process.processParse(test);
 
         System.out.println("\n---- END of Parsing ----");
-
     }
+
 }

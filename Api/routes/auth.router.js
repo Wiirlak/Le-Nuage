@@ -37,7 +37,6 @@ router.post('/login', async (req, res, next) => {
         return res.status(400).end();
     }
 
-    console.log('lll');
     const auth = await AuthController.login(req.body.email, req.body.password);
     if (auth === undefined) {
         return res.status(404).end();

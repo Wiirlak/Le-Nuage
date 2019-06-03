@@ -6,11 +6,16 @@ const nuageSchema = mongoose.Schema({
     name: {
         type: String
     },
-    path: {
-        type: String
-    },
+    entities: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Entity',
+    }],
     image: {
         type: String
+    },
+    parentEntity: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Entity'
     }
 });
 
