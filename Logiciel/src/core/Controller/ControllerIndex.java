@@ -1,10 +1,12 @@
 package core.Controller;
 
+import core.Http.Auth.HttpAuth;
 import core.Model.AuthService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -37,6 +39,15 @@ public class ControllerIndex {
         loadSecondFxml();
 
     }
+
+
+    @FXML
+    public Label errorNetwork;
+
+    @FXML
+    public Label errorLogin;
+
+
     @FXML
     public void loadSecondFxml()throws  IOException{
         //Load new FXML and assign it to scene
@@ -65,28 +76,32 @@ public class ControllerIndex {
 
     @FXML
     public void loading() throws IOException, InterruptedException {
+        errorLogin.setVisible(false);
         AuthService.getUser().setEmail(emailIndex.getText());
         AuthService.getUser().setMdp(passwordIndex.getText());
-
-
-        Parent root;
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("Loading.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Loading.fxml"));
-        ControllerLoading controllerLoading = loader.getController();
-        controllerLoading.setStage(stage);
-        Scene scene = new Scene(root);
-        stage.setResizable(true);
-        stage.setTitle("Le-Nuage");
-        stage.setScene(scene);
-        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
-        stage.show();
+        int acces = HttpAuth.login(emailIndex.getText(),passwordIndex.getText());
+        if( acces == 1) {
+            Parent root;
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("Loading.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Loading.fxml"));
+            ControllerLoading controllerLoading = loader.getController();
+            controllerLoading.setStage(stage);
+            Scene scene = new Scene(root);
+            stage.setResizable(true);
+            stage.setTitle("Le-Nuage");
+            stage.setScene(scene);
+            scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
+            stage.show();
+        }else if(acces == 0){
+            errorLogin.setVisible(true);
+            errorLogin.setText("Identifiants de connexion incorrects.");
+            //System.out.println("Mauvais identifiants");
+        }else{
+            errorLogin.setVisible(true);
+            errorLogin.setText("Impossible d'accéder à l'api. ");
+            //System.out.println("Impossible d'acceder à l'api");
+        }
 
     }
-
-    public boolean canConnect(){
-
-        return true;
-    }
-
 
 }

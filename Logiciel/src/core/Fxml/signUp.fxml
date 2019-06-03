@@ -55,22 +55,22 @@
         <!-- RIGHT BOX -->
         <Label text="Inscription" styleClass="connect" ></Label>
         <HBox alignment="CENTER">
-            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Nom..." styleClass="input" fx:id="nom" id="NomdeOuf" text="Nisole"></TextField>
+            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Nom..." styleClass="input" fx:id="nom" id="NomdeOuf"></TextField>
         </HBox>
         <HBox alignment="CENTER">
-            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Prenom..." styleClass="input" fx:id="prenom" text="Bastien"></TextField>
+            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Prenom..." styleClass="input" fx:id="prenom"></TextField>
         </HBox>
         <HBox alignment="CENTER">
-            <DatePicker editable="false" styleClass="input, datepicker" maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" fx:id="date" promptText="MM/DD/YYYY"></DatePicker>
+            <DatePicker editable="false" styleClass="datepicker" maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" fx:id="date" promptText="MM/DD/YYYY"></DatePicker>
         </HBox>
         <HBox alignment="CENTER">
-            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input" fx:id="email" text="dantonpif@hotmail.fr"></TextField>
+            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input" fx:id="email"></TextField>
         </HBox>
         <HBox alignment="CENTER">
-            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input" fx:id="mdp" text="Test"></PasswordField>
+            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input" fx:id="mdp" ></PasswordField>
         </HBox>
         <HBox alignment="CENTER">
-            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Confirmation du mot de passe..." styleClass="input" fx:id="mdpc" text="Test"></PasswordField>
+            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Confirmation du mot de passe..." styleClass="input" fx:id="mdpc" ></PasswordField>
         </HBox>
         <HBox alignment="CENTER">
             <CheckBox text="J'accepte les CGU's" fx:id="check" styleClass="boxe"></CheckBox>

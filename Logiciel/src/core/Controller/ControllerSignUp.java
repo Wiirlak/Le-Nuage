@@ -1,5 +1,6 @@
 package core.Controller;
 
+import core.Http.Auth.HttpAuth;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -89,10 +90,11 @@ public class ControllerSignUp {
         }
 
         if(date.getValue() == null  ){
-            date.getStyleClass().add("inputWrong");
+            //date.getStyleClass().add("inputWrong");
+            date.setStyle("-fx-border-color: #ed0e24");
             data++;
         }else{
-            date.getStyleClass().remove("inputWrong");
+            date.setStyle("-fx-border-color: #3792F7");
         }
 
         if(check.isSelected() == false){
@@ -121,6 +123,20 @@ public class ControllerSignUp {
             System.out.println("Date :" + user.getDate());
             System.out.println("Mot de passe :" + user.pwdEqual());
             System.out.println("CGU :" + user.getCheck());
+
+            try {
+
+                int access = HttpAuth.register(user.getEmail(),user.getMdp(),user.getMdpc(),user.getNom(),user.getPrenom(),user.getDate(),user.getCheck());
+                if( access == 1)
+                    goBack();
+                else if(access == 0){
+                    System.out.println("Mauvaises infos");
+                }else{
+                    System.out.println("Impossible d'atteindre l'api");
+                }
+            }catch (IOException e ){
+                System.out.println("Error");
+            }
         }
     }
 

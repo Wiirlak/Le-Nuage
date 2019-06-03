@@ -52,7 +52,7 @@
     -fx-background-color: #ed0e24;
 }
 
-.datepicker,.datepicker .text-field{
+.datepicker .text-field{
     -fx-border-color: #3792F7;
 }
 
@@ -119,4 +119,10 @@
 
 .table-column {
     -fx-alignment: CENTER;
+}
+
+
+.errorLogin{
+    -fx-text-fill : #ed0e24;
+    visibility: hidden;
 }

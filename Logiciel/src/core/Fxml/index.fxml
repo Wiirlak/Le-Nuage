@@ -58,6 +58,12 @@
         <HBox alignment="CENTER">
             <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input" fx:id="passwordIndex"></PasswordField>
         </HBox>
+
+        <HBox alignment="CENTER">
+            <VBox>
+                <Label maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" styleClass="errorLogin" fx:id="errorLogin"></Label>
+            </VBox>
+        </HBox>
         <HBox alignment="CENTER">
             <Button text="Se connecter" styleClass="btn-connect" onAction="#loading" fx:id="signup"></Button>
         </HBox>
