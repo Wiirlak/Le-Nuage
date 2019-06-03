@@ -1,5 +1,10 @@
 package core.Http.Auth;
 
+import com.google.gson.Gson;
+import core.Http.Apple.Apple;
+import core.Model.AuthService;
+import core.Model.AuthUser;
+
 import java.io.*;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
@@ -30,9 +35,24 @@ public class HttpAuth {
             wr.flush();
             wr.close();
             int status = con.getResponseCode();
-            if(status == 200)
+            if(status == 200){
+
+                // Add user to logged user
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                Auth answer =(new Gson()).fromJson(in.readLine(), Auth.class);
+                in.close();
+                con.disconnect();
+                System.out.println(answer.getAuth());
+                System.out.println(answer.getToken());
+                //AuthService.getAuthUser().setId(answer[0].getId());
+                //AuthService.getAuthUser().setToken(answer[0].getToken());
+
+            //end  Add user to logged user
                 return 1;
-            else
+            }else
                 return 0;
         }catch (ConnectException e){
             return -1;

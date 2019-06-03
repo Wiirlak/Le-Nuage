@@ -85,7 +85,7 @@ public class ControllerFile implements AnnotatedClass {
 
     public  void initialize() {
 
-        System.out.println(AuthService.getUser().getEmail());
+        //System.out.println(AuthService.getUser().getEmail());
         setUrlFromOs();
 
         label1.setText(url1);

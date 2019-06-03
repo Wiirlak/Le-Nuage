@@ -77,8 +77,6 @@ public class ControllerIndex {
     @FXML
     public void loading() throws IOException, InterruptedException {
         errorLogin.setVisible(false);
-        AuthService.getUser().setEmail(emailIndex.getText());
-        AuthService.getUser().setMdp(passwordIndex.getText());
         int acces = HttpAuth.login(emailIndex.getText(),passwordIndex.getText());
         if( acces == 1) {
             Parent root;

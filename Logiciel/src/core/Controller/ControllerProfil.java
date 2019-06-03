@@ -54,12 +54,12 @@ public class ControllerProfil {
 
     @FXML
     public void printOutput(){
-        System.out.println(AuthService.getUser().getNom());
+        /*System.out.println(AuthService.getAuthUser().getNom());
         name.setText(AuthService.getUser().getNom());
         email.setText(AuthService.getUser().getEmail());
         surname.setText(AuthService.getUser().getPrenom());
         birthdate.setText(AuthService.getUser().getDate());
-        password.setText(AuthService.getUser().getMdp());
+        password.setText(AuthService.getUser().getMdp());*/
     }
 
     @FXML
