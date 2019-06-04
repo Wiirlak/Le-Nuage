@@ -142,12 +142,15 @@ public class ControllerFile implements AnnotatedClass {
             nuageArray.clear();
             flowpane.getChildren().clear();
             Profil response = HttpProfil.getProfil();
-            for(Nuage n : HttpNuage.getNuages(response.getNuages())){
-                nuageArray.add(new NuageModel(n.getName(),n.getImage()== null ? "/assets/pictures/LN.png": n.getImage(),"15/12/19","nuages"));
-                addNuage(n.getImage()== null ? "/assets/pictures/LN.png": n.getImage(),n.getName(),"15/12/19");
-                //System.out.println(n.getImage());
+            if( response != null) {
+                ArrayList<Nuage> nuageArrayList = HttpNuage.getNuages(response.getNuages());
+                if (nuageArrayList != null)
+                    for (Nuage n : nuageArrayList) {
+                        nuageArray.add(new NuageModel(n.getName(), n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), "15/12/19", "nuages"));
+                        addNuage(n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), n.getName(), "15/12/19");
+                        //System.out.println(n.getImage());
+                    }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -251,7 +254,7 @@ public class ControllerFile implements AnnotatedClass {
         vbox.getChildren().add(labelNuage);
         TreeView<String> tree;
         TreeItem<String> distant = new TreeItem<String>("Pommes");
-        try {
+        /*try {
             HttpApple test = new HttpApple();
             //System.out.println(test.getApple("5c5819ea0bbc7a1b444e9d9f"));
             //System.out.println(test.getApples()[1].get_id());
@@ -264,7 +267,7 @@ public class ControllerFile implements AnnotatedClass {
 
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
 
 
         tree = new TreeView<String>(distant);
