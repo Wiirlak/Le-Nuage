@@ -1,5 +1,7 @@
 package core.Controller;
 
+import core.Http.Profil.HttpProfil;
+import core.Http.Profil.Profil;
 import core.Model.AuthService;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -60,6 +62,16 @@ public class ControllerProfil {
         surname.setText(AuthService.getUser().getPrenom());
         birthdate.setText(AuthService.getUser().getDate());
         password.setText(AuthService.getUser().getMdp());*/
+        try {
+            Profil response = HttpProfil.getProfil();
+            name.setText(response.getName());
+            email.setText(response.getEmail());
+            surname.setText(response.getName());
+            birthdate.setText(response.getName());
+            password.setText(response.getPassword());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

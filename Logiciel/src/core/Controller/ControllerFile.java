@@ -4,7 +4,11 @@ import annotation.AnnotatedClass;
 import annotation.Status;
 import core.Http.Apple.Apple;
 import core.Http.Apple.HttpApple;
-import core.Model.AuthService;
+import core.Http.Nuage.HttpNuage;
+import core.Http.Nuage.Nuage;
+import core.Http.Profil.HttpProfil;
+import core.Http.Profil.Profil;
+import core.Model.NuageModel;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,7 +28,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import core.Model.Nuage;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -33,7 +36,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Status(author = "Krishan Class",
@@ -77,7 +79,7 @@ public class ControllerFile implements AnnotatedClass {
 
     public  String  url1;
     public  String  url2;
-    public  ArrayList<Nuage> nuageArray = new ArrayList<Nuage>();
+    public  ArrayList<NuageModel> nuageArray = new ArrayList<NuageModel>();
 
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
@@ -91,28 +93,30 @@ public class ControllerFile implements AnnotatedClass {
         label1.setText(url1);
         label2.setText(url2);
 
-        for(int i = 0 ; i < 100; i++){
+        /*for(int i = 0 ; i < 100; i++){
             if(i % 5 == 0){
-                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "nuages"));
+                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "nuages"));
             }else if( i % 5 == 1){
-                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "shareNuages"));
+                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "shareNuages"));
             }else if( i % 5 == 2){
-                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "recent"));
+                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "recent"));
             }else if( i % 5 == 3){
-                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "favorit"));
+                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "favorit"));
             }else if( i % 5 == 4){
-                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "trash"));
+                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "trash"));
             }else{
-                nuageArray.add(new Nuage("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "trash"));
+                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "trash"));
             }
 
 
-        }
-        for(Nuage i : nuageArray){
-            addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
-        }
+        }*/
+        getData();
 
-        //Nuage file
+        /*for(NuageModel i : nuageArray){
+            addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
+        }*/
+
+        //NuageModel file
         listFile2(nuageFile);
 
         // Fichier d'un dossier courant local
@@ -130,6 +134,23 @@ public class ControllerFile implements AnnotatedClass {
 
          */
 
+    }
+
+
+    public void getData(){
+        try {
+            nuageArray.clear();
+            flowpane.getChildren().clear();
+            Profil response = HttpProfil.getProfil();
+            for(Nuage n : HttpNuage.getNuages(response.getNuages())){
+                nuageArray.add(new NuageModel(n.getName(),n.getImage()== null ? "/assets/pictures/LN.png": n.getImage(),"15/12/19","nuages"));
+                addNuage(n.getImage()== null ? "/assets/pictures/LN.png": n.getImage(),n.getName(),"15/12/19");
+                //System.out.println(n.getImage());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -341,22 +362,22 @@ public class ControllerFile implements AnnotatedClass {
 
     @FXML
     public void setNewNuage(String content){
-        ArrayList<Nuage> nuageToPrint;
+        ArrayList<NuageModel> nuageToPrint;
         flowpane.getChildren().clear();
         if(content == "nuages"){
-            nuageToPrint =  new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+            nuageToPrint =  new ArrayList<NuageModel>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<NuageModel>toList()));
         }else if(content == "shareNuages"){
-            nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+            nuageToPrint = new ArrayList<NuageModel>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<NuageModel>toList()));
         }else if(content == "recent"){
-            nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+            nuageToPrint = new ArrayList<NuageModel>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<NuageModel>toList()));
         }else if(content == "favorit"){
-            nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+            nuageToPrint = new ArrayList<NuageModel>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<NuageModel>toList()));
         }else if(content == "trash"){
-            nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<Nuage>toList()));
+            nuageToPrint = new ArrayList<NuageModel>( nuageArray.stream().filter(type -> type.getType()== content).collect(Collectors.<NuageModel>toList()));
         }else {
             nuageToPrint = nuageArray;
         }
-        for(Nuage i : nuageToPrint){
+        for(NuageModel i : nuageToPrint){
             addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
         }
     }
@@ -375,7 +396,7 @@ public class ControllerFile implements AnnotatedClass {
         stage.setMinHeight(700);
         stage.setMaxWidth(900);
         stage.setMaxHeight(700);
-        stage.setTitle("Le-Nuage");
+        stage.setTitle("Le-NuageModel");
         stage.setScene(scene);
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         stage.show();
@@ -383,15 +404,6 @@ public class ControllerFile implements AnnotatedClass {
 
     @FXML
     public void openProfile() throws IOException {
-        /*Stage subStage = new Stage();
-        subStage.setTitle("Mon profile");
-        subStage.setWidth(250);
-        subStage.setResizable(false);
-        subStage.getIcons().add(new Image("/sample/LN.png"));
-        subStage.setHeight(250);
-        subStage.initOwner(stage);
-        subStage.initModality(Modality.WINDOW_MODAL);
-        subStage.show();*/
         Stage subStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("profil.fxml"));
         Scene scene = new Scene(loader.load(),400,700);
@@ -444,10 +456,10 @@ public class ControllerFile implements AnnotatedClass {
     @FXML
     public void  onEnter(){
 
-        ArrayList<Nuage> nuageToPrint;
-        nuageToPrint = new ArrayList<Nuage>( nuageArray.stream().filter(type -> type.getName().toLowerCase().contains(searchBar.getText().toLowerCase()) ).collect(Collectors.<Nuage>toList()));
+        ArrayList<NuageModel> nuageToPrint;
+        nuageToPrint = new ArrayList<NuageModel>( nuageArray.stream().filter(type -> type.getName().toLowerCase().contains(searchBar.getText().toLowerCase()) ).collect(Collectors.<NuageModel>toList()));
         flowpane.getChildren().clear();
-        for(Nuage i : nuageToPrint){
+        for(NuageModel i : nuageToPrint){
             addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
         }
 
@@ -461,9 +473,11 @@ public class ControllerFile implements AnnotatedClass {
         }*/
         RotateTransition rt = new RotateTransition(Duration.millis(3000),reloaded);
         rt.setByAngle(360);
+        rt.setFromAngle(0);
         rt.setCycleCount(1);
         rt.setAutoReverse(true);
         rt.play();
+        getData();
         listFile2(nuageFile);
     }
 

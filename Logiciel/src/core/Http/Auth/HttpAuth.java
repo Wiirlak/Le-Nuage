@@ -45,10 +45,8 @@ public class HttpAuth {
                 Auth answer =(new Gson()).fromJson(in.readLine(), Auth.class);
                 in.close();
                 con.disconnect();
-                System.out.println(answer.getAuth());
                 System.out.println(answer.getToken());
-                //AuthService.getAuthUser().setId(answer[0].getId());
-                //AuthService.getAuthUser().setToken(answer[0].getToken());
+                AuthService.getAuthUser().setToken(answer.getToken());
 
             //end  Add user to logged user
                 return 1;

@@ -32,7 +32,7 @@ public class PluginManager {
 
     public PluginManager() {
         mydoc = new JFileChooser().getFileSystemView().getDefaultDirectory().getPath();
-        checkPluginFolder("Le-Nuage");
+        checkPluginFolder("Le-NuageModel");
         findAllJar(this.pluginPath);
         classPlugin = new LinkedList<>();
     }

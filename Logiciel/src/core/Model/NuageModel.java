@@ -1,12 +1,21 @@
 package core.Model;
 
-public class Nuage {
+public class NuageModel {
     private String name;
     private String imagePath;
     private String lastEdit;
     private String type;
+    private String id;
 
-    public Nuage(String name, String imagePath, String lasEdit, String type) {
+    public NuageModel(String name, String imagePath, String lasEdit, String type, String id) {
+        this.name = name;
+        this.imagePath = imagePath;
+        this.lastEdit = lasEdit;
+        this.type = type;
+        this.id = id;
+    }
+
+    public NuageModel(String name, String imagePath, String lasEdit, String type) {
         this.name = name;
         this.imagePath = imagePath;
         this.lastEdit = lasEdit;
@@ -27,5 +36,9 @@ public class Nuage {
 
     public String getType() {
         return type;
+    }
+
+    public String getId() {
+        return id;
     }
 }

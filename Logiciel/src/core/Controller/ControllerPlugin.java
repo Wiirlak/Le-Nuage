@@ -66,7 +66,7 @@ public class ControllerPlugin {
         File selected = fileChooser.showOpenDialog(stage);
         if(selected != null){
             System.out.println(selected.toURI().toString());
-            Files.copy(selected.toPath(), Paths.get(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/Le-Nuage/plugins/"+selected.getName()));
+            Files.copy(selected.toPath(), Paths.get(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/Le-NuageModel/plugins/"+selected.getName()));
             refresh();
         }
     }

@@ -46,7 +46,7 @@ public class ControllerLoading {
         //endData
         Scene scene = new Scene(root);
         stage.setResizable(true);
-        stage.setTitle("Le-Nuage");
+        stage.setTitle("Le-NuageModel");
         stage.setScene(scene);
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
         stage.show();
