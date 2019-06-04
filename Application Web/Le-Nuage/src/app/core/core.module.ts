@@ -6,7 +6,7 @@ import {HeaderComponent} from './shared/header/header.component';
 import {NavbarComponent} from './shared/navbar/navbar.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-import {MatToolbarModule} from '@angular/material';
+import {NbButtonModule, NbLayoutModule, NbSidebarModule} from '@nebular/theme';
 
 @NgModule({
   declarations: [HomeComponent, WrongPathComponent, HeaderComponent, NavbarComponent],
@@ -14,7 +14,9 @@ import {MatToolbarModule} from '@angular/material';
     CommonModule,
     RouterModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
+    NbLayoutModule,
+    NbSidebarModule.forRoot(),
+    NbButtonModule
   ],
   exports: [
     HeaderComponent,

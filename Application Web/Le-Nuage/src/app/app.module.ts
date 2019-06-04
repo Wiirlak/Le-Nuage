@@ -8,8 +8,11 @@ import {WrongPathComponent} from './core/components/wrong-path/wrong-path.compon
 import {CoreModule} from './core/core.module';
 import {UserModule} from './user/user.module';
 import {HttpClientModule} from '@angular/common/http';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {AdminModule} from './admin/admin.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NbThemeModule, NbLayoutModule, NbSidebarModule} from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,12 @@ import {AdminModule} from './admin/admin.module';
     UserModule,
     AdminModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({name: 'default'}),
+    NbLayoutModule,
+    NbEvaIconsModule,
+    NbSidebarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
