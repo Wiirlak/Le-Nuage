@@ -11,6 +11,9 @@ class TreeController {
             return undefined;
         }
     }
+    async getAllTree(parentId) {
+        
+    }
 
 }
 
