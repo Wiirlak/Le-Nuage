@@ -11,8 +11,15 @@ class TreeController {
             return undefined;
         }
     }
+
     async getAllTree(parentId) {
-        
+        const entities = await this.getTree(parentId);
+        for (const e of entities) {
+            //console.log(e);
+            if (e.type.name === "folder") {
+                console.log('folder find');
+            }
+        }
     }
 
 }

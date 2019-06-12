@@ -72,6 +72,9 @@ class UserController {
         }
 
         return user;
+    }
+
+    async updateUser(id, password) {
 
     }
 }
