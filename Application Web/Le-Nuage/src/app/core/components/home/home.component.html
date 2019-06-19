@@ -1,3 +1,14 @@
-<p>
-  home works!
-</p>
+<mat-grid-list
+  rowHeight="1.2:1"
+  cols="5"
+  id="cloudList"
+  nbInfiniteList
+  listenWindowScroll
+  [threshold]="500"
+  (bottomThreshold)="loadNext()">
+  <mat-grid-tile class="cloud" *ngFor="let cloud of clouds">
+  <!-- [cloud]="newsPost"-->
+<!--        <mat-grid-list cols="4"-->
+      <p>{{cloud}}</p>
+  </mat-grid-tile>
+</mat-grid-list>

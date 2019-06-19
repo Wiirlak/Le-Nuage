@@ -6,7 +6,8 @@ import {HeaderComponent} from './shared/header/header.component';
 import {NavbarComponent} from './shared/navbar/navbar.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-import {NbButtonModule, NbLayoutModule, NbSidebarModule} from '@nebular/theme';
+import {NbButtonModule, NbCardModule, NbLayoutModule, NbListModule, NbMenuModule, NbSidebarModule} from '@nebular/theme';
+import {MatGridListModule} from '@angular/material';
 
 @NgModule({
   declarations: [HomeComponent, WrongPathComponent, HeaderComponent, NavbarComponent],
@@ -16,7 +17,11 @@ import {NbButtonModule, NbLayoutModule, NbSidebarModule} from '@nebular/theme';
     BrowserAnimationsModule,
     NbLayoutModule,
     NbSidebarModule.forRoot(),
-    NbButtonModule
+    NbButtonModule,
+    NbCardModule,
+    NbListModule,
+    MatGridListModule,
+    NbMenuModule.forRoot()
   ],
   exports: [
     HeaderComponent,
