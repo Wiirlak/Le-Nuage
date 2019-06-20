@@ -1,3 +1,10 @@
 .cloud{
   background: cornflowerblue;
 }
+
+.searchbar{
+  position: fixed;
+  top: 20px;
+  z-index: 2000;
+  width: 33.3vw;
+}

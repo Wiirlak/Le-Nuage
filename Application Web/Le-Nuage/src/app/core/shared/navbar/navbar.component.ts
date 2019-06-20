@@ -9,6 +9,28 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 export class NavbarComponent implements OnInit {
   navbarContent = [
     {
+      title: 'Nuage',
+      expanded: true,
+      children: [
+        {
+          title: 'Mes Nuages',
+          link: [], // goes into angular `routerLink`
+        },
+        {
+          title: 'Nuages partagés',
+          url: '#', // goes directly into `href` attribute
+        },
+        {
+          title: 'Favoris',
+          url: '#', // goes directly into `href` attribute
+        },
+        {
+          title: 'Corbeille',
+          url: '#', // goes directly into `href` attribute
+        },
+      ],
+    },
+    {
       title: 'Profil',
       expanded: true,
       children: [
@@ -26,20 +48,6 @@ export class NavbarComponent implements OnInit {
         },
       ],
     },
-    {
-      title: 'Nuage',
-      expanded: true,
-      children: [
-        {
-          title: 'Mes Nuages',
-          link: [], // goes into angular `routerLink`
-        },
-        {
-          title: 'Tous les Nuages accessible',
-          url: '#', // goes directly into `href` attribute
-        },
-      ],
-    }
   ];
 
   constructor() { }

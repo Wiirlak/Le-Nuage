@@ -6,8 +6,17 @@ import {HeaderComponent} from './shared/header/header.component';
 import {NavbarComponent} from './shared/navbar/navbar.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-import {NbButtonModule, NbCardModule, NbLayoutModule, NbListModule, NbMenuModule, NbSidebarModule} from '@nebular/theme';
+import {
+  NbButtonModule,
+  NbCardModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbListModule,
+  NbMenuModule,
+  NbSidebarModule
+} from '@nebular/theme';
 import {MatGridListModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [HomeComponent, WrongPathComponent, HeaderComponent, NavbarComponent],
@@ -21,7 +30,9 @@ import {MatGridListModule} from '@angular/material';
     NbCardModule,
     NbListModule,
     MatGridListModule,
-    NbMenuModule.forRoot()
+    NbMenuModule.forRoot(),
+    NbInputModule,
+    FormsModule,
   ],
   exports: [
     HeaderComponent,
