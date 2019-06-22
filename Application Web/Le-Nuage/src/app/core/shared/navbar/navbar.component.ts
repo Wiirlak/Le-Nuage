@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ProfilComponent} from '../../../user/components/profil/profil.component';
 
 @Component({
   selector: 'app-navbar',
@@ -14,19 +15,19 @@ export class NavbarComponent implements OnInit {
       children: [
         {
           title: 'Mes Nuages',
-          link: [], // goes into angular `routerLink`
+          link: ['/home'], // goes into angular `routerLink`
         },
         {
           title: 'Nuages partagés',
-          url: '#', // goes directly into `href` attribute
+          link: ['/shared'], // goes directly into `href` attribute
         },
         {
           title: 'Favoris',
-          url: '#', // goes directly into `href` attribute
+          link: ['/home'], // goes directly into `href` attribute
         },
         {
           title: 'Corbeille',
-          url: '#', // goes directly into `href` attribute
+          link: ['/home'], // goes directly into `href` attribute
         },
       ],
     },
@@ -36,15 +37,16 @@ export class NavbarComponent implements OnInit {
       children: [
         {
           title: 'Preferences',
-          link: [], // goes into angular `routerLink`
+          link: ['/user/profil'], // goes into angular `routerLink`
         },
         {
           title: 'Politique de confidentialitée',
-          url: '#', // goes directly into `href` attribute
+          target: 'blank',
+          url: 'https://www.greenfish.eu/wp-content/uploads/2018/09/Privacy-Chart-FR.pdf', // goes directly into `href` attribute
         },
         {
           title: 'Déconnexion',
-          link: [],
+          link: ['/user/signup'],
         },
       ],
     },

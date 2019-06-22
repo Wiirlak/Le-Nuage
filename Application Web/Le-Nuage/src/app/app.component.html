@@ -1,10 +1,10 @@
-<nb-layout>
+<nb-layout *ngIf="logged">
 
-  <nb-layout-header fixed>
+  <nb-layout-header fixed> <!-- if logged in -->
     <app-header></app-header>
   </nb-layout-header>
 
-  <nb-sidebar><app-navbar></app-navbar></nb-sidebar>
+  <nb-sidebar><app-navbar></app-navbar></nb-sidebar> <!-- if logged in -->
 
   <nb-layout-column>
     <div>
@@ -13,7 +13,13 @@
   </nb-layout-column>
 
   <nb-layout-footer fixed>
-  <!-- Insert footer here -->
+    <!-- Insert footer here -->
   </nb-layout-footer>
 
 </nb-layout>
+
+<div *ngIf="logged == false">
+
+  <router-outlet></router-outlet>
+
+</div>

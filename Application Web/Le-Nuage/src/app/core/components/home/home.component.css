@@ -7,4 +7,5 @@
   top: 20px;
   z-index: 2000;
   width: 33.3vw;
+  max-width: none !important;
 }

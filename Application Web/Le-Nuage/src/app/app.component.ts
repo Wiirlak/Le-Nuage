@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  logged = true; // TODO : Service provider for logged
   title = 'Le-Nuage';
 }
