@@ -76,6 +76,9 @@ public class ControllerFile implements AnnotatedClass {
     @FXML
     public ImageView reloaded;
 
+    @FXML
+    public ArrayList<ContextMenu> contextMenuArrayList = new ArrayList<>();
+
 
     public  String  url1;
     public  String  url2;
@@ -147,7 +150,7 @@ public class ControllerFile implements AnnotatedClass {
                 if (nuageArrayList != null)
                     for (Nuage n : nuageArrayList) {
                         nuageArray.add(new NuageModel(n.getName(), n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), "15/12/19", "nuages"));
-                        addNuage(n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), n.getName(), "15/12/19");
+                        addNuage(n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), n.getName(), "15/12/19", n.get_id());
                         //System.out.println(n.getImage());
                     }
             }
@@ -157,7 +160,7 @@ public class ControllerFile implements AnnotatedClass {
     }
 
 
-    public void addNuage(String nuageImage, String nuageName, String lastEdit){
+    public void addNuage(String nuageImage, String nuageName, String lastEdit, String id){
         VBox vbox = new VBox();
         vbox.getStyleClass().add("nuages");
         vbox.setAlignment(Pos.CENTER);
@@ -169,10 +172,13 @@ public class ControllerFile implements AnnotatedClass {
         vbox.getChildren().add(imageView);
         vbox.getChildren().add(label1);
         vbox.getChildren().add(label2);
+        vbox.setUserData(id);
         vbox.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
-            public void handle(ContextMenuEvent event) {
-                createRightClickMenu(nuageName).show(vbox, event.getScreenX(), event.getScreenY());
+            public void handle(final ContextMenuEvent event) {
+                for (ContextMenu i : contextMenuArrayList)
+                    i.hide();
+                createRightClickMenu(nuageName, ((VBox)event.getSource()).getUserData().toString()).show(vbox, event.getScreenX(), event.getScreenY());
             }
         });
         vbox.setOnMouseClicked(event -> {
@@ -187,7 +193,7 @@ public class ControllerFile implements AnnotatedClass {
         flowpane.getChildren().add(vbox);
     }
 
-    public ContextMenu createRightClickMenu(String nuageName){
+    public ContextMenu createRightClickMenu(String nuageName, String id){
         ContextMenu contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem("S'envoler");
         item1.setOnAction(new EventHandler<ActionEvent>() {
@@ -199,8 +205,36 @@ public class ControllerFile implements AnnotatedClass {
         });
         MenuItem item2 = new MenuItem("Voir sa composition");
         MenuItem item3 = new MenuItem("Tomber");
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                labelNuage.setText("Les fichiers de votre nuage");
+            }
+        });
         MenuItem item4 = new MenuItem("Souffler le nuage");
+        item4.setUserData(id);
+        item4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Profil response = HttpProfil.getProfil();
+                    if( response != null) {
+                         if( HttpNuage.deleteNuage(((MenuItem)event.getSource()).getUserData().toString()) ){
+                             reload();
+                             labelNuage.setText("Les fichiers de votre nuage");
+                         }
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
         contextMenu.getItems().addAll(item1, item2,item3,item4);
+        contextMenuArrayList.add(contextMenu);
         return contextMenu;
     }
 
@@ -381,7 +415,7 @@ public class ControllerFile implements AnnotatedClass {
             nuageToPrint = nuageArray;
         }
         for(NuageModel i : nuageToPrint){
-            addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
+            addNuage(i.getImagePath(),i.getName(),i.getLastEdit(),i.getId());
         }
     }
 
@@ -463,7 +497,7 @@ public class ControllerFile implements AnnotatedClass {
         nuageToPrint = new ArrayList<NuageModel>( nuageArray.stream().filter(type -> type.getName().toLowerCase().contains(searchBar.getText().toLowerCase()) ).collect(Collectors.<NuageModel>toList()));
         flowpane.getChildren().clear();
         for(NuageModel i : nuageToPrint){
-            addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
+            addNuage(i.getImagePath(),i.getName(),i.getLastEdit(), i.getId());
         }
 
     }

@@ -1,6 +1,7 @@
 package core.Http.Nuage;
 
 import com.google.gson.Gson;
+import core.Model.AuthService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class HttpNuage {
             for (String nuageId : nuages) {
                 URL url = new URL(apiUrl + "/nuage/" + nuageId);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
                 con.setRequestMethod("GET");
                 con.setConnectTimeout(60000); //60 secs
                 con.setReadTimeout(60000); //60 secs
@@ -44,5 +46,10 @@ public class HttpNuage {
             return new ArrayList<>();
         }
         return new ArrayList<>();
+    }
+
+
+    public static boolean deleteNuage(String id){
+        return true;
     }
 }

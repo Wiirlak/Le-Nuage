@@ -47,7 +47,6 @@
             </VBox>
             <VBox>
                 <Label text="Mot de passe"></Label>
-                <PasswordField promptText="Mot de passe" styleClass="inputProfil" fx:id="password"></PasswordField>
                 <Label text="Changer votre mot de passe" onMouseClicked="#updatePwd" style="-fx-cursor:HAND"></Label>
             </VBox>
         </VBox>

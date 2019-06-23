@@ -56,7 +56,7 @@
             <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input" fx:id="emailIndex"></TextField>
         </HBox>
         <HBox alignment="CENTER">
-            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input" fx:id="passwordIndex"></PasswordField>
+            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input" fx:id="passwordIndex" onAction="#loading"></PasswordField>
         </HBox>
 
         <HBox alignment="CENTER">

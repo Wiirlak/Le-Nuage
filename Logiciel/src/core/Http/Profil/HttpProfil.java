@@ -30,13 +30,16 @@ public class HttpProfil {
             StringBuffer content = new StringBuffer();
             Profil answer =(new Gson()).fromJson(in.readLine(), Profil.class);
             in.close();
-            in.close();
             con.disconnect();
             return answer;
         }catch(ConnectException e ){
             System.out.println("error");
         }
         return null;
+    }
+
+    public static boolean updateProfil(String name, String email, String password){
+        return true;
     }
 
 }

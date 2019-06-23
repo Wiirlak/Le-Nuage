@@ -40,9 +40,6 @@ public class ControllerProfil {
     @FXML
     public TextField birthdate;
 
-    @FXML
-    public PasswordField password;
-
     public static void setStage(Stage stagep) {
         stage = stagep;
     }
@@ -65,10 +62,12 @@ public class ControllerProfil {
         try {
             Profil response = HttpProfil.getProfil();
             name.setText(response.getName());
+            surname.setText(response.getFirstname());
             email.setText(response.getEmail());
-            surname.setText(response.getName());
-            birthdate.setText(response.getName());
-            password.setText(response.getPassword());
+            //ADD EMAIL
+            birthdate.setText(response.getBirthdate());
+
+            System.out.println("haha : "+response.getBirthdate());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,11 +103,14 @@ public class ControllerProfil {
 
     @FXML
     public void updatePwd() throws Exception{
-        Desktop.getDesktop().browse(new URL("http://localhost:3000/user/123123156/reset").toURI());
+        Profil response = HttpProfil.getProfil();
+        Desktop.getDesktop().browse(new URL("http://localhost:3000/user/"+response.get_id()+"/reset").toURI());
     }
 
     @FXML
-    public void close(){
-        stage.close();
+    public void close() throws IOException {
+        Profil response = HttpProfil.getProfil();
+        if (HttpProfil.updateProfil(response.getName(),email.getText(),response.getPassword()));
+            stage.close();
     }
 }

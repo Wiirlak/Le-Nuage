@@ -7,18 +7,22 @@ public class Profil {
     private String[] nuages;
     private String _id;
     private String name;
+    private String firstname;
     private String email;
     private String password;
+    private String birthdate;
 
-    public Profil(boolean is_deleted, int capacity_max, int capacity_usage, String[] nuages, String _id, String name, String email, String password) {
+    public Profil(boolean is_deleted, int capacity_max, int capacity_usage, String[] nuages, String _id, String name, String firstname, String email, String password, String birthdate) {
         this.is_deleted = is_deleted;
         this.capacity_max = capacity_max;
         this.capacity_usage = capacity_usage;
         this.nuages = nuages;
         this._id = _id;
         this.name = name;
+        this.firstname = firstname;
         this.email = email;
         this.password = password;
+        this.birthdate = birthdate;
     }
 
     public boolean isIs_deleted() {
@@ -51,5 +55,13 @@ public class Profil {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
     }
 }
