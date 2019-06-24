@@ -4,6 +4,7 @@ import annotation.AnnotatedClass;
 import annotation.Status;
 import core.Http.Apple.Apple;
 import core.Http.Apple.HttpApple;
+import core.Http.Entite.HttpEntite;
 import core.Http.Nuage.HttpNuage;
 import core.Http.Nuage.Nuage;
 import core.Http.Profil.HttpProfil;
@@ -337,7 +338,13 @@ public class ControllerFile implements AnnotatedClass {
             hbox.getChildren().add(pane);
             hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
             vbox.getChildren().add(hbox);
-            hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> System.out.println(hbox.getUserData().toString()));
+            hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                try {
+                    HttpEntite.upload(label1.getText()+"\\"+hbox.getUserData().toString(),"5d0f766742038438d41f5c5c");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
         }
     }
 

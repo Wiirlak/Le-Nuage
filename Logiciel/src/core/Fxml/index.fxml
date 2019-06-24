@@ -53,10 +53,10 @@
         <!-- RIGHT BOX -->
         <Label text="Connexion" styleClass="connect" ></Label>
         <HBox alignment="CENTER">
-            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input" fx:id="emailIndex"></TextField>
+            <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input" fx:id="emailIndex" text="jean@toto.fr"></TextField>
         </HBox>
         <HBox alignment="CENTER">
-            <PasswordField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input" fx:id="passwordIndex" onAction="#loading"></PasswordField>
+            <PasswordField text="testtest" maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Mot de passe..." styleClass="input" fx:id="passwordIndex" onAction="#loading"></PasswordField>
         </HBox>
 
         <HBox alignment="CENTER">
