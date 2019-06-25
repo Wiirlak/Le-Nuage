@@ -339,11 +339,7 @@ public class ControllerFile implements AnnotatedClass {
             hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
             vbox.getChildren().add(hbox);
             hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                try {
-                    HttpEntite.upload(label1.getText()+"\\"+hbox.getUserData().toString(),"5d0f766742038438d41f5c5c");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                HttpEntite.threadT(label1.getText()+"\\"+hbox.getUserData().toString(),"5d0f766742038438d41f5c5c");
             });
         }
     }
