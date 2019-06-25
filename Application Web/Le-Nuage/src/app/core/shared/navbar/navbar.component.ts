@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ProfilComponent} from '../../../user/components/profil/profil.component';
+import {AuthentificationService} from '../../../admin/services/authentification/authentification.service';
 
 @Component({
   selector: 'app-navbar',
@@ -51,8 +52,8 @@ export class NavbarComponent implements OnInit {
       ],
     },
   ];
-
-  constructor() { }
+  constructor(private authService: AuthentificationService) {}
+  logged = false;
 
   ngOnInit() {
   }

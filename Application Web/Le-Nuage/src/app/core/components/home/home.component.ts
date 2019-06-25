@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { CloudsService} from '../../services/clouds.service';
+import { CloudsService} from '../../services/cloud/clouds.service';
 import { Cloud } from '../../models/Cloud';
 import { NbSearchService } from '@nebular/theme';
 

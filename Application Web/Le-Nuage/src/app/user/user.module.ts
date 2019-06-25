@@ -12,6 +12,7 @@ import {
   MatInputModule,
   ShowOnDirtyErrorStateMatcher
 } from '@angular/material';
+import {NbCardModule, NbListModule} from '@nebular/theme';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import {
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    NbCardModule,
+    NbListModule
   ],
   exports: [],
   providers: [
