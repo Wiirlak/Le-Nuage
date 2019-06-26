@@ -1,5 +1,9 @@
 package core;
 
+import annotation.AnnotatedClass;
+import annotation.ParserAnnotations;
+import annotation.Status;
+import annotation.Usage;
 import com.sun.javafx.application.LauncherImpl;
 import core.Model.AuthService;
 import core.preloader.Preload;
@@ -13,11 +17,13 @@ import core.Controller.ControllerIndex;
 import plugin.PluginManager;
 
 import java.awt.*;
-import java.io.IOException;
 
-
-public class Main extends Application {
+@Status(author = "Bastien NISOLE",
+        progression = 90,
+        version = 2.5)
+public class Main extends Application implements AnnotatedClass {
     @Override
+    @Usage(description = "Affichage de l'index")
     public void start(Stage primaryStage) throws Exception{
 
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("index.fxml"));
@@ -39,6 +45,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    @Usage(description = "Lancement du projet")
     public static void main(String[] args) throws Exception {
         //launch(args);
         //System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
@@ -47,12 +54,15 @@ public class Main extends Application {
         /*
         AuthService.getUser().setNom("slamai");
         System.out.println(AuthService.getUser().getNom());*/
+
+        ParserAnnotations t =  new ParserAnnotations();
         LauncherImpl.launchApplication(Main.class, Preload.class, args);
 
         /*PluginManager a = new PluginManager();
         a.openJarFile(a.listPlugins[1]);*/
     }
 
+    @Usage(description = "Récuperation du nom de la classe")
     public String getId() {
         return "main";
     }

@@ -1,5 +1,8 @@
 package core.Controller;
 
+import annotation.AnnotatedClass;
+import annotation.Status;
+import annotation.Usage;
 import core.Http.Profil.HttpProfil;
 import core.Http.Profil.Profil;
 import core.Model.AuthService;
@@ -18,7 +21,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class ControllerProfil {
+
+@Status(author = "Bastien NISOLE",
+        progression = 50,
+        version = 2.3)
+public class ControllerProfil  implements AnnotatedClass {
 
     public static Stage stage;
 
@@ -40,11 +47,13 @@ public class ControllerProfil {
     @FXML
     public TextField birthdate;
 
+    @Usage(description = "Affecter le stage courant")
     public static void setStage(Stage stagep) {
         stage = stagep;
     }
 
     @FXML
+    @Usage(description = "Actions faitre slors du chargement de la page")
     public void initialize() {
         profilPicture.setFill(new ImagePattern(new Image ("assets/pictures/profile.jpg")));
         printOutput();
@@ -52,6 +61,7 @@ public class ControllerProfil {
     }
 
     @FXML
+    @Usage(description = "Affichage des informations de l'utilisateur")
     public void printOutput(){
         /*System.out.println(AuthService.getAuthUser().getNom());
         name.setText(AuthService.getUser().getNom());
@@ -74,6 +84,7 @@ public class ControllerProfil {
     }
 
     @FXML
+    @Usage(description = "Ouvre l'exploreur de fichier pour selectionner une photo")
     public void openExplorer() throws IOException {
         //Desktop.getDesktop().open(new File("C:\\"));
         FileChooser fileChooser = new FileChooser();
@@ -102,12 +113,14 @@ public class ControllerProfil {
 
 
     @FXML
+    @Usage(description = "Ouvrir le navigateur vers la page pour ranger de mot de passe")
     public void updatePwd() throws Exception{
         Profil response = HttpProfil.getProfil();
         Desktop.getDesktop().browse(new URL("http://localhost:3000/user/"+response.get_id()+"/reset").toURI());
     }
 
     @FXML
+    @Usage(description = "Fermeture de la fenettre et sauvegarde")
     public void close() throws IOException {
         Profil response = HttpProfil.getProfil();
         if (HttpProfil.updateProfil(response.getName(),email.getText(),response.getPassword()));

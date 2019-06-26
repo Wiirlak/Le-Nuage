@@ -1,8 +1,12 @@
 package annotation;
 
-import core.Controller.ControllerFile;
-import core.Model.User;
+import core.Controller.*;
+import core.Main;
+import core.Model.*;
+import core.preloader.Preload;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ParserAnnotations
@@ -10,12 +14,37 @@ public class ParserAnnotations
     public ParserAnnotations() {
         System.out.println("---- Annotation Parse ----\n");
         ArrayList<AnnotatedClass> test = new ArrayList<>();
+
+        //Modele
+        test.add(new AuthService());
+        test.add(new AuthUser());
+        test.add(new NuageModel("Test","test","test","test"));
+        test.add(new PluginFxml(new File("t")));
         test.add(new User());
+
+        //Preloader
+        test.add(new Preload());
+
+        //Main
+        test.add(new Main());
+
+        //Controller
         test.add(new ControllerFile());
+        test.add(new ControllerIndex());
+        test.add(new ControllerLoading());
+        test.add(new ControllerPlugin());
+        test.add(new ControllerProfil());
+        test.add(new ControllerSignUp());
 
 
-        ParsingProcess process = new ParsingProcess();
-        process.processParse(test);
+        ParsingProcess process = null;
+        try {
+            process = new ParsingProcess();
+            process.processParse(test);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         System.out.println("\n---- END of Parsing ----");
     }

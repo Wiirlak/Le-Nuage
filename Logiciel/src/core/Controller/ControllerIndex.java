@@ -1,5 +1,8 @@
 package core.Controller;
 
+import annotation.AnnotatedClass;
+import annotation.Status;
+import annotation.Usage;
 import core.Http.Auth.HttpAuth;
 import core.Model.AuthService;
 import javafx.fxml.FXML;
@@ -15,13 +18,12 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 
-public class ControllerIndex {
+@Status(author = "Bastien NISOLE",
+        progression = 50,
+        version = 2.3)
+public class ControllerIndex implements AnnotatedClass {
+
     public Stage stage;
-
-    public void setStage(Stage primaryStage){
-        this.stage = primaryStage;
-    }
-
     @FXML
     public TextField emailIndex;
 
@@ -29,26 +31,32 @@ public class ControllerIndex {
     public PasswordField passwordIndex;
 
     @FXML
+    public Label errorNetwork;
+
+    @FXML
+    public Label errorLogin;
+
+    @Usage(description = "Affecter le stage courant")
+    public void setStage(Stage primaryStage){
+        this.stage = primaryStage;
+    }
+
+    @FXML
+    @Usage(description = "Fonction de log")
     private void log(){
         System.out.println("Logger");
     }
 
     @FXML
+    @Usage(description = "Afficher la page d'inscription")
     private void signUp() throws IOException {
         //System.out.println("Sign in");
         loadSecondFxml();
 
     }
 
-
     @FXML
-    public Label errorNetwork;
-
-    @FXML
-    public Label errorLogin;
-
-
-    @FXML
+    @Usage(description = "Chargement et affichage de la page d'inscription")
     public void loadSecondFxml()throws  IOException{
         //Load new FXML and assign it to scene
         Parent root;
@@ -64,17 +72,20 @@ public class ControllerIndex {
     }
 
     @FXML
+    @Usage(description = "Ouvrir le navigateur avec l'url de facebook")
     public void openFB() throws Exception{
         Desktop.getDesktop().browse(new URL("http://quedescodes.blogspot.com/2016/04/java-ouvrir-un-lien-dans-le-navigateur.html").toURI());
     }
 
     @FXML
+    @Usage(description = "Ouvrir le navigateur avec l'url de twitter")
     public void openTW() throws Exception{
         Desktop.getDesktop().browse(new URL("https://stackoverflow.com/questions/23032253/how-to-change-the-current-scene-to-another-in-javafx").toURI());
     }
 
 
     @FXML
+    @Usage(description = "Affichage de la fenetre de chargement")
     public void loading() throws IOException, InterruptedException {
         errorLogin.setVisible(false);
         int acces = HttpAuth.login(emailIndex.getText(),passwordIndex.getText());

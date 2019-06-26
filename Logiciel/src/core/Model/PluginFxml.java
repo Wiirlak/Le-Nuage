@@ -1,5 +1,8 @@
 package core.Model;
 
+import annotation.AnnotatedClass;
+import annotation.Status;
+import annotation.Usage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,7 +17,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 //import plugin.NewPlugin;
 
-public class PluginFxml {
+@Status(author = "Bastien NISOLE",
+        progression = 90,
+        version = 2.5)
+public class PluginFxml implements AnnotatedClass {
     /*@FXML
     public NewPlugin newPlugin = new NewPlugin();*/
 
@@ -29,7 +35,7 @@ public class PluginFxml {
     @FXML
     public Button edited = new Button("Ouvrir");
 
-
+    @Usage(description = "Constructeur de l'objet pluginFxml avec un traitement par defaut pour rentré dans la tableview")
     public PluginFxml(File named){
         this.name = named;
         deleted.setOnAction(new EventHandler<ActionEvent>() {
@@ -69,19 +75,22 @@ public class PluginFxml {
     /*public String getNewPlugin() {
         return newPlugin.getName();
     }*/
-
+    @Usage(description = "Recuperation du nom du plugin")
     public String getName() {
         return name.getName();
     }
 
+    @Usage(description = "Récuperation du bouton d'activation")
     public Button getActivated() {
         return activated;
     }
 
+    @Usage(description = "Récuperation de la checkbox de suppression")
     public CheckBox getDeleted() {
         return deleted;
     }
 
+    @Usage(description = "Récuperation du bouton pour l'edition")
     public Button getEdited() {
         return edited;
     }

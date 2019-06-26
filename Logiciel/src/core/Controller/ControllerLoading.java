@@ -1,5 +1,8 @@
 package core.Controller;
 
+import annotation.AnnotatedClass;
+import annotation.Status;
+import annotation.Usage;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,15 +13,20 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-public class ControllerLoading {
+@Status(author = "Bastien NISOLE",
+        progression = 50,
+        version = 2.3)
+public class ControllerLoading implements AnnotatedClass {
 
     public static Stage stage;
 
+    @Usage(description = "Affecter le stage courant")
     public static void setStage(Stage stagep) {
         stage = stagep;
     }
 
     @FXML
+    @Usage(description = "Traitement a faire lors de l'initialisation de la page")
     public void initialize(){
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished( event -> {
@@ -30,7 +38,7 @@ public class ControllerLoading {
         });
         delay.play();
     }
-
+    @Usage(description = "Chargement et affichage de page principale")
     public void login() throws IOException {
         Parent root;
         root = FXMLLoader.load(getClass().getClassLoader().getResource("file.fxml"));

@@ -2,6 +2,7 @@ package core.Controller;
 
 import annotation.AnnotatedClass;
 import annotation.Status;
+import annotation.Usage;
 import core.Http.Apple.Apple;
 import core.Http.Apple.HttpApple;
 import core.Http.Entite.HttpEntite;
@@ -39,7 +40,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-@Status(author = "Krishan Class",
+@Status(author = "Bastien NISOLE",
         progression = 50,
         version = 2.3)
 public class ControllerFile implements AnnotatedClass {
@@ -85,10 +86,13 @@ public class ControllerFile implements AnnotatedClass {
     public  String  url2;
     public  ArrayList<NuageModel> nuageArray = new ArrayList<NuageModel>();
 
+
+    @Usage(description = "Affecter le stage courant")
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
     }
 
+    @Usage(description = "Actions faites lors de l'initialisation de la page")
     public  void initialize() {
 
         //System.out.println(AuthService.getUser().getEmail());
@@ -140,7 +144,7 @@ public class ControllerFile implements AnnotatedClass {
 
     }
 
-
+    @Usage(description = "Récuperation de nuage")
     public void getData(){
         try {
             nuageArray.clear();
@@ -160,7 +164,7 @@ public class ControllerFile implements AnnotatedClass {
         }
     }
 
-
+    @Usage(description = "Ajout du nuage sur l'interface")
     public void addNuage(String nuageImage, String nuageName, String lastEdit, String id){
         VBox vbox = new VBox();
         vbox.getStyleClass().add("nuages");
@@ -194,6 +198,7 @@ public class ControllerFile implements AnnotatedClass {
         flowpane.getChildren().add(vbox);
     }
 
+    @Usage(description = "Création de menu sur le click droit")
     public ContextMenu createRightClickMenu(String nuageName, String id){
         ContextMenu contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem("S'envoler");
@@ -239,6 +244,7 @@ public class ControllerFile implements AnnotatedClass {
         return contextMenu;
     }
 
+    @Usage(description = "Recuperation de la taille d'un fichier")
     public String getSizeOfFile(double size){
         NumberFormat nf = new DecimalFormat("0.##");
         String[] data = {"B", "KB", "MB", "GB", "TB"};
@@ -250,6 +256,7 @@ public class ControllerFile implements AnnotatedClass {
         return nf.format(size)+" "+data[index];
     }
 
+    @Usage(description = "Recuperation et affichage des dossiers de l'utilisateur")
     public void listFile(VBox vbox, String filename ){
         TreeView<File> fileViewMine = new TreeView<File>(
                 new SimpleFileTreeItem(new File(filename)));
@@ -262,7 +269,7 @@ public class ControllerFile implements AnnotatedClass {
         });
 
     }
-
+    @Usage(description = "Récuperation et affichage des dossiers du nuage")
     public void listFile2(VBox vbox){
         /*TreeView<File> fileViewMine = new TreeView<File>(
                 new SimpleFileTreeItem(new File(filename)));
@@ -309,7 +316,7 @@ public class ControllerFile implements AnnotatedClass {
         vbox.getChildren().add(tree);
     }
 
-
+    @Usage(description = "Affichage des fichiers d'un dossier")
     public void listFileByFolder(VBox vbox, String filename){
         //Filtre
         FilenameFilter fnf = (current, name) -> {
@@ -344,6 +351,7 @@ public class ControllerFile implements AnnotatedClass {
         }
     }
 
+    @Usage(description = "Affecter le chemin par defaut selon l'os")
     public void setUrlFromOs(){
         if( System.getProperty("os.name").contains("Windows")){//Windows
             //url1 = "C:\\";
@@ -372,35 +380,43 @@ public class ControllerFile implements AnnotatedClass {
 
 
     @FXML
+    @Usage(description = "Changer le type de tri à nuages")
     public void orderbyNuage() {
         setNewNuage("nuages");
     }
+
     @FXML
+    @Usage(description = "Changer le type de tri à shareNuages")
     public void orderbyNuageShared(){
         setNewNuage("shareNuages");
     }
 
     @FXML
+    @Usage(description = "Changer le type de tri à recent")
     public void orderbyLastEdit(){
         setNewNuage("recent");
     }
 
     @FXML
+    @Usage(description = "Changer le type de tri à favorit")
     public void orderbyFavorite(){
         setNewNuage("favorit");
     }
 
     @FXML
+    @Usage(description = "Changer le type de tri à trash")
     public void orderbyTrash(){
         setNewNuage("trash");
     }
 
     @FXML
+    @Usage(description = "Changer le type de tri à nothing")
     public void orderbyNothing(){
         setNewNuage("nothing");
     }
 
     @FXML
+    @Usage(description = "Affichage des nuages en fonction du tri")
     public void setNewNuage(String content){
         ArrayList<NuageModel> nuageToPrint;
         flowpane.getChildren().clear();
@@ -424,6 +440,7 @@ public class ControllerFile implements AnnotatedClass {
 
 
     @FXML
+    @Usage(description = "Se deconnecter")
     public void disconnect() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("index.fxml"));
         Scene scene = new Scene(loader.load());
@@ -443,6 +460,7 @@ public class ControllerFile implements AnnotatedClass {
     }
 
     @FXML
+    @Usage(description = "Ouverture de la page du profil de l'utilisateur")
     public void openProfile() throws IOException {
         Stage subStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("profil.fxml"));
@@ -459,6 +477,7 @@ public class ControllerFile implements AnnotatedClass {
     }
 
     @FXML
+    @Usage(description = "Ouverture de la fenetre de chargement")
     public void openLoading() throws IOException {
         Stage subStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Loading.fxml"));
@@ -477,6 +496,7 @@ public class ControllerFile implements AnnotatedClass {
 
 
     @FXML
+    @Usage(description = "Ouverture de la fenetre des options")
     public void openOptions() throws IOException {
         Stage subStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("options.fxml"));
@@ -494,6 +514,7 @@ public class ControllerFile implements AnnotatedClass {
 
 
     @FXML
+    @Usage(description = "Lancer la rechercher lorsque l'on appuie sur entrer")
     public void  onEnter(){
 
         ArrayList<NuageModel> nuageToPrint;
@@ -506,6 +527,7 @@ public class ControllerFile implements AnnotatedClass {
     }
 
     @FXML
+    @Usage(description = "Recharger les informations de la page")
     public void reload() throws InterruptedException {
         /*for(int i = 0 ; i < 360 ; i++){
             reloaded.setRotate(reloaded.getRotate() + i);

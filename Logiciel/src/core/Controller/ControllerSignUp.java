@@ -1,5 +1,8 @@
 package core.Controller;
 
+import annotation.AnnotatedClass;
+import annotation.Status;
+import annotation.Usage;
 import core.Http.Auth.HttpAuth;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +20,10 @@ import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 import core.Model.User;
 
-public class ControllerSignUp {
+@Status(author = "Bastien NISOLE",
+        progression = 50,
+        version = 2.3)
+public class ControllerSignUp  implements AnnotatedClass {
 
     public static Stage stage;
 
@@ -36,21 +42,25 @@ public class ControllerSignUp {
     @FXML
     public CheckBox check;
 
+    @Usage(description = "Affecter le stage courant")
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
     }
 
     @FXML
+    @Usage(description = "Ouvrir le navigateur avec l'url de facebook")
     public void openFB() throws Exception{
         Desktop.getDesktop().browse(new URL("http://quedescodes.blogspot.com/2016/04/java-ouvrir-un-lien-dans-le-navigateur.html").toURI());
     }
 
     @FXML
+    @Usage(description = "Ouvrir le navigateur avec l'url de twitter")
     public void openTW() throws Exception{
         Desktop.getDesktop().browse(new URL("https://stackoverflow.com/questions/23032253/how-to-change-the-current-scene-to-another-in-javafx").toURI());
     }
 
     @FXML
+    @Usage(description = "Affichage des informations lorsqu'un champ est faux et envoie des données")
     public void printData(){
         int data = 0;
 
@@ -141,6 +151,7 @@ public class ControllerSignUp {
     }
 
     @FXML
+    @Usage(description = "Chargement de la page index")
     public void goBack() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("index.fxml"));
         Scene scene = new Scene(loader.load());

@@ -1,5 +1,8 @@
 package core.Controller;
 
+import annotation.AnnotatedClass;
+import annotation.Status;
+import annotation.Usage;
 import core.Model.PluginFxml;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -15,13 +18,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class ControllerPlugin {
+@Status(author = "Bastien NISOLE",
+        progression = 50,
+        version = 2.3)
+public class ControllerPlugin  implements AnnotatedClass {
 
     public static Stage stage;
-
-    public static void setStage(Stage primaryStage){
-        stage = primaryStage;
-    }
 
     @FXML
     public TableView tvPlugin;
@@ -33,7 +35,14 @@ public class ControllerPlugin {
 
     public PluginManager pluginManager = new PluginManager();
 
+    @Usage(description = "Affecter le stage courant")
+    public static void setStage(Stage primaryStage){
+        stage = primaryStage;
+    }
+
+
     @FXML
+    @Usage(description = "Traitement réaliser lors de l'initialisation")
     public void initialize(){
         tvPlugin.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pluginFxmls =  new ArrayList<PluginFxml>();
@@ -45,6 +54,7 @@ public class ControllerPlugin {
         //pluginFxmls.get(2).getActivated().setSelected(true);
     }
 
+    @Usage(description = "Tous cocher ou tous décocher")
     public void tickedNoTicked() throws IOException {
         if(checkAll.isSelected()){
             pluginFxmls.forEach(c -> c.deleted.setSelected(true));
@@ -56,6 +66,7 @@ public class ControllerPlugin {
     }
 
     @FXML
+    @Usage(description = "Ouverture de l'explorateur de fichier")
     public void openExplorer() throws IOException {
         //Desktop.getDesktop().open(new File("C:\\"));
         FileChooser fileChooser = new FileChooser();
@@ -71,14 +82,17 @@ public class ControllerPlugin {
         }
     }
 
+    @Usage(description = "Fermer la fenetre")
     public void save(){
         exit();
     }
 
+    @Usage(description = "Quitter l'application")
     public void exit(){
         stage.close();
     }
 
+    @Usage(description = "Raffraichir la liste de plugin")
     public void refresh(){
         tvPlugin.getItems().clear();
         pluginManager.findAllJar(pluginManager.pluginPath);
@@ -89,7 +103,7 @@ public class ControllerPlugin {
         tvPlugin.getItems().addAll(pluginFxmls);
     }
 
-
+    @Usage(description = "Suppression d'un plugin")
     public void delete(){
         for( PluginFxml pgxml: pluginFxmls){
             if(pgxml.deleted.isSelected()){
