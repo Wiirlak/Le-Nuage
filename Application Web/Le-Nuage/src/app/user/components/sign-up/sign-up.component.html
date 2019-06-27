@@ -6,17 +6,23 @@
       </mat-grid-tile>
       <mat-grid-tile>
         <form class="frm"[formGroup]="myForm" (ngSubmit)="onSubmit()">
-          <h1 class="fil titre">Connexion</h1>
+          <h1 class="fil titre">Inscription</h1>
+          <mat-form-field class="fil">
+            <input matInput placeholder="Prénom" formControlName="firstname" required>
+          </mat-form-field>
+          <mat-form-field class="fil">
+            <input matInput placeholder="Nom" formControlName="lastname" required>
+          </mat-form-field>
           <mat-form-field class="fil">
             <input matInput placeholder="Email" formControlName="email" required>
           </mat-form-field>
-
           <mat-form-field class="fil">
-            <input matInput placeholder="Password" type="password" formControlName="password" required>
+            <input matInput placeholder="Mot de passe" type="password" formControlName="password" required>
           </mat-form-field>
-          <button mat-button type="submit">Se connecter</button>
-          <a class="fila" routerLink="/forgotpwd">Mot de passe oublié</a>
-          <a class="fila" routerLink="/signup">Pas de compte ? s'en créer un !</a>
+          <mat-form-field class="fil">
+            <input matInput placeholder="Confirmation du mot de passe" type="password" formControlName="password2" required>
+          </mat-form-field>
+          <button mat-button type="submit">S'inscrire</button>
         </form>
       </mat-grid-tile>
     </mat-grid-list>

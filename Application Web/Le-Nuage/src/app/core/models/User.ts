@@ -1,6 +1,6 @@
-export interface Cloud {
+export interface User {
   id: number;
-  img: string;
-  date_created: string;
-  name: string;
+  firstname: string;
+  lastname: string;
+  email: string;
 }

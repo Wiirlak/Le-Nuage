@@ -9,15 +9,17 @@ import {
   MatCardModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatInputModule,
+  MatInputModule, MatListModule,
   ShowOnDirtyErrorStateMatcher
 } from '@angular/material';
 import {NbCardModule, NbListModule} from '@nebular/theme';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     SignUpComponent,
-    ProfilComponent
+    ProfilComponent,
+    SignInComponent
   ],
   imports: [
     UserRoutingModule,
@@ -28,7 +30,8 @@ import {NbCardModule, NbListModule} from '@nebular/theme';
     MatInputModule,
     MatButtonModule,
     NbCardModule,
-    NbListModule
+    NbListModule,
+    MatListModule
   ],
   exports: [],
   providers: [
