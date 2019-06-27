@@ -1,6 +1,10 @@
-export interface Cloud {
-  id: number;
-  img: string;
-  date_created: string;
-  name: string;
+export class Cloud {
+
+  constructor(
+    public id: number,
+    public img: string,
+    public date_created: string,
+    public name: string
+  ){}
+  
 }

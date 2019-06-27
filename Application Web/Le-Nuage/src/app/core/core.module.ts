@@ -15,7 +15,7 @@ import {
   NbMenuModule,
   NbSidebarModule
 } from '@nebular/theme';
-import {MatGridListModule} from '@angular/material';
+import {MatGridListModule, MatCardModule } from '@angular/material';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
@@ -30,6 +30,7 @@ import {FormsModule} from '@angular/forms';
     NbCardModule,
     NbListModule,
     MatGridListModule,
+    MatCardModule,
     NbMenuModule.forRoot(),
     NbInputModule,
     FormsModule,
