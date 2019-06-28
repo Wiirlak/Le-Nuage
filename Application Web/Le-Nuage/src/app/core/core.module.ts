@@ -17,9 +17,10 @@ import {
 } from '@nebular/theme';
 import {MatGridListModule, MatCardModule } from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import { RightbarComponent } from './shared/rightbar/rightbar.component';
 
 @NgModule({
-  declarations: [HomeComponent, WrongPathComponent, HeaderComponent, NavbarComponent],
+  declarations: [HomeComponent, WrongPathComponent, HeaderComponent, NavbarComponent, RightbarComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -37,7 +38,8 @@ import {FormsModule} from '@angular/forms';
   ],
   exports: [
     HeaderComponent,
-    NavbarComponent
+    NavbarComponent,
+    RightbarComponent
   ],
   providers: []
 })
