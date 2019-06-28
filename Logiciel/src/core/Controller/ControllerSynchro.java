@@ -6,9 +6,14 @@ import annotation.Status;
 import annotation.Usage;
 import core.Model.PluginFxml;
 import core.Model.SynchroFxml;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import plugin.PluginManager;
 
@@ -32,6 +37,13 @@ public class ControllerSynchro  implements AnnotatedClass {
     @FXML
     public CheckBox checkAll;
 
+
+    @FXML
+    public TextField recherche;
+
+    @FXML
+    public ObservableList<SynchroFxml> masterData = FXCollections.observableArrayList();
+
     @Usage(description = "Affecter le stage courant")
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
@@ -43,8 +55,12 @@ public class ControllerSynchro  implements AnnotatedClass {
     public void initialize(){
         files.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         synchroFxml =  new ArrayList<SynchroFxml>();
-        for( int i = 0 ; i < 50; i ++)
+        for( int i = 0 ; i < 50; i ++){
+
             synchroFxml.add(new SynchroFxml());
+            masterData.add(new SynchroFxml());
+        }
+        masterData.add(new SynchroFxml("Salo"));
         /*
         - Recuperer tous les fichiers présent dans le dossier local
         - Récuperer tous les fichiers présent dans le dossier distant du nuage
@@ -77,7 +93,7 @@ public class ControllerSynchro  implements AnnotatedClass {
                 - Si tout est identique
                     - Ne rien faire
                 - Sinon
-                    - Télécharger la nouvelle version du fichier sur le fichier de l'utilisateur (écrasement)
+                    - Télécharger la nouvelle version du fichier sur le pc de l'utilisateur (écrasement)
             - Fermer la fênetre
 
             ******
@@ -93,5 +109,36 @@ public class ControllerSynchro  implements AnnotatedClass {
     @Usage(description = "Quitter l'application")
     public void leave(){
         stage.close();
+    }
+
+    @Usage(description = "Rechercher un fichier")
+    public void search(){
+        recherche.getText();
+        FilteredList<SynchroFxml> filteredList = new FilteredList<>(masterData, p-> true);
+
+        recherche.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(synchroFxml -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (synchroFxml.getName().toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (synchroFxml.getName().toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                return false; // Does not match.
+            });
+        });
+
+        SortedList<SynchroFxml> sortedData = new SortedList<>(filteredList);
+
+        sortedData.comparatorProperty().bind(files.comparatorProperty());
+
+        files.setItems(sortedData);
     }
 }

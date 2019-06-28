@@ -29,9 +29,26 @@ public class SynchroFxml implements AnnotatedClass {
     public SynchroFxml() {
         selected =  new CheckBox();
         name =  new Label("file.txt");
-        lastEdit =  new Label("18-05-2019 15:52");
-        size =  new Label("25 ko");
+        lastEdit =  new Label("18-05-19 15:52 (17-05-19 12:25)");
+        size =  new Label("25 ko (12ko)");
     }
+
+    @Usage(description = "Constructeur de l'objet pluginFxml avec un nom pour rentré dans la tableview")
+    public SynchroFxml(String filename) {
+        selected =  new CheckBox();
+        name =  new Label(filename);
+        lastEdit =  new Label("18-05-19 15:52 (17-05-19 12:25)");
+        size =  new Label("25 ko (12ko)");
+    }
+
+    @Usage(description = "Constructeur de l'objet pluginFxml pour rentré dans la tableview")
+    public SynchroFxml(String filename, String sizeLocal, String sizeCloud, String lastUpdateLocal, String lastUpdateCloud) {
+        selected =  new CheckBox();
+        name =  new Label(filename);
+        lastEdit =  new Label(lastUpdateLocal +" ("+lastUpdateCloud+")");
+        size =  new Label(sizeLocal + " ("+sizeCloud+")");
+    }
+
 
     @Usage(description = "Recuperation la checkbox")
     public CheckBox getSelected() {
