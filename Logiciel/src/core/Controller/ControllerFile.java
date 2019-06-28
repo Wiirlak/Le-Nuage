@@ -470,6 +470,7 @@ public class ControllerFile implements AnnotatedClass {
         subStage.setResizable(false);
         subStage.setTitle("Mon profil");
         subStage.setScene(scene);
+        subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.initOwner(stage);
         subStage.initModality(Modality.WINDOW_MODAL);
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
@@ -486,6 +487,7 @@ public class ControllerFile implements AnnotatedClass {
         ControllerLoading.setStage(subStage);
         subStage.setResizable(false);
         subStage.setTitle("Mon profil");
+        subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.setScene(scene);
         subStage.initOwner(stage);
         subStage.initModality(Modality.WINDOW_MODAL);
@@ -506,6 +508,7 @@ public class ControllerFile implements AnnotatedClass {
         subStage.setResizable(false);
         subStage.setTitle("Options");
         subStage.setScene(scene);
+        subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.initOwner(stage);
         subStage.initModality(Modality.WINDOW_MODAL);
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
@@ -543,6 +546,22 @@ public class ControllerFile implements AnnotatedClass {
         listFile2(nuageFile);
     }
 
-
+    @FXML
+    @Usage(description = "Ouverture de la fenetre de synchronisation")
+    public void synchro() throws IOException {
+        Stage subStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("synchro.fxml"));
+        Scene scene = new Scene(loader.load());
+        ControllerSynchro controllerSynchro = loader.getController();
+        controllerSynchro.setStage(subStage);
+        subStage.setResizable(false);
+        subStage.setTitle("Synchro");
+        subStage.setScene(scene);
+        subStage.getIcons().add(new Image("pictures/LNb.png"));
+        subStage.initOwner(stage);
+        subStage.initModality(Modality.WINDOW_MODAL);
+        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
+        subStage.show();
+    }
 
 }

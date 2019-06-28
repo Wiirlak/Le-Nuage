@@ -126,3 +126,7 @@
     -fx-text-fill : #ed0e24;
     visibility: hidden;
 }
+
+.bgcolor{
+    -fx-background-color:transparent
+}

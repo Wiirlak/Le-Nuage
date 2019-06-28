@@ -6,6 +6,7 @@ import annotation.Usage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -33,6 +34,7 @@ public class ControllerOption implements AnnotatedClass {
         controllerPlugin.setStage(subStage);
         subStage.setResizable(false);
         subStage.setTitle("Plugins");
+        subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.setScene(scene);
         subStage.initOwner(stage);
         subStage.initModality(Modality.WINDOW_MODAL);

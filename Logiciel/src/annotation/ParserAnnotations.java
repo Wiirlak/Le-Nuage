@@ -20,6 +20,7 @@ public class ParserAnnotations
         test.add(new AuthUser());
         test.add(new NuageModel("Test","test","test","test"));
         test.add(new PluginFxml(new File("t")));
+        test.add(new SynchroFxml());
         test.add(new User());
 
         //Preloader
@@ -35,6 +36,8 @@ public class ParserAnnotations
         test.add(new ControllerPlugin());
         test.add(new ControllerProfil());
         test.add(new ControllerSignUp());
+        test.add(new ControllerSynchro());
+
 
 
         ParsingProcess process = null;

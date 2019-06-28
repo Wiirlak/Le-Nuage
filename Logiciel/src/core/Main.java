@@ -37,7 +37,7 @@ public class Main extends Application implements AnnotatedClass {
         primaryStage.setResizable(false);
         primaryStage.setWidth(900);
         primaryStage.setHeight(700);
-        primaryStage.getIcons().add(new Image("pictures/LN.png"));
+        primaryStage.getIcons().add(new Image("pictures/LNb.png"));
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         primaryStage.setMaxWidth(screenSize.getWidth());
         primaryStage.setMaxHeight(screenSize.getHeight());
