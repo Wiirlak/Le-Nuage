@@ -8,14 +8,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {
   NbButtonModule,
-  NbCardModule,
+  NbCardModule, NbIconModule,
   NbInputModule,
   NbLayoutModule,
   NbListModule,
   NbMenuModule,
   NbSidebarModule
 } from '@nebular/theme';
-import {MatGridListModule, MatCardModule } from '@angular/material';
+import {MatGridListModule, MatCardModule, MatMenuModule, MatButtonModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import { RightbarComponent } from './shared/rightbar/rightbar.component';
 
@@ -35,6 +35,9 @@ import { RightbarComponent } from './shared/rightbar/rightbar.component';
     NbMenuModule.forRoot(),
     NbInputModule,
     FormsModule,
+    NbIconModule,
+    MatMenuModule,
+    MatButtonModule,
   ],
   exports: [
     HeaderComponent,
