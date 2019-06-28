@@ -28,9 +28,6 @@ public class ControllerSynchro  implements AnnotatedClass {
 
     public static Stage stage;
 
-    public ArrayList<SynchroFxml> synchroFxml;
-
-
     @FXML
     public TableView files;
 
@@ -44,6 +41,8 @@ public class ControllerSynchro  implements AnnotatedClass {
     @FXML
     public ObservableList<SynchroFxml> masterData = FXCollections.observableArrayList();
 
+    public SortedList<SynchroFxml> sortedData;
+
     @Usage(description = "Affecter le stage courant")
     public static void setStage(Stage primaryStage){
         stage = primaryStage;
@@ -54,10 +53,7 @@ public class ControllerSynchro  implements AnnotatedClass {
     @Usage(description = "Traitement réaliser lors de l'initialisation")
     public void initialize(){
         files.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        synchroFxml =  new ArrayList<SynchroFxml>();
         for( int i = 0 ; i < 50; i ++){
-
-            synchroFxml.add(new SynchroFxml());
             masterData.add(new SynchroFxml());
         }
         masterData.add(new SynchroFxml("Salo"));
@@ -67,7 +63,7 @@ public class ControllerSynchro  implements AnnotatedClass {
         - Ne conserver que ceux existant dans les 2 tableau
         */
 
-        files.getItems().addAll(synchroFxml);
+        files.getItems().addAll(masterData);
 
         //pluginFxmls.get(2).getActivated().setSelected(true);
     }
@@ -75,11 +71,10 @@ public class ControllerSynchro  implements AnnotatedClass {
     @Usage(description = "Tous cocher ou tous décocher")
     public void tickedNoTicked() throws IOException {
         if(checkAll.isSelected()){
-            synchroFxml.forEach(c -> c.selected.setSelected(true));
+            masterData.forEach(c -> c.selected.setSelected(true));
             //pluginManager.openJarFiles();
-
         }else{
-            synchroFxml.forEach(c -> c.selected.setSelected(false));
+            masterData.forEach(c -> c.selected.setSelected(false));
         }
     }
 
@@ -135,9 +130,10 @@ public class ControllerSynchro  implements AnnotatedClass {
             });
         });
 
-        SortedList<SynchroFxml> sortedData = new SortedList<>(filteredList);
+        sortedData = new SortedList<>(filteredList);
 
         sortedData.comparatorProperty().bind(files.comparatorProperty());
+
 
         files.setItems(sortedData);
     }
