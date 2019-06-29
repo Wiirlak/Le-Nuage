@@ -14,7 +14,7 @@
 <?import javafx.stage.Screen?>
 <?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
-<HBox fx:controller="core.Controller.ControllerFile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="900" minWidth="700" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:controller="core.Controller.ControllerFile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="950" minWidth="700" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane xmlns:fx="http://javafx.com/fxml" styleClass="tet" HBox.hgrow="ALWAYS" >
         <!-- Bind data-->
         <fx:define>
@@ -89,7 +89,7 @@
                                 <Label text="Vos fichiers" alignment="CENTER" ></Label>
 
                             </VBox>
-                            <VBox HBox.hgrow="ALWAYS" minHeight="100" fx:id="sized">
+                            <VBox HBox.hgrow="ALWAYS" minHeight="80" fx:id="sized">
                                 <Label styleClass="dossier" fx:id="label1"></Label>
                                 <ScrollPane>
                                     <VBox fx:id="myFiles" prefWidth="${sized.width-25}" styleClass="nuageFiles" >
@@ -102,7 +102,7 @@
                             <VBox minHeight="100" fx:id="nuageFile">
                                 <Label text="Les fichiers de votre nuage" alignment="CENTER" fx:id="labelNuage"></Label>
                             </VBox>
-                            <VBox HBox.hgrow="ALWAYS" minHeight="100" fx:id="sized2" >
+                            <VBox HBox.hgrow="ALWAYS" minHeight="80" fx:id="sized2" >
                                 <Label styleClass="dossier" fx:id="label2"></Label>
                                 <ScrollPane>
                                     <VBox fx:id="nuageFiles" prefWidth="${sized2.width-25}" styleClass="nuageFiles" >

@@ -54,6 +54,9 @@ public class ControllerLoading implements AnnotatedClass {
         //endData
         Scene scene = new Scene(root);
         stage.setResizable(true);
+        stage.setHeight(800);
+        stage.setMinHeight(800);
+        stage.setMinWidth(900);
         stage.setTitle("Le-NuageModel");
         stage.setScene(scene);
         scene.getStylesheets().add("core/StyleSheet/stylesheet.css");

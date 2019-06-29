@@ -5,6 +5,7 @@ import annotation.ParserAnnotations;
 import annotation.Status;
 import annotation.Usage;
 import com.sun.javafx.application.LauncherImpl;
+import core.Http.Entite.HttpEntite;
 import core.Model.AuthService;
 import core.preloader.Preload;
 import javafx.application.Application;

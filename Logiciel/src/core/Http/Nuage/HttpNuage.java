@@ -29,8 +29,6 @@ public class HttpNuage {
                 if (status == 200) {
                     BufferedReader in = new BufferedReader(
                             new InputStreamReader(con.getInputStream()));
-                    String inputLine;
-                    StringBuffer content = new StringBuffer();
                     nuageList.add((new Gson()).fromJson(in.readLine(), Nuage.class));
                     in.close();
                     con.disconnect();

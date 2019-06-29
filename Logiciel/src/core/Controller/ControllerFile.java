@@ -10,6 +10,7 @@ import core.Http.Nuage.HttpNuage;
 import core.Http.Nuage.Nuage;
 import core.Http.Profil.HttpProfil;
 import core.Http.Profil.Profil;
+import core.Model.Entity;
 import core.Model.NuageModel;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
@@ -83,7 +84,6 @@ public class ControllerFile implements AnnotatedClass {
 
 
     public  String  url1;
-    public  String  url2;
     public  ArrayList<NuageModel> nuageArray = new ArrayList<NuageModel>();
 
 
@@ -99,7 +99,6 @@ public class ControllerFile implements AnnotatedClass {
         setUrlFromOs();
 
         label1.setText(url1);
-        label2.setText(url2);
 
         /*for(int i = 0 ; i < 100; i++){
             if(i % 5 == 0){
@@ -126,6 +125,7 @@ public class ControllerFile implements AnnotatedClass {
 
         //NuageModel file
         listFile2(nuageFile);
+        listDistantFileByParentId();
 
         // Fichier d'un dossier courant local
        //listFileByFolder(myFiles,url1);
@@ -284,18 +284,19 @@ public class ControllerFile implements AnnotatedClass {
         /*TreeItem<String> distant = new TreeItem<String>("wowow");
         TreeItem<String> rootItem = new TreeItem<String>("salade");
 
-        // JSP Item
+         //JSP Item
         TreeItem<String> itemJSP = new TreeItem<String>("tomate");
 
-        // Spring Item
-        TreeItem<String> itemSpring = new TreeItem<>("oignon");*/
+         //Spring Item
+        TreeItem<String> itemSpring = new TreeItem<>("oignon");
 
         // Add to Root
-        //distant.getChildren().addAll(rootItem, itemJSP, itemSpring);
+        distant.getChildren().addAll(rootItem, itemJSP, itemSpring);*/
         vbox.getChildren().clear();
         vbox.getChildren().add(labelNuage);
         TreeView<String> tree;
-        TreeItem<String> distant = new TreeItem<String>("Pommes");
+        TreeItem<String> distant = new TreeItem<String>("Fichiers distants");
+        tree = new TreeView<String>(distant);
         /*try {
             HttpApple test = new HttpApple();
             //System.out.println(test.getApple("5c5819ea0bbc7a1b444e9d9f"));
@@ -304,16 +305,55 @@ public class ControllerFile implements AnnotatedClass {
             //System.out.println(test.createApple("Cookie",635));
             //System.out.println(test.updateApple("5c45f7c51d5463541812ddf4","Pasteque",115));
             for(Apple a :test.getApples() ){
-                distant.getChildren().add(new TreeItem<>(a.getName()+" - "+a.getPepins()));
+                TreeItem <String> t = new TreeItem<>(a.getName()+" - "+a.getPepins());
+                t.getChildren().add(new TreeItem<>("lele"));
+                distant.getChildren().add(t);
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }*/
 
-
-        tree = new TreeView<String>(distant);
+        /*Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
+        System.out.println(o);
+        for( Entity i : o){
+            TreeItem <String> t = new TreeItem<String>(i.getName());
+            t.getChildren().add(new TreeItem<>("lele"));
+            distant.getChildren().add(t);
+            System.out.println(i.getName());
+        }*/
         vbox.getChildren().add(tree);
+    }
+
+
+
+    public void listDistantFileByParentId(){
+
+
+        /*
+        GET SIZE OF FILE
+        CHANGE NAME OF LABEL1 WITH THE Name of the current entitid
+
+         */
+
+        label2.setText("5d0f766742038438d41f5c5c");
+        Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
+        System.out.println(o);
+        for( Entity i : o){
+            HBox hbox =  new HBox();
+            hbox.setUserData(i);
+            //hbox.getChildren().add(img);
+            hbox.getChildren().add(new Label(i.getName()));
+            Pane pane = new Pane();
+            HBox.setHgrow(pane, Priority.ALWAYS);
+            //hbox.getChildren().add(pane);
+            //hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
+            nuageFiles.getChildren().add(hbox);
+            hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                System.out.println("Downlaod");
+                HttpEntite.download(i.get_id(),i.getName());
+            });
+        }
     }
 
     @Usage(description = "Affichage des fichiers d'un dossier")
@@ -355,7 +395,6 @@ public class ControllerFile implements AnnotatedClass {
     public void setUrlFromOs(){
         if( System.getProperty("os.name").contains("Windows")){//Windows
             //url1 = "C:\\";
-            url2 = "D:\\";
             TreeItem t = new TreeItem("Ordinateur");
             for(File file : File.listRoots()){
                 SimpleFileTreeItem To = new SimpleFileTreeItem(new File(String.valueOf(file)));
@@ -372,7 +411,6 @@ public class ControllerFile implements AnnotatedClass {
             });
         }else{ // other
             url1 = "/";
-            url2 = "/";
             listFile(myFile,url1);
             listFileByFolder(myFiles,url1);
         }
