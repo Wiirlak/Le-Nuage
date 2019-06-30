@@ -1,0 +1,24 @@
+.cloud{
+  background: none;
+
+}
+
+.searchbar{
+  position: fixed;
+  top: 20px;
+  z-index: 2000;
+  width: 33.3vw;
+  max-width: none !important;
+}
+
+.cover{
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+
+
+.img{
+  width: 6vw;
+  height: 8vh;
+}
