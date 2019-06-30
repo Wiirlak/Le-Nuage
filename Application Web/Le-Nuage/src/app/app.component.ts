@@ -11,6 +11,6 @@ export class AppComponent {
   title = 'Le-Nuage';
 
   isLogged() {
-    return this.authentificationService.isUserAuthenticated('a', 'b');
+    return this.authentificationService.loggingIn('jean@toto.fr', 'testtest');
   }
 }

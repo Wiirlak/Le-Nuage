@@ -7,7 +7,7 @@ const EntityController = require('./entity.controller');
 class NuageController {
     async getAll() {
         const nuage = await Nuage.find().populate('entities parentEntity');
-        if (nuage.length > 0 && nuage !== undefined) {
+        if (nuage.length > 0 && nuage !== null) {
             return nuage;
         }
     }
@@ -25,13 +25,13 @@ class NuageController {
         try {
             let n = await nuage.save();
 
-            if ( await this.createDirectory(n._id) === undefined) {
+            if ( await this.createDirectory(n._id) === null) {
                 nuage.remove();
                 return undefined;
             }
 
             const e = await EntityController.add(n._id, n._id, 'nuage');
-            if (e === undefined) {
+            if (e === null) {
                 return undefined;
             }
 
@@ -58,6 +58,19 @@ class NuageController {
         try {
             await fs.ensureDir(process.env.NUAGE_PATH + id);
             return true;
+        } catch (e) {
+            return undefined;
+        }
+    }
+
+    async updateName(id, name) {
+        const nuage = await Nuage.findById(id);
+        if (nuage === null) {
+            return undefined;
+        }
+        nuage.name = name;
+        try {
+            return await nuage.save();
         } catch (e) {
             return undefined;
         }

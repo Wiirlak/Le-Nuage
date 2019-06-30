@@ -38,6 +38,42 @@ router.get('/:id', async (req, res, next) => {
     res.json(u);
 });
 
+router.put('/', async(req, res, next) => {
+    if (!req.body.id) {
+        return res.status(400).end();
+    }
+    if (req.body.email) {
+        const user = await UserController.updateEmail(req.body.id, req.body.email);
+        if (user === undefined) {
+            return res.status(409).end();
+        }
+        return res.json(user);
+    }
+    if (req.body.password) {
+        const user = await UserController.updatePassword(req.body.id, req.body.password);
+        if (user === undefined) {
+            return res.status(409).end();
+        }
+        return res.json(user);
+    }
+    res.status(400).end();
+});
+
+router.delete('/:id', async(req, res, next) => {
+    if (!req.params.id) {
+        return res.status(400).end();
+    }
+
+    const u = await UserController.deleteUser(req.params.id);
+
+    if (u == undefined) {
+        return res.status(409).end();
+    }
+    res.send();
+});
+
+
+
 /*router.route('/:id')
     .get(UserController.view)
     .put(UserController.update)

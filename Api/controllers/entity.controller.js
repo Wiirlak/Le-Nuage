@@ -2,9 +2,7 @@
 
 const Entity = require('../models').Entity;
 const Type = require('../models').Type;
-const Nuage = require('../models').Nuage;
 const fs = require('fs-extra');
-const path = require('path');
 
 class EntityController {
 
@@ -17,7 +15,15 @@ class EntityController {
         return undefined;
     }
 
-    async add(parentId, name, type) {
+    async getEntityById(id) {
+        try {
+            return await Entity.findById(id).populate('type parent');
+        } catch (e) {
+            return undefined;
+        }
+    }
+
+    async  add(parentId, name, type) {
         //let nuage;
         const entity = new Entity();
         entity.name = name;
@@ -44,11 +50,8 @@ class EntityController {
         }
 
         try {
-            return await entity.save();
-            //nuage.entities.push(entity);
-            //await nuage.save();
-            //console.log(nuage);
-            //return entity;
+            const e = await entity.save();
+            return e;
         } catch (err) {
             return undefined;
         }
@@ -63,6 +66,49 @@ class EntityController {
         } catch (e) {
             return false;
         }
+    }
+
+    async downloadEntity(entityId) {
+        const entity = await Entity.findById(entityId);
+
+        if (entity === null) {
+            return undefined;
+        }
+        //TODO find problème
+        const parent = await this.getNuageByEntityId(entity._id);
+        if (parent === undefined || parent.type.name !== 'nuage') {
+            return undefined;
+        }
+        return `${process.env.NUAGE_PATH}${parent.id}/${entity.name}`;
+    }
+
+    async rename(entityId, name) {
+        const entity = await Entity.findById(entityId);
+        if (entity === null) {
+            return undefined;
+        }
+        const parent = await this.getNuageByEntityId(entity._id);
+        if (parent === undefined || parent.type.name !== 'nuage') {
+            return undefined;
+        }
+        const path = `${process.env.NUAGE_PATH}${parent.id}/${entity.name}`;
+        //TODO rename realfile
+        return undefined;
+    }
+
+    async getNuageByEntityId(id) {
+        const entity = await this.getEntityById(id);
+
+        if (entity !== undefined && entity.type.name === 'nuage') {
+            return entity;
+        }
+        const parent = await this.getEntityById(entity.parent._id);
+        if (parent !== undefined && parent.type.name === 'nuage') {
+            return parent;
+        } else if (parent !== undefined && parent.type.name === 'folder') {
+            return await this.getNuageByEntityId(parent.id);
+        }
+        return undefined;
     }
 
 }

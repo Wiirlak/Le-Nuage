@@ -1,17 +1,24 @@
+import { AuthentificationService } from './../../services/authentification/authentification.service';
 import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {Observable} from 'rxjs';
-import {AuthentificationService} from '../../services/authentification/authentification.service';
-import {LocalStorageService} from '../../../core/services/localStorage/local-storage.service';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, Route } from '@angular/router';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private localStorageService: LocalStorageService) { }
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.localStorageService.test('currentUser');
+
+
+  constructor(private authentificationService: AuthentificationService, private router: Router) {
   }
+
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.authentificationService.isAuthenticated()) {
+      return true;
+    }
+    console.log('dsl');
+    // navigate to login page
+    this.router.navigate(['/user/signin']);
+    // you can save redirect url so after authing we can move them back to the page they requested
+    return false;
+  }
+
 }

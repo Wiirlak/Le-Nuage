@@ -9,9 +9,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 class AuthController {
-    async register(name, email, password) {
-        const user = await UserController.add(name, email, password);
-        if (user === undefined) {
+    //req.body.name, req.body.firstname, req.body.email, req.body.date, req.body.password
+    async register(name, firstname, email, date, password) {
+        const user = await UserController.add(name, firstname, email, date, password);
+        if (user === null) {
             return undefined;
         }
 
@@ -37,7 +38,7 @@ class AuthController {
 
     async login(email, password) {
         const user = await UserController.getByEmail(email);
-        if (user === undefined) {
+        if (user === null) {
             return undefined;
         }
 

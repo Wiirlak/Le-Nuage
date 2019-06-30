@@ -18,6 +18,7 @@ import {
 import {MatGridListModule, MatCardModule, MatMenuModule, MatButtonModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import { RightbarComponent } from './shared/rightbar/rightbar.component';
+import {NgxFileDropModule} from 'ngx-file-drop';
 
 @NgModule({
   declarations: [HomeComponent, WrongPathComponent, HeaderComponent, NavbarComponent, RightbarComponent],
@@ -38,6 +39,7 @@ import { RightbarComponent } from './shared/rightbar/rightbar.component';
     NbIconModule,
     MatMenuModule,
     MatButtonModule,
+    NgxFileDropModule,
   ],
   exports: [
     HeaderComponent,
