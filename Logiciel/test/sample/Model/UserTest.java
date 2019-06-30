@@ -1,7 +1,7 @@
 package sample.Model;
 
 import org.junit.jupiter.api.Test;
-import core.Model.User;
+import core.model.User;
 
 import static org.junit.jupiter.api.Assertions.*;
 
