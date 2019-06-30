@@ -1,6 +1,6 @@
 'use strict';
 require('dotenv').config();
-const verify = require('./middleware');
+
 //Import express
 const express = require('express');
 //Import Cors
@@ -19,6 +19,7 @@ const app = express();
 //Configure bodyparser to handle requests
 app.use(morgan('dev'));
 app.use(cors());
+
 RouterBuilder.build(app);
 
 //var urlMongo = "mongodb://admin:admin@annuel3al-shard-00-00-iui8c.mongodb.net:27017,annuel3al-shard-00-01-iui8c.mongodb.net:27017,annuel3al-shard-00-02-iui8c.mongodb.net:27017/pierre?ssl=true&replicaSet=annuel3AL-shard-0&authSource=admin&retryWrites=true";

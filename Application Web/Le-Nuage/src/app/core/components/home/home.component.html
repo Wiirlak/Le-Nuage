@@ -1,0 +1,33 @@
+<input
+  nbInput
+  class="searchbar"
+  type="text"
+  fieldSize="medium"
+  status="info"
+  shape="semi-round"
+  placeholder="Rechercher ici..."
+  (keyup)="onKey($event)">
+
+<mat-grid-list
+  rowHeight="1.2:1"
+  cols="6"
+  id="cloudList"
+  nbInfiniteList
+  listenWindowScroll
+  [threshold]="500"
+  (bottomThreshold)="loadNext()">
+  <mat-grid-tile class="cloud" *ngFor="let cloud of cloudstmp">
+  <!-- [cloud]="newsPost"-->
+<!--        <mat-grid-list cols="4"-->
+  <mat-card class=" cover">
+      <img  mat-card-sm-image [src]="toGoodUrl(cloud.img)" class="img">
+      <mat-card-header>
+          <mat-card-title>{{cloud.name}}</mat-card-title>
+          <mat-card-subtitle>{{cloud.date_created}}</mat-card-subtitle>
+          <!--<mat-card-subtitle>{{cloud.id}}</mat-card-subtitle>-->
+      </mat-card-header>
+  </mat-card>
+    
+    
+  </mat-grid-tile>
+</mat-grid-list>

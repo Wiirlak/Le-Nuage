@@ -1,0 +1,26 @@
+<div class="contain">
+  <mat-card class="contained">
+    <mat-grid-list cols="2" rowHeight="100%">
+      <mat-grid-tile class="lft">
+        <img src="./assets/img/logo.png">
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <form class="frm"[formGroup]="myForm" (ngSubmit)="onSubmit()">
+          <h1 class="fil titre">Connexion</h1>
+          <mat-form-field class="fil">
+            <input matInput placeholder="Email" formControlName="email" required>
+          </mat-form-field>
+
+          <mat-form-field class="fil">
+            <input matInput placeholder="Password" type="password" formControlName="password" required>
+          </mat-form-field>
+          <button mat-button type="submit">Se connecter</button>
+          <a class="fila" routerLink="/forgotpwd">Mot de passe oublié</a>
+          <a class="fila" routerLink="/signup">Pas de compte ? s'en créer un !</a>
+        </form>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+</div>
+
+
