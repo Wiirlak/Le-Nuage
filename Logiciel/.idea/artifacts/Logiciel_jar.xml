@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Logiciel:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Logiciel_jar</output-path>
+    <root id="archive" name="Logiciel.jar">
+      <element id="module-output" name="Logiciel" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/commons-validator-1.6.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/commons-validator-1.6.jar" />
+    </root>
+  </artifact>
+</component>

@@ -36,7 +36,7 @@ router.post('/upload', upload.single('somefile'),async (req, res, next) => {
         return res.status(400).end();
     }
     //console.log(req.file);
-    const m = await EntityController.moveFile(req.file.path, `${process.env.NUAGE_PATH}${req.body.nuageId}/${req.file.originalname}`);
+    const m = await EntityController.moveFile(req.file.path, `${process.env.NUAGE_PATH}${req.body.parentId}/${req.file.originalname}`);
 
     if (!m) {
         return res.status(409).end();
@@ -47,6 +47,17 @@ router.post('/upload', upload.single('somefile'),async (req, res, next) => {
     }
 
     res.status(201).json(e);
+});
+
+router.get('/download', async (req, res, next) => {
+    if (!req.query.e) {
+        return res.status(400).end();
+    }
+
+    const path = await EntityController.downloadEntity(req.query.e);
+    console.log(path);
+
+    res.sendFile(path);
 });
 
 module.exports = router;

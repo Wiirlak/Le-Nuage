@@ -9,8 +9,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 class AuthController {
-    async register(name, email, password) {
-        const user = await UserController.add(name, email, password);
+    //req.body.name, req.body.firstname, req.body.email, req.body.date, req.body.password
+    async register(name, firstname, email, date, password) {
+        const user = await UserController.add(name, firstname, email, date, password);
         if (user === undefined) {
             return undefined;
         }

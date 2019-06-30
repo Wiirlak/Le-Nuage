@@ -21,6 +21,10 @@ const entitySchema = mongoose.Schema({
     created: {
         default: Date.now,
         type: Date
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 
