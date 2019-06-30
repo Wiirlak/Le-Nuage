@@ -13,7 +13,7 @@
 <?import javafx.scene.control.PasswordField?>
 
 <?import java.lang.Double?>
-<GridPane fx:controller="core.Controller.ControllerIndex"
+<GridPane fx:controller="core.controller.ControllerIndex"
           xmlns:fx="http://javafx.com/fxml" styleClass="tet" >
 
     <!-- Bind data-->

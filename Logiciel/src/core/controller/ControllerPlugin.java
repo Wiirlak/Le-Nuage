@@ -77,7 +77,7 @@ public class ControllerPlugin  implements AnnotatedClass {
         File selected = fileChooser.showOpenDialog(stage);
         if(selected != null){
             System.out.println(selected.toURI().toString());
-            Files.copy(selected.toPath(), Paths.get(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/Le-NuageModel/plugins/"+selected.getName()));
+            Files.copy(selected.toPath(), Paths.get(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/Le-Nuage/plugins/"+selected.getName()));
             refresh();
         }
     }

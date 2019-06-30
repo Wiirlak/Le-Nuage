@@ -362,7 +362,7 @@ public class ControllerFile implements AnnotatedClass {
             File file = new File(current, name);
             return !file.isHidden() && !file.isDirectory();
 
-        };
+    };
 
         ImageView img = new ImageView();
         img.setImage(new Image("/assets/pictures/file.png"));

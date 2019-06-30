@@ -14,7 +14,7 @@
 <?import javafx.stage.Screen?>
 <?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
-<HBox fx:controller="core.Controller.ControllerFile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="950" minWidth="700" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:controller="core.controller.ControllerFile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="950" minWidth="700" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane xmlns:fx="http://javafx.com/fxml" styleClass="tet" HBox.hgrow="ALWAYS" >
         <!-- Bind data-->
         <fx:define>
