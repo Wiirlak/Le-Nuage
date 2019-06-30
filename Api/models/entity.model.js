@@ -25,6 +25,9 @@ const entitySchema = mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    extension: {
+        type: String
     }
 });
 
