@@ -5,8 +5,6 @@ import annotation.ParserAnnotations;
 import annotation.Status;
 import annotation.Usage;
 import com.sun.javafx.application.LauncherImpl;
-import core.Http.Entite.HttpEntite;
-import core.Model.AuthService;
 import core.preloader.Preload;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import core.Controller.ControllerIndex;
-import plugin.PluginManager;
+import core.controller.ControllerIndex;
 
 import java.awt.*;
 
@@ -31,7 +28,7 @@ public class Main extends Application implements AnnotatedClass {
         Parent root = loader.load();
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(primaryStage);
-        primaryStage.setTitle("Test JAVAFX");
+        primaryStage.setTitle("Le-Nuage");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.toFront();
@@ -42,7 +39,7 @@ public class Main extends Application implements AnnotatedClass {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         primaryStage.setMaxWidth(screenSize.getWidth());
         primaryStage.setMaxHeight(screenSize.getHeight());
-        scene.getStylesheets().add("core/StyleSheet/stylesheet.css");
+        scene.getStylesheets().add("core/stylesheet/stylesheet.css");
         primaryStage.show();
     }
 

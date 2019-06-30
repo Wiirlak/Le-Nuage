@@ -1,8 +1,8 @@
 package annotation;
 
-import core.Controller.*;
+import core.controller.*;
 import core.Main;
-import core.Model.*;
+import core.model.*;
 import core.preloader.Preload;
 
 import java.io.File;
@@ -29,7 +29,7 @@ public class ParserAnnotations
         //Main
         test.add(new Main());
 
-        //Controller
+        //controller
         test.add(new ControllerFile());
         test.add(new ControllerIndex());
         test.add(new ControllerLoading());

@@ -32,7 +32,7 @@ public class PluginManager {
 
     public PluginManager() {
         mydoc = new JFileChooser().getFileSystemView().getDefaultDirectory().getPath();
-        checkPluginFolder("Le-NuageModel");
+        checkPluginFolder("Le-nuage");
         findAllJar(this.pluginPath);
         classPlugin = new LinkedList<>();
     }
@@ -67,7 +67,7 @@ public class PluginManager {
             if (entry.getName().endsWith(".class")) {
                 convertedName = entry.getName().substring(0,entry.getName().length() - 6).replace('/','.'); // remove ".class" and format
                 classPlugin.add(convertedName);
-                if (convertedName.equals("sample.Model.User")){
+                if (convertedName.equals("sample.model.User")){
                     Class<?> subClass = Class.forName(convertedName, true, loader);
                     Constructor<?> subConst = subClass.getConstructor();
                     Object doRun = subConst.newInstance();

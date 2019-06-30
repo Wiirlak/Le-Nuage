@@ -19,7 +19,7 @@ public class ParsingProcess {
     public void processParse(ArrayList<AnnotatedClass> ac) throws IOException {
         //ac.stream().map(n -> processParse(n)).findAny();
 
-        String str = new JFileChooser().getFileSystemView().getDefaultDirectory().getPath()+"\\Le-NuageModel\\Parser";
+        String str = new JFileChooser().getFileSystemView().getDefaultDirectory().getPath()+"\\Le-nuage\\Parser";
         System.out.println("To see the result go to : "+ new File(str));
         File f = new File(str);
         if(! f.exists())
