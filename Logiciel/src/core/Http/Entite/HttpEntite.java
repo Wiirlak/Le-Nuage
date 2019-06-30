@@ -1,11 +1,13 @@
 package core.Http.Entite;
 
 import com.google.gson.Gson;
+import core.Controller.ControllerFile;
 import core.Http.Apple.Apple;
 import core.Http.Nuage.Nuage;
 import core.Http.Profil.Profil;
 import core.Model.AuthService;
 import core.Model.Entity;
+import javafx.application.Platform;
 import javafx.scene.control.TreeItem;
 import okhttp3.*;
 import java.io.*;
@@ -48,7 +50,7 @@ public class HttpEntite {
         //System.out.println(response);
     }
 
-    public static void threadT(String file, String parentId) {
+    public static void threadT(String file, String parentId, ControllerFile c) {
         final String threatname = String.format("%.3f",  System.currentTimeMillis() / 1000.0);;
         Thread t = new Thread() {
             public void run() {
@@ -58,6 +60,8 @@ public class HttpEntite {
                     for(Thread thread : setOfThread){
                         if(thread.getName()==threatname){
                             System.out.println("End : "+threatname);
+                            Platform.runLater( () ->c.reload());
+
                             thread.interrupt();
                         }
                     }
@@ -100,8 +104,9 @@ public class HttpEntite {
         }
     }
 
-    public static void download(String fileId,String filename){
+    public static void download(String fileId,String filename, String output){
         try{
+            System.out.println(output);
             URL url = new URL(apiUrl+"/entity/download?e="+fileId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -109,13 +114,27 @@ public class HttpEntite {
             con.setConnectTimeout(60000); //60 secs
             con.setReadTimeout(60000); //60 secs
             int status = con.getResponseCode();
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            FileWriter fw = new FileWriter("E:\\Autre\\Ecole\\ESGI\\3AL\\Projet_Annuel\\"+filename);
-            fw.write(in.lines().collect(Collectors.joining("\r\n")));
-            fw.close();
-            in.close();
-            con.disconnect();
+            if ( status != 200)
+                throw new IOException();
+            /*BufferedReader in = new BufferedReader( new InputStreamReader(con.getInputStream(), "UTF-8"));
+            if (!output.isEmpty()) {
+                FileWriter fw = new FileWriter(output+"\\"+filename);
+                fw.write(in.lines().collect(Collectors.joining("\r\n")));
+                fw.close();
+                in.close();
+                con.disconnect();
+            }else{
+                throw new IOException();
+            }*/
+            byte[] buffer = new byte[4096];
+            int n;
+
+            OutputStream t = new FileOutputStream( output+"\\"+filename );
+            while ((n = con.getInputStream().read(buffer)) != -1)
+            {
+                t.write(buffer, 0, n);
+            }
+            t.close();
         }catch(IOException e ){
             System.out.println("error");
         }

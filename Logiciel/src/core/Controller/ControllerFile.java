@@ -233,8 +233,6 @@ public class ControllerFile implements AnnotatedClass {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
 
             }
@@ -314,14 +312,14 @@ public class ControllerFile implements AnnotatedClass {
             e.printStackTrace();
         }*/
 
-        /*Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
+        Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
         System.out.println(o);
         for( Entity i : o){
             TreeItem <String> t = new TreeItem<String>(i.getName());
             t.getChildren().add(new TreeItem<>("lele"));
             distant.getChildren().add(t);
             System.out.println(i.getName());
-        }*/
+        }
         vbox.getChildren().add(tree);
     }
 
@@ -338,8 +336,9 @@ public class ControllerFile implements AnnotatedClass {
 
         label2.setText("5d0f766742038438d41f5c5c");
         Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
-        System.out.println(o);
+        nuageFiles.getChildren().clear();
         for( Entity i : o){
+            System.out.println(i);
             HBox hbox =  new HBox();
             hbox.setUserData(i);
             //hbox.getChildren().add(img);
@@ -351,7 +350,8 @@ public class ControllerFile implements AnnotatedClass {
             nuageFiles.getChildren().add(hbox);
             hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 System.out.println("Downlaod");
-                HttpEntite.download(i.get_id(),i.getName());
+                HttpEntite.download(i.get_id(),i.getName(),label1.getText().isEmpty()? "":label1.getText());
+                reload();
             });
         }
     }
@@ -386,7 +386,7 @@ public class ControllerFile implements AnnotatedClass {
             hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
             vbox.getChildren().add(hbox);
             hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                HttpEntite.threadT(label1.getText()+"\\"+hbox.getUserData().toString(),"5d0f766742038438d41f5c5c");
+                HttpEntite.threadT(label1.getText()+"\\"+hbox.getUserData().toString(),"5d0f766742038438d41f5c5c",this);
             });
         }
     }
@@ -569,11 +569,7 @@ public class ControllerFile implements AnnotatedClass {
 
     @FXML
     @Usage(description = "Recharger les informations de la page")
-    public void reload() throws InterruptedException {
-        /*for(int i = 0 ; i < 360 ; i++){
-            reloaded.setRotate(reloaded.getRotate() + i);
-            TimeUnit.MILLISECONDS.sleep(25);
-        }*/
+    public void reload() {
         RotateTransition rt = new RotateTransition(Duration.millis(3000),reloaded);
         rt.setByAngle(360);
         rt.setFromAngle(0);
@@ -582,6 +578,8 @@ public class ControllerFile implements AnnotatedClass {
         rt.play();
         getData();
         listFile2(nuageFile);
+        listDistantFileByParentId();
+        System.out.println("reloaded");
     }
 
     @FXML
