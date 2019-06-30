@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
     name: {
         type: String
     },
-    firstname: {
+    lastname: {
         type: String
     },
     email: {

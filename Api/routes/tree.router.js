@@ -23,16 +23,6 @@ router.get('/:parentId', async (req, res, next) => {
 
 });
 
-router.get('/all/:parentId', async (req, res, next) => {
-    if (!req.params.parentId) {
-        return res.status(400).end();
-    }
-
-    await TreeController.getAllTree(req.params.parentId);
-
-    res.send();
-});
-
 router.post('/', async (req, res, next) => {
 
 });

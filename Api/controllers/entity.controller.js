@@ -65,15 +65,5 @@ class EntityController {
         }
     }
 
-    async downloadEntity(entityId) {
-        const entity = await Entity.findOne({ _id : entityId });
-
-        if (entity === null) {
-            return undefined;
-        }
-
-        return `${process.env.NUAGE_PATH}${entity.parent}/${entity.name}`;
-    }
-
 }
 module.exports = new EntityController();

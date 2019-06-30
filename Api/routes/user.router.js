@@ -38,19 +38,6 @@ router.get('/:id', async (req, res, next) => {
     res.json(u);
 });
 
-router.delete('/:id', async(req, res, next) => {
-    if (!req.params.id) {
-        return res.status(400).end();
-    }
-
-    const u = await UserController.deleteUser(req.params.id);
-
-    if (u == undefined) {
-        return res.status(409).end();
-    }
-    res.send();
-});
-
 /*router.route('/:id')
     .get(UserController.view)
     .put(UserController.update)

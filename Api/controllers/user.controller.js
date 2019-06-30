@@ -18,14 +18,8 @@ class UserController {
         return undefined;
     }
 
-    //req.body.name || !req.body.firstname || !req.body.email || !req.body.date || !req.body.password
-    async add(name, firstname, email, date, password) {
+    async add(name, email, password) {
         const hashedPassword = await bcrypt.hash(password, 8);
-
-        if (await User.findOne({ email: email})) {
-            console.log("qzdqzd");
-            return undefined;
-        }
 
         const nuage = await NuageController.add('Default', null);
 
@@ -35,9 +29,7 @@ class UserController {
 
         const user = new User();
         user.name = name;
-        user.firstname = firstname;
         user.email = email;
-        user.birthday = date;
         user.password = hashedPassword;
         user.nuages.push(nuage);
 
@@ -62,20 +54,6 @@ class UserController {
             return undefined;
         }
         return user;
-    }
-
-    async deleteUser(id) {
-        const user = await User.findOneAndUpdate( { _id: id }, { is_deleted: true });
-
-        if (user === null) {
-            return undefined;
-        }
-
-        return user;
-    }
-
-    async updateUser(id, password) {
-
     }
 }
 
