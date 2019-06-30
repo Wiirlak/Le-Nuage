@@ -13,6 +13,8 @@ import {AdminModule} from './admin/admin.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NbThemeModule, NbLayoutModule, NbSidebarModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import {Globals} from './core/globals/globals';
+import {AuthGuard} from './admin/guard/auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbEvaIconsModule,
     NbSidebarModule
   ],
-  providers: [],
+  providers: [Globals, AuthGuard],
   bootstrap: [AppComponent]
 })
 

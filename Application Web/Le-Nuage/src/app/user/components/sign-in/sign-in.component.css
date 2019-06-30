@@ -1,0 +1,38 @@
+.lft{
+  background: #4b9df8;
+}
+
+.titre{
+  color: #4b9df8;
+}
+
+.frm{
+  padding: 0 1vw 0 1vw;
+  width: 40vw;
+  text-align: center;
+}
+
+.fil{
+  width: 100%;
+}
+
+.fila{
+  color: #4b9df8;
+  width: 100%;
+  display: block;
+  text-decoration: #4b9df8 underline;
+}
+
+.contain{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*margin-top: 10vh;*/
+  height: 100vh;
+  background: #f9f9f9;
+}
+.contained{
+  padding: 0;
+  height: 70vh;
+  width: 45vw;
+}

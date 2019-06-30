@@ -1,9 +1,9 @@
 <nb-layout>
-  <nb-layout-header fixed *ngIf="isLogged()">
+  <nb-layout-header fixed>
     <app-header></app-header> <!-- if logged in -->
   </nb-layout-header>
 
-  <nb-sidebar *ngIf="isLogged()">
+  <nb-sidebar>
     <app-navbar></app-navbar> <!-- if logged in -->
   </nb-sidebar>
 

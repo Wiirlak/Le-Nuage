@@ -8,16 +8,15 @@ import { Cloud } from '../../models/Cloud';
 export class CloudsService {
   clouddata = new Array();
 
-
-
-
-  names = new Array('Jule', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon', 'Pier', 'Andrey', 'Mod', 'Papi', 'llon');
-  constructor() { }
-  load(actual, pageSize, filter) {
-
-    for (let i = 0 ; i < 100 ; i++){
-        this.clouddata.push(new Cloud(i,"https://zupimages.net/up/19/26/afo4.png","15/05/2018","Jule"));
+  constructor() {
+    for (let i = 0 ; i < 120 ; i++) {
+      this.clouddata.push(new Cloud(i,"https://zupimages.net/up/19/26/afo4.png","15/05/2018","J"+i+"ulie"));
     }
+    this.clouddata.sort(() => {
+      return .5 - Math.random();
+    });
+  }
+  load(actual, pageSize, filter) {
     return new Observable<Array<Cloud>>((observer) => {
       /*const namess = new Array();
       const currentPos = actual * pageSize;
@@ -32,19 +31,19 @@ export class CloudsService {
         }
       }
       observer.next(namess);*/
-      const namess = new Array();
+      const clouds = new Array();
       const currentPos = actual * pageSize;
       let i;
       for (i = currentPos; i < currentPos + pageSize && i < this.clouddata.length; i ++) {
         if (filter.length > 0) {
             if (this.clouddata[i].name.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
-              namess.push(this.clouddata[i]);
+              clouds.push(this.clouddata[i]);
             }
         } else {
-          namess.push(this.clouddata[i]);
+          clouds.push(this.clouddata[i]);
         }
       }
-      observer.next(namess);
+      observer.next(clouds);
     });
   }
 }

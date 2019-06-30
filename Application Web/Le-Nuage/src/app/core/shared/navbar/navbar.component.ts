@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ProfilComponent} from '../../../user/components/profil/profil.component';
 import {AuthentificationService} from '../../../admin/services/authentification/authentification.service';
+import {NbMenuService} from '@nebular/theme';
 
 @Component({
   selector: 'app-navbar',
@@ -47,12 +48,18 @@ export class NavbarComponent implements OnInit {
         },
         {
           title: 'Déconnexion',
-          link: ['/user/signup'],
+          link: ['/user/signin'],
         },
       ],
     },
   ];
-  constructor(private authService: AuthentificationService) {}
+  constructor(private authService: AuthentificationService, private menu: NbMenuService) {
+    menu.onItemClick().subscribe((res) => {
+      if (res.item.title === 'Déconnexion') {
+        authService.loggingOut();
+      }
+    });
+  }
   logged = false;
 
   ngOnInit() {
