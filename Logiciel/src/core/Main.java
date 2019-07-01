@@ -54,7 +54,7 @@ public class Main extends Application implements AnnotatedClass {
         System.out.println(AuthService.getUser().getNom());*/
 
         ParserAnnotations t =  new ParserAnnotations();
-        LauncherImpl.launchApplication(Main.class, Preload.class, args);
+        //LauncherImpl.launchApplication(Main.class, Preload.class, args);
 
         /*PluginManager a = new PluginManager();
         a.openJarFile(a.listPlugins[1]);*/

@@ -57,6 +57,7 @@ public class PluginManager {
     }
 
     public void runJar2(String fp, URL ur) throws Exception {
+        classPlugin.clear();
         loader = URLClassLoader.newInstance(new URL[] { ur }, getClass().getClassLoader());
 
         JarFile jar = new JarFile(fp);
@@ -88,7 +89,24 @@ public class PluginManager {
                             //m.invoke(doRun, args);
                         }
                     }
+                }else if (convertedName.equals("M2")){
+                    Class<?> subClass = Class.forName(convertedName, true, loader);
+                    Constructor<?> subConst = subClass.getConstructor();
+                    Object doRun = subConst.newInstance();
+
+                    Method testaccess = subClass.getMethod("pluginEz");
+                    System.out.println(testaccess.invoke(doRun));
+
+                /******************************** CELLE CI EST IMPORTANTE ******************************/
+                }else if (convertedName.equals("Runnable")){
+                    Class<?> subClass = Class.forName(convertedName, true, loader);
+                    Constructor<?> subConst = subClass.getConstructor();
+                    Object doRun = subConst.newInstance();
+
+                    Method testaccess = subClass.getMethod("main");
+                    System.out.println(testaccess.invoke(doRun));
                 }
+                /******************************** CELLE CI EST IMPORTANTE ******************************/
             }
         }
         System.out.println(classPlugin);
