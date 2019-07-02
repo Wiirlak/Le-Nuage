@@ -50,8 +50,10 @@ public class PluginFxml implements AnnotatedClass {
             public void handle(ActionEvent event) {
                 System.out.println("activated");
                 try {
-                    PluginManager.openJarUrl(name.toString());
-                } catch (IOException e) {
+                    //PluginManager.openJarUrl(name.toString());
+                    PluginManager t = new PluginManager();
+                    t.runJar2(named,"returnNewStage");
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

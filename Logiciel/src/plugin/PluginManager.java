@@ -2,6 +2,8 @@ package plugin;
 
 import com.sun.org.apache.bcel.internal.classfile.ClassParser;
 import com.sun.org.apache.bcel.internal.classfile.JavaClass;
+import core.data.PluginData;
+import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
@@ -56,7 +58,17 @@ public class PluginManager {
         }
     }
 
-    public void runJar2(String fp, URL ur) throws Exception {
+    public void runAllJar(String methodName) throws Exception {
+        for(File file : listPlugins) {
+            runJar2(file,methodName);
+        }
+    }
+
+    public void runJar2(File name, String methodName) throws Exception {
+        String fp = name.getAbsolutePath();
+        URL ur = name.toURL();
+
+
         classPlugin.clear();
         loader = URLClassLoader.newInstance(new URL[] { ur }, getClass().getClassLoader());
 
@@ -68,43 +80,25 @@ public class PluginManager {
             if (entry.getName().endsWith(".class")) {
                 convertedName = entry.getName().substring(0,entry.getName().length() - 6).replace('/','.'); // remove ".class" and format
                 classPlugin.add(convertedName);
-                if (convertedName.equals("sample.model.User")){
+
+                if (convertedName.equals("Runnable")){
                     Class<?> subClass = Class.forName(convertedName, true, loader);
                     Constructor<?> subConst = subClass.getConstructor();
                     Object doRun = subConst.newInstance();
-
-                    Method testaccess = subClass.getMethod("getNom");
-                    System.out.println(testaccess.invoke(doRun));
-
-                }else if (convertedName.equals("sample.Main")){
-                    Class<?> subClass = Class.forName(convertedName, true, loader);
-                    Constructor<?> subConst = subClass.getConstructor();
-                    Object doRun = subConst.newInstance();
-
-                    Method[] testsaccess = subClass.getMethods();
-                    for(Method m: testsaccess){
-                        //System.out.println(m.getName());
-                        if(m.getName().equals("main")){
-                            String[] args = new String[] {};
-                            //m.invoke(doRun, args);
+                    Method[] methodes = subClass.getMethods();
+                    for(Method m: methodes){
+                        if(m.getName().equals(methodName)){
+                            if( methodName.equals("returnNewStage") ){
+                                Stage s = (Stage) m.invoke(doRun);
+                                s.show();
+                            }else if(methodName.equals("returnNuageName")){
+                                PluginData.nuageName = (String) m.invoke((doRun));
+                            }else{
+                                m.invoke(doRun);
+                            }
+                            break;
                         }
                     }
-                }else if (convertedName.equals("M2")){
-                    Class<?> subClass = Class.forName(convertedName, true, loader);
-                    Constructor<?> subConst = subClass.getConstructor();
-                    Object doRun = subConst.newInstance();
-
-                    Method testaccess = subClass.getMethod("pluginEz");
-                    System.out.println(testaccess.invoke(doRun));
-
-                /******************************** CELLE CI EST IMPORTANTE ******************************/
-                }else if (convertedName.equals("Runnable")){
-                    Class<?> subClass = Class.forName(convertedName, true, loader);
-                    Constructor<?> subConst = subClass.getConstructor();
-                    Object doRun = subConst.newInstance();
-
-                    Method testaccess = subClass.getMethod("main");
-                    System.out.println(testaccess.invoke(doRun));
                 }
                 /******************************** CELLE CI EST IMPORTANTE ******************************/
             }
@@ -135,23 +129,8 @@ public class PluginManager {
 
     }
 
-    public void openJarFile(File name) throws Exception {
-        URL tmp = name.toURL();
-        //runJar(name.getAbsolutePath());
-        runJar2(name.getAbsolutePath(), tmp);
-    }
-
     public static void openJarUrl(String name) throws IOException {
         runJar(name);
     }
-
-    public void openJarFiles() throws Exception {
-        for(File f: listPlugins){
-            openJarFile(f);
-        }
-    }
-
-
-
 
 }

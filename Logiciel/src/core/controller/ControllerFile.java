@@ -3,6 +3,7 @@ package core.controller;
 import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
+import core.data.PluginData;
 import core.http.entite.HttpEntite;
 import core.http.nuage.HttpNuage;
 import core.http.nuage.Nuage;
@@ -490,7 +491,7 @@ public class ControllerFile implements AnnotatedClass {
         stage.setMinHeight(700);
         stage.setMaxWidth(900);
         stage.setMaxHeight(700);
-        stage.setTitle("Le-Nuage");
+        stage.setTitle(PluginData.nuageName);
         stage.setScene(scene);
         scene.getStylesheets().add("core/stylesheet/stylesheet.css");
         stage.show();
@@ -505,7 +506,7 @@ public class ControllerFile implements AnnotatedClass {
         ControllerProfil controllerProfil = loader.getController();
         controllerProfil.setStage(subStage);
         subStage.setResizable(false);
-        subStage.setTitle("Mon profil");
+        subStage.setTitle(PluginData.nuageName+" - Mon profil");
         subStage.setScene(scene);
         subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.initOwner(stage);
@@ -523,7 +524,7 @@ public class ControllerFile implements AnnotatedClass {
         ControllerLoading controllerLoading = loader.getController();
         ControllerLoading.setStage(subStage);
         subStage.setResizable(false);
-        subStage.setTitle("Mon profil");
+        subStage.setTitle(PluginData.nuageName + " - Mon profil");
         subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.setScene(scene);
         subStage.initOwner(stage);
@@ -543,7 +544,7 @@ public class ControllerFile implements AnnotatedClass {
         ControllerOption controllerOption = loader.getController();
         controllerOption.setStage(subStage);
         subStage.setResizable(false);
-        subStage.setTitle("Options");
+        subStage.setTitle(PluginData.nuageName+" - Options");
         subStage.setScene(scene);
         subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.initOwner(stage);
@@ -591,7 +592,7 @@ public class ControllerFile implements AnnotatedClass {
         ControllerSynchro controllerSynchro = loader.getController();
         controllerSynchro.setStage(subStage);
         subStage.setResizable(false);
-        subStage.setTitle("Synchronisation");
+        subStage.setTitle(PluginData.nuageName + " - Synchronisation");
         subStage.setScene(scene);
         subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.initOwner(stage);

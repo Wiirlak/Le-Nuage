@@ -10,6 +10,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import plugin.PluginManager;
 
 
 @Status(author = "Bastien NISOLE",
@@ -17,6 +18,12 @@ import javafx.stage.Stage;
         version = 2.5)
 public class Preload extends Preloader implements AnnotatedClass {
     private Stage preloaderStage;
+
+
+    public void initialize() throws Exception {
+        PluginManager a = new PluginManager();
+        a.runAllJar("lnOpen");
+    }
 
     @Override
     @Usage(description = "Affichage d'une fenetre en attendant que la l'index charge")
