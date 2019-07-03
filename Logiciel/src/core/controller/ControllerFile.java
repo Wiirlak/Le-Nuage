@@ -314,9 +314,11 @@ public class ControllerFile implements AnnotatedClass {
         Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
         //System.out.println(o);
         for( Entity i : o){
-            TreeItem <String> t = new TreeItem<String>(i.getName());
-            t.getChildren().add(new TreeItem<>("lele"));
-            distant.getChildren().add(t);
+            if(i.getType().getName().equals("folder")){
+                TreeItem <String> t = new TreeItem<String>(i.getName());
+                distant.getChildren().add(t);
+            }
+
             //System.out.println(i.getName());
         }
         vbox.getChildren().add(tree);
@@ -337,21 +339,24 @@ public class ControllerFile implements AnnotatedClass {
         Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
         nuageFiles.getChildren().clear();
         for( Entity i : o){
-            //System.out.println(i);
-            HBox hbox =  new HBox();
-            hbox.setUserData(i);
-            //hbox.getChildren().add(img);
-            hbox.getChildren().add(new Label(i.getName()));
-            Pane pane = new Pane();
-            HBox.setHgrow(pane, Priority.ALWAYS);
-            //hbox.getChildren().add(pane);
-            //hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
-            nuageFiles.getChildren().add(hbox);
-            hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                //System.out.println("Downlaod");
-                HttpEntite.download(i.get_id(),i.getName(),label1.getText().isEmpty()? "":label1.getText(),this);
+            if(i.getType().getName().equals("file")){
+                //System.out.println(i);
+                HBox hbox =  new HBox();
+                hbox.setUserData(i);
+                //hbox.getChildren().add(img);
+                hbox.getChildren().add(new Label(i.getName()));
+                Pane pane = new Pane();
+                HBox.setHgrow(pane, Priority.ALWAYS);
+                //hbox.getChildren().add(pane);
+                //hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
+                nuageFiles.getChildren().add(hbox);
+                hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                    //System.out.println("Downlaod");
+                    HttpEntite.download(i.get_id(),i.getName(),label1.getText().isEmpty()? "":label1.getText(),this);
 
-            });
+                });
+            }
+
         }
     }
 
