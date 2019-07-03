@@ -97,7 +97,7 @@ public class ControllerFile implements AnnotatedClass {
         //System.out.println(AuthService.getUser().getEmail());
         setUrlFromOs();
 
-        label1.setText(url1);
+        //label1.setText(url1);
 
         /*for(int i = 0 ; i < 100; i++){
             if(i % 5 == 0){
@@ -351,9 +351,7 @@ public class ControllerFile implements AnnotatedClass {
                 //hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
                 nuageFiles.getChildren().add(hbox);
                 hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                    //System.out.println("Downlaod");
-                    HttpEntite.download(i.get_id(),i.getName(),label1.getText().isEmpty()? "":label1.getText(),this);
-
+                    HttpEntite.download(i.get_id(),i.getName(),label1.getText().equals("")? "":label1.getText(),this);
                 });
             }
 
@@ -591,19 +589,24 @@ public class ControllerFile implements AnnotatedClass {
     @FXML
     @Usage(description = "Ouverture de la fenetre de synchronisation")
     public void synchro() throws IOException {
-        Stage subStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("synchro.fxml"));
-        Scene scene = new Scene(loader.load());
-        ControllerSynchro controllerSynchro = loader.getController();
-        controllerSynchro.setStage(subStage);
-        subStage.setResizable(false);
-        subStage.setTitle(PluginData.nuageName + " - Synchronisation");
-        subStage.setScene(scene);
-        subStage.getIcons().add(new Image("pictures/LNb.png"));
-        subStage.initOwner(stage);
-        subStage.initModality(Modality.WINDOW_MODAL);
-        scene.getStylesheets().add("core/stylesheet/stylesheet.css");
-        subStage.show();
+        if(!label1.getText().equals("") && !label2.getText().equals("") ){
+            Stage subStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("synchro.fxml"));
+            Scene scene = new Scene(loader.load());
+            ControllerSynchro controllerSynchro = loader.getController();
+            controllerSynchro.setLocalFolder(label1.getText());
+            controllerSynchro.setDistantFolder(label2.getText());
+            controllerSynchro.setStage(subStage);
+            subStage.setResizable(false);
+            subStage.setTitle(PluginData.nuageName + " - Synchronisation");
+            subStage.setScene(scene);
+            subStage.getIcons().add(new Image("pictures/LNb.png"));
+            subStage.initOwner(stage);
+            subStage.initModality(Modality.WINDOW_MODAL);
+            scene.getStylesheets().add("core/stylesheet/stylesheet.css");
+            subStage.show();
+        }
+
     }
 
 }

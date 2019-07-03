@@ -11,6 +11,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -35,6 +36,20 @@ public class ControllerSynchro  implements AnnotatedClass {
     public TextField recherche;
 
     @FXML
+    public Label localFilePath;
+
+    @FXML
+    public Label distantFilePath;
+
+    public void setLocalFolder(String localFolder) {
+        localFilePath.setText(localFolder);
+    }
+
+    public void setDistantFolder(String distantFolder) {
+        distantFilePath.setText(distantFolder);
+    }
+
+    @FXML
     public ObservableList<SynchroFxml> masterData = FXCollections.observableArrayList();
 
     public SortedList<SynchroFxml> sortedData;
@@ -48,6 +63,7 @@ public class ControllerSynchro  implements AnnotatedClass {
     @FXML
     @Usage(description = "Traitement réaliser lors de l'initialisation")
     public void initialize(){
+
         files.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         for( int i = 0 ; i < 50; i ++){
             masterData.add(new SynchroFxml());

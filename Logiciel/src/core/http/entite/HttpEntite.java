@@ -99,6 +99,8 @@ public class HttpEntite {
     public static void download(String fileId,String filename, String output ,ControllerFile c){
         try{
             System.out.println(output);
+            if(output.equals(""))
+                return;
             URL url = new URL(apiUrl+"/entity/download?e="+fileId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
