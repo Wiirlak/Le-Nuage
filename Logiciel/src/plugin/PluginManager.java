@@ -1,19 +1,16 @@
 package plugin;
 
-import com.sun.org.apache.bcel.internal.classfile.ClassParser;
-import com.sun.org.apache.bcel.internal.classfile.JavaClass;
+import com.google.gson.Gson;
 import core.data.PluginData;
 import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FilenameFilter;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
@@ -25,41 +22,61 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class PluginManager {
-    public File pluginPath;
     public String mydoc;
+    public File pluginPath;
     public ClassLoader loader;
     public Thread load;
     public File[] listPlugins;
     public List<String> classPlugin;
+    public PluginConfig conf;
 
     public PluginManager() {
         mydoc = new JFileChooser().getFileSystemView().getDefaultDirectory().getPath();
         checkPluginFolder("Le-nuage");
+        conf = new PluginConfig(pluginPath,"plugins.conf");
         findAllJar(this.pluginPath);
         classPlugin = new LinkedList<>();
     }
 
+
     public boolean checkPluginFolder(String name){
-        File test = new File(mydoc+'\\'+name+"\\plugins");
-        if(!test.exists()){
-            if(!test.mkdirs()){
+        File temp = new File(mydoc+'\\'+name+"\\plugins");
+        if(!temp.exists()){
+            try{
+                String content = "[\n\t\"pluginName.jar\"\n]";
+                temp.createNewFile();
+                FileOutputStream tmp= new FileOutputStream(temp);
+                tmp.write(content.getBytes());
+                tmp.flush();
+                tmp.close();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            if(!temp.mkdirs()){
                 return false;
             }
         }
-        this.pluginPath = test;
+        this.pluginPath = temp;
         return true;
     }
 
     public void findAllJar(File path){
         listPlugins = path.listFiles((dir, name) -> name.endsWith(".jar"));
 
+        //Comment under
         for(File file : listPlugins) {
-            System.out.println(file.getName());
+            //System.out.println(file.getName());
         }
     }
 
     public void runAllJar(String methodName) throws Exception {
         for(File file : listPlugins) {
+            runJar2(file,methodName);
+        }
+    }
+
+    public void runSelectedJar(String methodName) throws Exception {
+        for(File file : conf.listExecutedPlugins) {
             runJar2(file,methodName);
         }
     }
@@ -100,10 +117,9 @@ public class PluginManager {
                         }
                     }
                 }
-                /******************************** CELLE CI EST IMPORTANTE ******************************/
             }
         }
-        System.out.println(classPlugin);
+        //System.out.println(classPlugin);
     }
 
     public static void runJar(String fp) throws IOException {
@@ -124,7 +140,7 @@ public class PluginManager {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(p.exitValue());
+            //System.out.println(p.exitValue());
         }, 1, TimeUnit.SECONDS);
 
     }
