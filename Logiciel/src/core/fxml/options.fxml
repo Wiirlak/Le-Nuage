@@ -6,13 +6,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<GridPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="core.controller.ControllerOption"
-            prefHeight="400.0" prefWidth="600.0">
-    <Label text="Ok"></Label>
-    <VBox>
-        <Button text="Plugins" onMouseClicked="#openplugins"></Button>
-        <Button text="Quitter" onMouseClicked="#leave"></Button>
+            prefHeight="400.0" prefWidth="250.0" styleClass="anchor" alignment="BASELINE_CENTER">
+    <VBox GridPane.columnIndex="1" alignment="BASELINE_CENTER" spacing="15">
+        <Label text="Options" styleClass="connect"></Label>
+        <Button text="Plugins" onMouseClicked="#openplugins" styleClass="optionButton"></Button>
+        <Button text="Quitter" onMouseClicked="#leave" styleClass="optionButton"></Button>
     </VBox>
-</AnchorPane>
+</GridPane>

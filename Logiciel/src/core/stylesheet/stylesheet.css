@@ -130,3 +130,19 @@
 .bgcolor{
     -fx-background-color:transparent
 }
+
+
+.anchor{
+    -fx-background-image: url('file:/C:/Users/Bastien/Pictures/nuage.gif');
+    -fx-background-size: cover, auto;
+}
+
+.optionButton {
+    -fx-background-color: #3d94f6;
+    -fx-border-radius: 6;
+    -fx-border-color: #337fed;
+    -fx-border-style: solid;
+    -fx-padding: 6 40;
+    -fx-text-fill : #ffffff;
+    -fx-font-size: 20px;
+}
