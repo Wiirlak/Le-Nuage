@@ -1,14 +1,14 @@
-<mat-grid-list cols="4">
-  <mat-grid-tile>
+<mat-grid-list cols="4" class="myHeight">
+  <mat-grid-tile class="icon">
     <nb-icon icon="download-outline"></nb-icon>
   </mat-grid-tile>
-  <mat-grid-tile>
+  <mat-grid-tile class="icon">
     <nb-icon icon="share-outline"></nb-icon>
   </mat-grid-tile>
-  <mat-grid-tile>
+  <mat-grid-tile class="icon">
     <nb-icon icon="trash-2-outline"></nb-icon>
   </mat-grid-tile>
-  <mat-grid-tile>
+  <mat-grid-tile class="icon">
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
       <nb-icon icon="menu-outline"></nb-icon>
     </button>
@@ -28,7 +28,7 @@
     </mat-menu>
   </mat-grid-tile>
 
-  <mat-grid-tile colspan="4" style="min-height: 50px;">
+  <mat-grid-tile colspan="4">
     Filename.docx
   </mat-grid-tile>
   <mat-grid-tile colspan="4">

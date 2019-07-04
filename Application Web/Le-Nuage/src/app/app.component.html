@@ -7,11 +7,12 @@
     <app-navbar></app-navbar> <!-- if logged in -->
   </nb-sidebar>
 
+  <nb-sidebar right style="background: #4b9df8">
+    <app-rightbar></app-rightbar>
+  </nb-sidebar>
+
   <nb-layout-column style="min-width: 80%">
     <router-outlet></router-outlet>
-  </nb-layout-column>
-  <nb-layout-column>
-    <app-rightbar></app-rightbar>
   </nb-layout-column>
 
 <!--  <nb-layout-footer fixed> &lt;!&ndash; if logged in &ndash;&gt;-->
