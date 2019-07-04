@@ -133,7 +133,7 @@
 
 
 .anchor{
-    -fx-background-image: url('file:/C:/Users/Bastien/Pictures/nuage.gif');
+    -fx-background-image: url('../../assets/pictures/nuage.gif');
     -fx-background-size: cover, auto;
 }
 
