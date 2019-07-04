@@ -5,6 +5,7 @@ import annotation.ParserAnnotations;
 import annotation.Status;
 import annotation.Usage;
 import com.sun.javafx.application.LauncherImpl;
+import core.data.PluginData;
 import core.preloader.Preload;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +14,15 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import core.controller.ControllerIndex;
+import plugin.PluginManager;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
+import javax.sound.sampled.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 @Status(author = "Bastien NISOLE",
         progression = 90,
@@ -28,7 +36,7 @@ public class Main extends Application implements AnnotatedClass {
         Parent root = loader.load();
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(primaryStage);
-        primaryStage.setTitle("Le-Nuage");
+        primaryStage.setTitle(PluginData.nuageName);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.toFront();
@@ -54,14 +62,12 @@ public class Main extends Application implements AnnotatedClass {
         System.out.println(AuthService.getUser().getNom());*/
 
         ParserAnnotations t =  new ParserAnnotations();
+
+        //plugin data
+        PluginManager a = new PluginManager();
+        a.runAllJar("returnNuageName");
+        //
+
         LauncherImpl.launchApplication(Main.class, Preload.class, args);
-
-        /*PluginManager a = new PluginManager();
-        a.openJarFile(a.listPlugins[1]);*/
-    }
-
-    @Usage(description = "Récuperation du nom de la classe")
-    public String getId() {
-        return "main";
     }
 }

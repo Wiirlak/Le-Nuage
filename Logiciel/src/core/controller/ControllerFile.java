@@ -3,6 +3,7 @@ package core.controller;
 import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
+import core.data.PluginData;
 import core.http.entite.HttpEntite;
 import core.http.nuage.HttpNuage;
 import core.http.nuage.Nuage;
@@ -96,7 +97,7 @@ public class ControllerFile implements AnnotatedClass {
         //System.out.println(AuthService.getUser().getEmail());
         setUrlFromOs();
 
-        label1.setText(url1);
+        //label1.setText(url1);
 
         /*for(int i = 0 ; i < 100; i++){
             if(i % 5 == 0){
@@ -313,9 +314,11 @@ public class ControllerFile implements AnnotatedClass {
         Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
         //System.out.println(o);
         for( Entity i : o){
-            TreeItem <String> t = new TreeItem<String>(i.getName());
-            t.getChildren().add(new TreeItem<>("lele"));
-            distant.getChildren().add(t);
+            if(i.getType().getName().equals("folder")){
+                TreeItem <String> t = new TreeItem<String>(i.getName());
+                distant.getChildren().add(t);
+            }
+
             //System.out.println(i.getName());
         }
         vbox.getChildren().add(tree);
@@ -336,21 +339,22 @@ public class ControllerFile implements AnnotatedClass {
         Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
         nuageFiles.getChildren().clear();
         for( Entity i : o){
-            //System.out.println(i);
-            HBox hbox =  new HBox();
-            hbox.setUserData(i);
-            //hbox.getChildren().add(img);
-            hbox.getChildren().add(new Label(i.getName()));
-            Pane pane = new Pane();
-            HBox.setHgrow(pane, Priority.ALWAYS);
-            //hbox.getChildren().add(pane);
-            //hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
-            nuageFiles.getChildren().add(hbox);
-            hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                //System.out.println("Downlaod");
-                HttpEntite.download(i.get_id(),i.getName(),label1.getText().isEmpty()? "":label1.getText(),this);
+            if(i.getType().getName().equals("file")){
+                //System.out.println(i);
+                HBox hbox =  new HBox();
+                hbox.setUserData(i);
+                //hbox.getChildren().add(img);
+                hbox.getChildren().add(new Label(i.getName()));
+                Pane pane = new Pane();
+                HBox.setHgrow(pane, Priority.ALWAYS);
+                //hbox.getChildren().add(pane);
+                //hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
+                nuageFiles.getChildren().add(hbox);
+                hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                    HttpEntite.download(i.get_id(),i.getName(),label1.getText().equals("")? "":label1.getText(),this);
+                });
+            }
 
-            });
         }
     }
 
@@ -490,7 +494,7 @@ public class ControllerFile implements AnnotatedClass {
         stage.setMinHeight(700);
         stage.setMaxWidth(900);
         stage.setMaxHeight(700);
-        stage.setTitle("Le-Nuage");
+        stage.setTitle(PluginData.nuageName);
         stage.setScene(scene);
         scene.getStylesheets().add("core/stylesheet/stylesheet.css");
         stage.show();
@@ -505,7 +509,7 @@ public class ControllerFile implements AnnotatedClass {
         ControllerProfil controllerProfil = loader.getController();
         controllerProfil.setStage(subStage);
         subStage.setResizable(false);
-        subStage.setTitle("Mon profil");
+        subStage.setTitle(PluginData.nuageName+" - Mon profil");
         subStage.setScene(scene);
         subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.initOwner(stage);
@@ -523,7 +527,7 @@ public class ControllerFile implements AnnotatedClass {
         ControllerLoading controllerLoading = loader.getController();
         ControllerLoading.setStage(subStage);
         subStage.setResizable(false);
-        subStage.setTitle("Mon profil");
+        subStage.setTitle(PluginData.nuageName + " - Mon profil");
         subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.setScene(scene);
         subStage.initOwner(stage);
@@ -543,7 +547,7 @@ public class ControllerFile implements AnnotatedClass {
         ControllerOption controllerOption = loader.getController();
         controllerOption.setStage(subStage);
         subStage.setResizable(false);
-        subStage.setTitle("Options");
+        subStage.setTitle(PluginData.nuageName+" - Options");
         subStage.setScene(scene);
         subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.initOwner(stage);
@@ -585,19 +589,24 @@ public class ControllerFile implements AnnotatedClass {
     @FXML
     @Usage(description = "Ouverture de la fenetre de synchronisation")
     public void synchro() throws IOException {
-        Stage subStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("synchro.fxml"));
-        Scene scene = new Scene(loader.load());
-        ControllerSynchro controllerSynchro = loader.getController();
-        controllerSynchro.setStage(subStage);
-        subStage.setResizable(false);
-        subStage.setTitle("Synchronisation");
-        subStage.setScene(scene);
-        subStage.getIcons().add(new Image("pictures/LNb.png"));
-        subStage.initOwner(stage);
-        subStage.initModality(Modality.WINDOW_MODAL);
-        scene.getStylesheets().add("core/stylesheet/stylesheet.css");
-        subStage.show();
+        if(!label1.getText().equals("") && !label2.getText().equals("") ){
+            Stage subStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("synchro.fxml"));
+            Scene scene = new Scene(loader.load());
+            ControllerSynchro controllerSynchro = loader.getController();
+            controllerSynchro.setLocalFolder(label1.getText());
+            controllerSynchro.setDistantFolder(label2.getText());
+            controllerSynchro.setStage(subStage);
+            subStage.setResizable(false);
+            subStage.setTitle(PluginData.nuageName + " - Synchronisation");
+            subStage.setScene(scene);
+            subStage.getIcons().add(new Image("pictures/LNb.png"));
+            subStage.initOwner(stage);
+            subStage.initModality(Modality.WINDOW_MODAL);
+            scene.getStylesheets().add("core/stylesheet/stylesheet.css");
+            subStage.show();
+        }
+
     }
 
 }

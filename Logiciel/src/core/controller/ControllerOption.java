@@ -3,6 +3,7 @@ package core.controller;
 import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
+import core.data.PluginData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,7 +34,7 @@ public class ControllerOption implements AnnotatedClass {
         ControllerPlugin controllerPlugin = loader.getController();
         controllerPlugin.setStage(subStage);
         subStage.setResizable(false);
-        subStage.setTitle("Plugins");
+        subStage.setTitle(PluginData.nuageName + " - Plugins");
         subStage.getIcons().add(new Image("pictures/LNb.png"));
         subStage.setScene(scene);
         subStage.initOwner(stage);

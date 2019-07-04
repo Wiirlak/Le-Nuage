@@ -3,6 +3,7 @@ package core.controller;
 import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
+import core.data.PluginData;
 import core.http.auth.HttpAuth;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -158,7 +159,7 @@ public class ControllerSignUp  implements AnnotatedClass {
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(stage);
         stage.setResizable(true);
-        stage.setTitle("Le-Nuage");
+        stage.setTitle(PluginData.nuageName);
         stage.setScene(scene);
         scene.getStylesheets().add("core/stylesheet/stylesheet.css");
         stage.show();

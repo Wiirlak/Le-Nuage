@@ -3,6 +3,7 @@ package core.controller;
 import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
+import core.data.PluginData;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +58,7 @@ public class ControllerLoading implements AnnotatedClass {
         stage.setHeight(800);
         stage.setMinHeight(800);
         stage.setMinWidth(900);
-        stage.setTitle("Le-Nuage");
+        stage.setTitle(PluginData.nuageName);
         stage.setScene(scene);
         scene.getStylesheets().add("core/stylesheet/stylesheet.css");
         stage.show();
