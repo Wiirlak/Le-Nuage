@@ -9,9 +9,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.io.FileDeleteStrategy;
+import org.apache.commons.io.FileUtils;
 import plugin.PluginManager;
 
+import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -47,7 +51,10 @@ public class ControllerPlugin  implements AnnotatedClass {
         tvPlugin.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pluginFxmls =  new ArrayList<PluginFxml>();
         for(File f : pluginManager.listPlugins){
-            pluginFxmls.add(new PluginFxml(f));
+            if (pluginManager.conf.listExecutedPlugins.contains(f))
+                pluginFxmls.add(new PluginFxml(f,true));
+            else
+                pluginFxmls.add(new PluginFxml(f,false));
         }
         tvPlugin.getItems().addAll(pluginFxmls);
 
@@ -57,11 +64,11 @@ public class ControllerPlugin  implements AnnotatedClass {
     @Usage(description = "Tous cocher ou tous décocher")
     public void tickedNoTicked() throws IOException {
         if(checkAll.isSelected()){
-            pluginFxmls.forEach(c -> c.deleted.setSelected(true));
+            pluginFxmls.forEach(c -> c.activated.setSelected(true));
             //pluginManager.openJarFiles();
 
         }else{
-            pluginFxmls.forEach(c -> c.deleted.setSelected(false));
+            pluginFxmls.forEach(c -> c.activated.setSelected(false));
         }
     }
 
@@ -84,6 +91,17 @@ public class ControllerPlugin  implements AnnotatedClass {
 
     @Usage(description = "Fermer la fenetre")
     public void save(){
+        PluginManager t = new PluginManager();
+        for( PluginFxml p : pluginFxmls){
+            if(p.activated.isSelected()){
+                System.out.println(p.name+" activated");
+                t.conf.addPlugin(p.name);
+            }else{
+                System.out.println(p.name+" nope");
+                t.conf.removePlugin(p.name);
+            }
+        }
+        t.conf.updateConfigFile();
         exit();
     }
 
@@ -94,26 +112,23 @@ public class ControllerPlugin  implements AnnotatedClass {
 
     @Usage(description = "Raffraichir la liste de plugin")
     public void refresh(){
+        pluginManager.conf.reloadPluginsConfig();
         tvPlugin.getItems().clear();
         pluginManager.findAllJar(pluginManager.pluginPath);
         pluginFxmls =  new ArrayList<PluginFxml>();
         for(File f : pluginManager.listPlugins){
-            pluginFxmls.add(new PluginFxml(f));
+            if (pluginManager.conf.listExecutedPlugins.contains(f))
+                pluginFxmls.add(new PluginFxml(f,true));
+            else
+                pluginFxmls.add(new PluginFxml(f,false));
         }
         tvPlugin.getItems().addAll(pluginFxmls);
     }
 
-    @Usage(description = "Suppression d'un plugin")
-    public void delete(){
-        for( PluginFxml pgxml: pluginFxmls){
-            if(pgxml.deleted.isSelected()){
-                pgxml.name.delete();
-            }
-        }
-        refresh();
-        //pluginFxmls.forEach(c -> c.deleted.setSelected(true));
-    }
 
+    public void openPluginFolder() throws IOException {
+        Desktop.getDesktop().open(new File(new JFileChooser().getFileSystemView().getDefaultDirectory().getPath()+"\\Le-Nuage\\plugins"));
+    }
 
 }
 

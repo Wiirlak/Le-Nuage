@@ -2,6 +2,7 @@ package plugin;
 
 import com.google.gson.Gson;
 import core.data.PluginData;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -10,12 +11,14 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
@@ -55,9 +58,9 @@ public class PluginManager {
         listPlugins = path.listFiles((dir, name) -> name.endsWith(".jar"));
 
         //Comment under
-        for(File file : listPlugins) {
+        /*for(File file : listPlugins) {
             //System.out.println(file.getName());
-        }
+        }*/
     }
 
     public void runAllJar(String methodName) throws Exception {
@@ -102,7 +105,29 @@ public class PluginManager {
                             }else if(methodName.equals("returnNuageName")){
                                 PluginData.nuageName = (String) m.invoke((doRun));
                             }else{
-                                m.invoke(doRun);
+                                final String threatname = String.format("%.3f",  System.currentTimeMillis() / 1000.0);
+                                //System.out.println("start");
+                                Thread t = new Thread() {
+                                    public void run() {
+                                        try {
+                                            m.invoke(doRun);
+                                            Set<Thread> setOfThread = Thread.getAllStackTraces().keySet();
+                                            for(Thread thread : setOfThread) {
+                                                if (thread.getName() == threatname) {
+                                                    //System.out.println("End : " + threatname);
+                                                    thread.interrupt();
+                                                }
+                                            }
+                                        } catch (IllegalAccessException e) {
+                                            e.printStackTrace();
+                                        } catch (InvocationTargetException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                };
+                                t.setName(threatname);
+                                //System.out.println("Start :  "+threatname);
+                                t.start();
                             }
                             break;
                         }
@@ -134,10 +159,6 @@ public class PluginManager {
             //System.out.println(p.exitValue());
         }, 1, TimeUnit.SECONDS);
 
-    }
-
-    public static void openJarUrl(String name) throws IOException {
-        runJar(name);
     }
 
 }

@@ -18,20 +18,20 @@ public class PluginConfig {
 
     public PluginConfig(File pluginPath) {
         this.pluginPath = pluginPath;
-        listExecutedPlugins = new LinkedList<>();
+
         checkConfigFile("plugins.conf");
     }
 
     public PluginConfig(File pluginPath, String s) {
         this.pluginPath = pluginPath;
-        listExecutedPlugins = new LinkedList<>();
-        listExecutedPluginsName = new LinkedList<>();
         checkConfigFile(s);
         checkConfig();
     }
 
     private void checkConfig() {
         try {
+            listExecutedPlugins = new LinkedList<>();
+            listExecutedPluginsName = new LinkedList<>();
             Gson gson = new Gson();
             String[] items = gson.fromJson(new FileReader(pluginConfPath.getPath()), String[].class);
             for (String i: items) {
@@ -106,7 +106,7 @@ public class PluginConfig {
         try{
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String content = gson.toJson(listExecutedPluginsName);
-            System.out.println(content);
+            //System.out.println(content);
             FileOutputStream tmp= new FileOutputStream(this.pluginConfPath);
             tmp.write(content.getBytes());
             tmp.flush();

@@ -43,7 +43,7 @@ public class HttpEntite {
     }
 
     public static void threadT(String file, String parentId, ControllerFile c) {
-        final String threatname = String.format("%.3f",  System.currentTimeMillis() / 1000.0);;
+        final String threatname = String.format("%.3f",  System.currentTimeMillis() / 1000.0);
         Thread t = new Thread() {
             public void run() {
                 try {

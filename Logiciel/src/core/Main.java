@@ -63,9 +63,9 @@ public class Main extends Application implements AnnotatedClass {
 
         ParserAnnotations t =  new ParserAnnotations();
 
-        //plugin data
         PluginManager a = new PluginManager();
-        a.runAllJar("returnNuageName");
+        a.runSelectedJar("lnOpen");
+        a.runSelectedJar("returnNuageName");
         //
 
         LauncherImpl.launchApplication(Main.class, Preload.class, args);

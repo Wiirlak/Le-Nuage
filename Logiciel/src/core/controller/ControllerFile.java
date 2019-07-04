@@ -123,8 +123,8 @@ public class ControllerFile implements AnnotatedClass {
         }*/
 
         //NuageModel file
-        listFile2(nuageFile);
-        listDistantFileByParentId();
+        //listFile2(nuageFile);
+        //listDistantFileByParentId();
 
         // Fichier d'un dossier courant local
        //listFileByFolder(myFiles,url1);
@@ -154,7 +154,7 @@ public class ControllerFile implements AnnotatedClass {
                 if (nuageArrayList != null)
                     for (Nuage n : nuageArrayList) {
                         nuageArray.add(new NuageModel(n.getName(), n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), "15/12/19", "nuages"));
-                        addNuage(n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), n.getName(), "15/12/19", n.get_id());
+                        addNuage(n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), n.getName(), "15/12/19", n.getParentEntity());
                         //System.out.println(n.getImage());
                     }
             }
@@ -189,6 +189,8 @@ public class ControllerFile implements AnnotatedClass {
             MouseButton button = event.getButton();
             if(button== MouseButton.PRIMARY){
                 labelNuage.setText(nuageName);
+                labelNuage.setUserData(id);
+                listFile2(nuageFile);
             }
         });
 
@@ -202,10 +204,11 @@ public class ControllerFile implements AnnotatedClass {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem("S'envoler");
         item1.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 labelNuage.setText(nuageName);
+                labelNuage.setUserData(id);
+                listFile2(nuageFile);
             }
         });
         MenuItem item2 = new MenuItem("Voir sa composition");
@@ -214,6 +217,10 @@ public class ControllerFile implements AnnotatedClass {
             @Override
             public void handle(ActionEvent event) {
                 labelNuage.setText("Les fichiers de votre nuage");
+                nuageFiles.getChildren().clear();
+                if(nuageFile.getChildren().size() >= 1 )
+                    nuageFile.getChildren().remove(1);
+                label2.setText("");
             }
         });
         MenuItem item4 = new MenuItem("Souffler le nuage");
@@ -311,11 +318,25 @@ public class ControllerFile implements AnnotatedClass {
             e.printStackTrace();
         }*/
 
-        Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
+        Entity[]o = HttpEntite.getTreeByParentId(labelNuage.getUserData().toString());
         //System.out.println(o);
         for( Entity i : o){
             if(i.getType().getName().equals("folder")){
                 TreeItem <String> t = new TreeItem<String>(i.getName());
+                /*t.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                    listDistantFileByParentId(i.getName(),i.getParent());
+                });*/
+                tree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                    TreeItem tmp = (TreeItem)tree.getSelectionModel().getSelectedItem();
+                    if((String)tmp.getValue() == "Fichiers distants"){
+
+                        listDistantFileByParentId("/",labelNuage.getUserData().toString());
+                    }else{
+                        listDistantFileByParentId((String)tmp.getValue(),i.get_id());
+                    }
+
+                });
+
                 distant.getChildren().add(t);
             }
 
@@ -326,7 +347,7 @@ public class ControllerFile implements AnnotatedClass {
 
 
 
-    public void listDistantFileByParentId(){
+    public void listDistantFileByParentId(String name,String id){
 
 
         /*
@@ -335,8 +356,9 @@ public class ControllerFile implements AnnotatedClass {
 
          */
 
-        label2.setText("5d0f766742038438d41f5c5c");
-        Entity[]o = HttpEntite.getTreeByParentId("5d0f766742038438d41f5c5c");
+        label2.setText(name);
+        label2.setUserData(id);
+        Entity[]o = HttpEntite.getTreeByParentId(id);
         nuageFiles.getChildren().clear();
         for( Entity i : o){
             if(i.getType().getName().equals("file")){
@@ -389,7 +411,8 @@ public class ControllerFile implements AnnotatedClass {
             hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
             vbox.getChildren().add(hbox);
             hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                HttpEntite.threadT(label1.getText()+"\\"+hbox.getUserData().toString(),"5d0f766742038438d41f5c5c",this);
+                if(label2.getText() != "" )
+                    HttpEntite.threadT(label1.getText()+"\\"+hbox.getUserData().toString(),label2.getUserData().toString(),this);
             });
         }
     }
@@ -407,10 +430,14 @@ public class ControllerFile implements AnnotatedClass {
             TreeView<File> fileViewMine = new TreeView<File>(t);
             myFile.getChildren().add(fileViewMine);
             fileViewMine.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                url1 = newValue.getValue().toString();
-                myFiles.getChildren().clear();
-                listFileByFolder(myFiles,url1);
-                label1.setText(url1);
+                TreeItem tmp = (TreeItem)fileViewMine.getSelectionModel().getSelectedItem();
+                if(tmp.getValue() != "Ordinateur"){
+                    url1 = newValue.getValue().toString();
+                    myFiles.getChildren().clear();
+                    listFileByFolder(myFiles,url1);
+                    label1.setText(url1);
+                }
+
             });
         }else{ // other
             url1 = "/";
@@ -580,10 +607,13 @@ public class ControllerFile implements AnnotatedClass {
         rt.setAutoReverse(true);
         rt.play();
         getData();
-        listFile2(nuageFile);
-        listDistantFileByParentId();
+        if(!label2.getText().equals("")){
+            listFile2(nuageFile);
+            listDistantFileByParentId(label2.getText(),label2.getUserData().toString());
+        }
         System.out.println("reloaded");
-        listFileByFolder(myFiles,url1);
+        if(!label1.getText().equals(""))
+            listFileByFolder(myFiles,url1);
     }
 
     @FXML
@@ -592,10 +622,11 @@ public class ControllerFile implements AnnotatedClass {
         if(!label1.getText().equals("") && !label2.getText().equals("") ){
             Stage subStage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("synchro.fxml"));
+            ControllerSynchro controllerSynchro = new ControllerSynchro(label1.getText(),label2.getText(),label2.getUserData().toString());
+            loader.setController(controllerSynchro);
+            /*controllerSynchro.setLocalFolder(label1.getText());
+            controllerSynchro.setDistantFolder(label2.getText());*/
             Scene scene = new Scene(loader.load());
-            ControllerSynchro controllerSynchro = loader.getController();
-            controllerSynchro.setLocalFolder(label1.getText());
-            controllerSynchro.setDistantFolder(label2.getText());
             controllerSynchro.setStage(subStage);
             subStage.setResizable(false);
             subStage.setTitle(PluginData.nuageName + " - Synchronisation");
