@@ -21,11 +21,11 @@
         </HBox>
         <HBox >
             <Label text="Chemin Local : " fx:id="t" ></Label>
-            <Label text="C://tets/pomme/salade" fx:id="s" ></Label>
+            <Label text="C://tets/pomme/salade" fx:id="localFilePath" ></Label>
         </HBox>
         <HBox >
             <Label text="Chemin Distant : " fx:id="z" ></Label>
-            <Label text="/pomme/pierre" fx:id="w" ></Label>
+            <Label text="/pomme/pierre" fx:id="distantFilePath" ></Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="10">
             <Label text="Rechercher : "></Label>

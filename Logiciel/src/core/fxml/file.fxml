@@ -90,7 +90,7 @@
 
                             </VBox>
                             <VBox HBox.hgrow="ALWAYS" minHeight="80" fx:id="sized">
-                                <Label styleClass="dossier" fx:id="label1"></Label>
+                                <Label styleClass="dossier" fx:id="label1" text=""></Label>
                                 <ScrollPane>
                                     <VBox fx:id="myFiles" prefWidth="${sized.width-25}" styleClass="nuageFiles" >
 
