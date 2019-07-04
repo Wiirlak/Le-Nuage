@@ -36,27 +36,18 @@ public class PluginManager {
         conf = new PluginConfig(pluginPath,"plugins.conf");
         findAllJar(this.pluginPath);
         classPlugin = new LinkedList<>();
+        conf.updateConfigFile();
     }
 
 
     public boolean checkPluginFolder(String name){
-        File temp = new File(mydoc+'\\'+name+"\\plugins");
-        if(!temp.exists()){
-            try{
-                String content = "[\n\t\"pluginName.jar\"\n]";
-                temp.createNewFile();
-                FileOutputStream tmp= new FileOutputStream(temp);
-                tmp.write(content.getBytes());
-                tmp.flush();
-                tmp.close();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-            if(!temp.mkdirs()){
+        File tempFolder = new File(mydoc+'\\'+name+"\\plugins");
+        if(!tempFolder.exists()){
+            if(!tempFolder.mkdirs()){
                 return false;
             }
         }
-        this.pluginPath = temp;
+        this.pluginPath = tempFolder;
         return true;
     }
 
