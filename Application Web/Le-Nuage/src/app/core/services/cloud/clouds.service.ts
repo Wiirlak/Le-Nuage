@@ -34,12 +34,14 @@ export class CloudsService {
       const clouds = new Array();
       const currentPos = actual * pageSize;
       let i;
-      for (i = currentPos; i < currentPos + pageSize && i < this.clouddata.length; i ++) {
-        if (filter.length > 0) {
-            if (this.clouddata[i].name.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
-              clouds.push(this.clouddata[i]);
-            }
-        } else {
+      if (filter.length > 0) {
+        for (i = 0; i < this.clouddata.length; i ++) {
+          if (this.clouddata[i].name.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
+            clouds.push(this.clouddata[i]);
+          }
+        }
+      } else {
+        for (i = currentPos; i < currentPos + pageSize && i < this.clouddata.length; i ++) {
           clouds.push(this.clouddata[i]);
         }
       }
