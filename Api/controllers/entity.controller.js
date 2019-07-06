@@ -36,6 +36,13 @@ class EntityController {
         if (entity.parent === null) {
             return undefined;
         }
+        let extension = entity.name.split('.');
+
+        if (type === 'file') {
+            entity.extension = extension[extension.length - 1];
+        } else {
+            entity.extension = '';
+        }
 
         //console.log(nuage);
 
@@ -79,7 +86,13 @@ class EntityController {
         if (parent === undefined || parent.type.name !== 'nuage') {
             return undefined;
         }
-        return `${process.env.NUAGE_PATH}${parent.id}/${entity.name}`;
+        let path = null;
+        if (entity.extension === '' || undefined) {
+            path = `${process.env.NUAGE_PATH}${parent._id}/${entity._id}`;
+        } else {
+            path = `${process.env.NUAGE_PATH}${parent._id}/${entity._id}.${entity.extension}`;
+        }
+        return path;
     }
 
     async rename(entityId, name) {
@@ -91,7 +104,7 @@ class EntityController {
         if (parent === undefined || parent.type.name !== 'nuage') {
             return undefined;
         }
-        const path = `${process.env.NUAGE_PATH}${parent.id}/${entity.name}`;
+        const path = `${process.env.NUAGE_PATH}${parent._id}/${entity._id}`;
         //TODO rename realfile
         return undefined;
     }

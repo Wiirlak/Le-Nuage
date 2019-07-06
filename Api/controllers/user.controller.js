@@ -18,8 +18,13 @@ class UserController {
         return undefined;
     }
 
-    async add(name, email, password) {
+    //name, firstname, email, date, password)
+    async add(name, firstname, email, date, password) {
         const hashedPassword = await bcrypt.hash(password, 8);
+
+        if (await User.findOne({ email: email})) {
+            return undefined;
+        }
 
         const nuage = await NuageController.add('Default', null);
 
@@ -29,7 +34,9 @@ class UserController {
 
         const user = new User();
         user.name = name;
+        user.firstname = firstname;
         user.email = email;
+        user.date = date;
         user.password = hashedPassword;
         user.nuages.push(nuage);
 
