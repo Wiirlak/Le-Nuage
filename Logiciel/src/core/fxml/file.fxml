@@ -63,8 +63,9 @@
             <Label text="Favoris" onMouseClicked="#orderbyFavorite" style="-fx-cursor:HAND"></Label>
             <Label text="Corbeille" onMouseClicked="#orderbyTrash" style="-fx-cursor:HAND"></Label>
             <Label text="Tous" onMouseClicked="#orderbyNothing" style="-fx-cursor:HAND"></Label>
-            <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS" spacing="15">
                 <Label text="Synchronisation" onMouseClicked="#synchro" style="-fx-cursor:HAND"></Label>
+                <Label text="Créer un nuage" onMouseClicked="#createNuage" style="-fx-cursor:HAND"></Label>
             </HBox>
 
             <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">

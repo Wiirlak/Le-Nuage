@@ -13,12 +13,15 @@ import core.model.AuthService;
 import core.model.Entity;
 import core.model.NuageModel;
 import javafx.animation.RotateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
@@ -29,6 +32,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -95,61 +99,14 @@ public class ControllerFile implements AnnotatedClass {
     @Usage(description = "Actions faites lors de l'initialisation de la page")
     public  void initialize() {
 
-        //System.out.println(AuthService.getUser().getEmail());
         setUrlFromOs();
 
-        //label1.setText(url1);
-
-        /*for(int i = 0 ; i < 100; i++){
-            if(i % 5 == 0){
-                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "nuages"));
-            }else if( i % 5 == 1){
-                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "shareNuages"));
-            }else if( i % 5 == 2){
-                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "recent"));
-            }else if( i % 5 == 3){
-                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "favorit"));
-            }else if( i % 5 == 4){
-                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "trash"));
-            }else{
-                nuageArray.add(new NuageModel("My nuage "+i, "/assets/pictures/LN.png", "15/12/19", "trash"));
-            }
-
-
-        }*/
         getData();
 
-        /*for(NuageModel i : nuageArray){
-            addNuage(i.getImagePath(),i.getName(),i.getLastEdit());
-        }*/
-
-        //NuageModel file
-        //listFile2(nuageFile);
-        //listDistantFileByParentId();
-
-        // Fichier d'un dossier courant local
-       //listFileByFolder(myFiles,url1);
-        // Fichier d'un dossier courant distant
-       //listFileByFolder(nuageFiles,url2);
 
 
 
 
-        /* **********
-
-            Call API
-
-
-         */
-        flowpane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-            @Override
-            public void handle(final ContextMenuEvent event) {
-                for (ContextMenu i : contextMenuArrayList)
-                    i.hide();
-                System.out.println("dd");
-                createRightClickMenuVbox().show(flowpane, event.getScreenX(), event.getScreenY());
-            }
-        });
 
     }
 
@@ -269,25 +226,6 @@ public class ControllerFile implements AnnotatedClass {
         return contextMenu;
     }
 
-    @Usage(description = "Création de menu sur le click droit pour créer un nuage")
-    public ContextMenu createRightClickMenuVbox(){
-        ContextMenu contextMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem("Créer un nuage");
-        item1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    createNuage();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                reload();
-            }
-        });
-        contextMenu.getItems().addAll(item1);
-        return contextMenu;
-    }
-
     @Usage(description = "Recuperation de la taille d'un fichier")
     public String getSizeOfFile(double size){
         NumberFormat nf = new DecimalFormat("0.##");
@@ -341,6 +279,7 @@ public class ControllerFile implements AnnotatedClass {
         TreeView<String> tree;
         TreeItem<String> distant = new TreeItem<String>("Fichiers distants");
         tree = new TreeView<String>(distant);
+
         /*try {
             HttpApple test = new HttpApple();
             //System.out.println(test.getApple("5c5819ea0bbc7a1b444e9d9f"));
@@ -357,34 +296,50 @@ public class ControllerFile implements AnnotatedClass {
         }catch (Exception e){
             e.printStackTrace();
         }*/
-
+        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                System.out.println("dfsosd");
+                TreeItem tmp = (TreeItem)tree.getSelectionModel().getSelectedItem();
+                if((String)tmp.getValue() == "Fichiers distants"){
+                    System.out.println("icicicicic :"+labelNuage.getUserData());
+                    listDistantFileByParentId("/",labelNuage.getUserData().toString());
+                }else{
+                    System.out.println("cocococo :"+labelNuage.getUserData());
+                    listDistantFileByParentId((String)tmp.getValue(),tmp.getValue().toString());
+                }
+            }
+        };
         Entity[]o = HttpEntite.getTreeByParentId(labelNuage.getUserData().toString());
         //System.out.println(o);
         for( Entity i : o){
             if(i.getType().getName().equals("folder")){
                 TreeItem <String> t = new TreeItem<String>(i.getName());
+                t.setValue(i.get_id());
+                distant.getChildren().add(t);
                 /*t.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                     listDistantFileByParentId(i.getName(),i.getParent());
                 });*/
-                tree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                /*tree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                     TreeItem tmp = (TreeItem)tree.getSelectionModel().getSelectedItem();
                     if((String)tmp.getValue() == "Fichiers distants"){
-
+                        System.out.println("icicicicic :"+labelNuage.getUserData());
                         listDistantFileByParentId("/",labelNuage.getUserData().toString());
                     }else{
+                        System.out.println("cocococo :"+labelNuage.getUserData());
                         listDistantFileByParentId((String)tmp.getValue(),i.get_id());
                     }
 
                 });
 
-                distant.getChildren().add(t);
+            */
             }
 
             //System.out.println(i.getName());
         }
+        tree.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
         vbox.getChildren().add(tree);
     }
-
 
 
     public void listDistantFileByParentId(String name,String id){
@@ -710,8 +665,10 @@ public class ControllerFile implements AnnotatedClass {
     public void createNuage() throws IOException {
         Stage subStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("createNuage.fxml"));
+        ControllerCreateNuage controllerCreateNuage = new ControllerCreateNuage(this);
+        loader.setController(controllerCreateNuage);
         Scene scene = new Scene(loader.load());
-        ControllerCreateNuage controllerCreateNuage = loader.getController();
+        controllerCreateNuage.setStage(subStage);
         controllerCreateNuage.setStage(subStage);
         subStage.setResizable(false);
         subStage.setTitle(PluginData.nuageName+" - Créer un nuage");

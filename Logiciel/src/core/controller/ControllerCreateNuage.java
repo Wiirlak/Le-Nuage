@@ -16,8 +16,14 @@ public class ControllerCreateNuage implements AnnotatedClass {
 
     public static Stage stage;
 
+    public ControllerFile parent;
+
     @FXML
     public TextField nuageName;
+
+    public ControllerCreateNuage(ControllerFile parent) {
+        this.parent = parent;
+    }
 
     @Usage(description = "Affecter le stage courant")
     public static void setStage(Stage primaryStage){
@@ -27,7 +33,10 @@ public class ControllerCreateNuage implements AnnotatedClass {
     @Usage(description = "Affecter le stage courant")
     public void create(){
         if(!nuageName.getText().equals("")){
-            HttpNuage.createNuage(nuageName.getText());
+            if(HttpNuage.createNuage(nuageName.getText())== 1){
+                stage.close();
+                parent.reload();
+            }
         }
     }
 
