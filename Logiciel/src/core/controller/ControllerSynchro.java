@@ -102,7 +102,7 @@ public class ControllerSynchro  implements AnnotatedClass {
                 String d = dt1.format(new Date(i.lastModified()));
                 masterData.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),"0Kb",d,"no sé"));
             }else{
-                System.out.println(i.getName());
+                //System.out.println(i.getName());
             }
         }
         /*
@@ -110,7 +110,8 @@ public class ControllerSynchro  implements AnnotatedClass {
         - Récuperer tous les fichiers présent dans le dossier distant du nuage
         - Ne conserver que ceux existant dans les 2 tableau
         */
-        sortedData.addAll(masterData);
+        //sortedData.addAll(masterData);
+        sortedData = new SortedList<>(masterData);
 
         files.getItems().addAll(masterData);
 

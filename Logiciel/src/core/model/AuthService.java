@@ -12,6 +12,7 @@ public class AuthService implements AnnotatedClass {
 
     private static AuthService AUTH  =  new AuthService();
     private static AuthUser user = new AuthUser();
+    private static NuageModel nuage = new NuageModel();
 
     @Usage(description = "Constructeur de l'objet par defaut")
     public AuthService(){
@@ -27,4 +28,10 @@ public class AuthService implements AnnotatedClass {
     public static  AuthUser getAuthUser(){
         return user;
     }
+
+    @Usage(description = "Recuperation du nuage courrant")
+    public static  NuageModel getNuage(){
+        return nuage;
+    }
+
 }

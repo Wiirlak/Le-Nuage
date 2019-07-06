@@ -9,6 +9,7 @@ import core.http.nuage.HttpNuage;
 import core.http.nuage.Nuage;
 import core.http.profil.HttpProfil;
 import core.http.profil.Profil;
+import core.model.AuthService;
 import core.model.Entity;
 import core.model.NuageModel;
 import javafx.animation.RotateTransition;
@@ -154,7 +155,7 @@ public class ControllerFile implements AnnotatedClass {
                 if (nuageArrayList != null)
                     for (Nuage n : nuageArrayList) {
                         nuageArray.add(new NuageModel(n.getName(), n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), "15/12/19", "nuages"));
-                        addNuage(n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), n.getName(), "15/12/19", n.getParentEntity());
+                        addNuage(n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), n.getName(), "15/12/19", n.getParentEntity(),n.get_id());
                         //System.out.println(n.getImage());
                     }
             }
@@ -164,7 +165,8 @@ public class ControllerFile implements AnnotatedClass {
     }
 
     @Usage(description = "Ajout du nuage sur l'interface")
-    public void addNuage(String nuageImage, String nuageName, String lastEdit, String id){
+    public void addNuage(String nuageImage, String nuageName, String lastEdit, String ParentEntityid,String nuageId){
+        System.out.println("parent entite ? "+ParentEntityid);
         VBox vbox = new VBox();
         vbox.getStyleClass().add("nuages");
         vbox.setAlignment(Pos.CENTER);
@@ -176,20 +178,21 @@ public class ControllerFile implements AnnotatedClass {
         vbox.getChildren().add(imageView);
         vbox.getChildren().add(label1);
         vbox.getChildren().add(label2);
-        vbox.setUserData(id);
+        vbox.setUserData(ParentEntityid);
         vbox.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
             public void handle(final ContextMenuEvent event) {
                 for (ContextMenu i : contextMenuArrayList)
                     i.hide();
-                createRightClickMenu(nuageName, ((VBox)event.getSource()).getUserData().toString()).show(vbox, event.getScreenX(), event.getScreenY());
+                createRightClickMenu(nuageName, ((VBox)event.getSource()).getUserData().toString(),nuageId).show(vbox, event.getScreenX(), event.getScreenY());
             }
         });
         vbox.setOnMouseClicked(event -> {
             MouseButton button = event.getButton();
             if(button== MouseButton.PRIMARY){
+                AuthService.getNuage().setAll(nuageName,nuageImage,lastEdit,"nuages",ParentEntityid,nuageId);
                 labelNuage.setText(nuageName);
-                labelNuage.setUserData(id);
+                labelNuage.setUserData(ParentEntityid);
                 listFile2(nuageFile);
             }
         });
@@ -200,7 +203,7 @@ public class ControllerFile implements AnnotatedClass {
     }
 
     @Usage(description = "Création de menu sur le click droit")
-    public ContextMenu createRightClickMenu(String nuageName, String id){
+    public ContextMenu createRightClickMenu(String nuageName, String id,String nuageId){
         ContextMenu contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem("S'envoler");
         item1.setOnAction(new EventHandler<ActionEvent>() {
@@ -243,7 +246,19 @@ public class ControllerFile implements AnnotatedClass {
 
             }
         });
-        contextMenu.getItems().addAll(item1, item2,item3,item4);
+        MenuItem item5 = new MenuItem("Renomer");
+        item5.setUserData(id);
+        item5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    rename(nuageId,nuageName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        contextMenu.getItems().addAll(item1, item2,item3,item4,item5);
         contextMenuArrayList.add(contextMenu);
         return contextMenu;
     }
@@ -502,7 +517,7 @@ public class ControllerFile implements AnnotatedClass {
             nuageToPrint = nuageArray;
         }
         for(NuageModel i : nuageToPrint){
-            addNuage(i.getImagePath(),i.getName(),i.getLastEdit(),i.getId());
+            addNuage(i.getImagePath(),i.getName(),i.getLastEdit(),i.getParentEntiteid(),i.getNuageId());
         }
     }
 
@@ -592,7 +607,7 @@ public class ControllerFile implements AnnotatedClass {
         nuageToPrint = new ArrayList<NuageModel>( nuageArray.stream().filter(type -> type.getName().toLowerCase().contains(searchBar.getText().toLowerCase()) ).collect(Collectors.<NuageModel>toList()));
         flowpane.getChildren().clear();
         for(NuageModel i : nuageToPrint){
-            addNuage(i.getImagePath(),i.getName(),i.getLastEdit(), i.getId());
+            addNuage(i.getImagePath(),i.getName(),i.getLastEdit(), i.getParentEntiteid(),i.getParentEntiteid());
         }
 
     }
@@ -614,6 +629,10 @@ public class ControllerFile implements AnnotatedClass {
         System.out.println("reloaded");
         if(!label1.getText().equals(""))
             listFileByFolder(myFiles,url1);
+
+
+        //refresh labelNuage
+        labelNuage.setText(AuthService.getNuage().getName());
     }
 
     @FXML
@@ -638,6 +657,25 @@ public class ControllerFile implements AnnotatedClass {
             subStage.show();
         }
 
+    }
+
+    @FXML
+    @Usage(description = "Ouverture de la fenetre de synchronisation")
+    public void rename(String nuageId, String nuageName) throws IOException {
+            Stage subStage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Rename.fxml"));
+            ControllerRename controllerRename = new ControllerRename(nuageName,nuageId,this);
+            loader.setController(controllerRename);
+            Scene scene = new Scene(loader.load());
+            controllerRename.setStage(subStage);
+            subStage.setResizable(false);
+            subStage.setTitle(PluginData.nuageName + " - Renomage");
+            subStage.setScene(scene);
+            subStage.getIcons().add(new Image("pictures/LNb.png"));
+            subStage.initOwner(stage);
+            subStage.initModality(Modality.WINDOW_MODAL);
+            scene.getStylesheets().add("core/stylesheet/stylesheet.css");
+            subStage.show();
     }
 
 }
