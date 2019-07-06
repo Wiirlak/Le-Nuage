@@ -23,6 +23,18 @@ router.get('/', async (req, res, next) => {
     res.json(entities);
 });
 
+router.get('/search', async (req, res, next) => {
+    if (!req.query.e) {
+        return res.status(400).end();
+    }
+
+    const entity = await EntityController.getEntityById(req.query.e);
+    if (entity === undefined) {
+        return res.status(409).end();
+    }
+    return res.json(entity.parent);
+});
+
 router.post('/', async (req, res, next) => {
    if (!req.body.name || !req.body.type || !req.body.parentId) {
        return res.status(400).end();
@@ -41,17 +53,19 @@ router.post('/upload', upload.single('somefile'),async (req, res, next) => {
     if (!req.file || !req.body.parentId) {
         return res.status(400).end();
     }
-    //console.log(req.file);
+    console.log(req.file);
     const p = await EntityController.getNuageByEntityId(req.body.parentId);
     if (p === undefined || p.type.name !== 'nuage') {
         return res.status(409).end();
     }
+    let extension = req.file.originalname.split('.');
+
     const e = await EntityController.add(req.body.parentId, req.file.originalname, "file");
     if (e === undefined) {
         return res.status(409).end();
     }
 
-    const m = await EntityController.moveFile(req.file.path, `${process.env.NUAGE_PATH}${p._id}/${e._id}`);
+    const m = await EntityController.moveFile(req.file.path, `${process.env.NUAGE_PATH}${p._id}/${e._id}.${extension[extension.length - 1]}`);
     if (!m) {
         return res.status(409).end();
     }
