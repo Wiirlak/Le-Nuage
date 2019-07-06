@@ -113,7 +113,11 @@ public class CliMenu {
     }
 
     private int gOption(){
-        HttpNuage.getNuages();
+        try {
+            HttpNuage.getNuages();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
