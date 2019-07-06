@@ -54,7 +54,7 @@ public class Main extends Application implements AnnotatedClass {
 
     @Usage(description = "Lancement du projet")
     public static void main(String[] args) throws Exception {
-        if (args.length != 0 && args[0].equals("-cmd")){
+        if (args.length != 0){
                 new CliMenu(args);
         }else {
             //launch(args);

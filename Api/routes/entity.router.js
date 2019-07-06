@@ -32,7 +32,7 @@ router.get('/search', async (req, res, next) => {
     if (entity === undefined) {
         return res.status(409).end();
     }
-    return res.json(entity.parent);
+    return res.json(entity);
 });
 
 router.post('/', async (req, res, next) => {

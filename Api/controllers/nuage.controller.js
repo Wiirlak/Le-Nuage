@@ -1,14 +1,34 @@
 'use strict';
 
 const Nuage = require('../models').Nuage;
+const User = require('../models').User;
 const fs = require('fs-extra');
 const EntityController = require('./entity.controller');
 
 class NuageController {
     async getAll() {
-        const nuage = await Nuage.find().populate('entities parentEntity');
+        const nuage = await Nuage.find().populate('parentEntity');
         if (nuage.length > 0 && nuage !== null) {
             return nuage;
+        }
+    }
+
+    async getUserNuages(id) {
+        try {
+            let nuageRetour = await User.findById(id).select('nuages -_id').toJson;
+            // nuageRetour = nuageRetour.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": ');
+            console.log(nuageRetour);
+            let nuageids = JSON.parse(String(nuageRetour));
+
+            console.log("ENCULER");
+            console.log(nuageids);
+            const tmp = [];
+            // for (let i = 0; i < nuage.length; i++) {
+            //     tmp.push(await Nuage.findById(nuage[i]));
+            // }
+            // return tmp;
+        }catch(err) {
+            return undefined;
         }
     }
 
