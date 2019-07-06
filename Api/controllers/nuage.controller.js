@@ -1,15 +1,34 @@
 'use strict';
 
 const Nuage = require('../models').Nuage;
+const User = require('../models').User;
 const fs = require('fs-extra');
 const EntityController = require('./entity.controller');
+const mongoose = require('mongoose');
 
 class NuageController {
     async getAll() {
-        const nuage = await Nuage.find().populate('entities parentEntity');
+        const nuage = await Nuage.find().populate('parentEntity');
         if (nuage.length > 0 && nuage !== null) {
             return nuage;
         }
+    }
+
+    async getUserNuage(id){
+        const nuage = await User.findById(id).select("nuages -_id").lean()
+        /*await Nuage.find({ "id name": { "$in": nuage } },function(err,items) {
+           // matching results are here
+           console.log(items)
+        })*/
+        //console.log(JSON.parse(nuage));
+        var tmp = JSON.stringify(nuage);
+        var tmp2 = JSON.parse(tmp);
+        const results = []
+        for(let i = 0 ; i< tmp2.nuages.length;i++)
+            results.push(tmp2.nuages[i])
+        
+        return await Nuage.find({ _id: { $in : results } });
+        
     }
 
     async add(name, image) {

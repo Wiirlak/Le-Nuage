@@ -11,13 +11,16 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 router.get('/', async(req, res, next) => {
-    const nuages = await NuageController.getAll();
+    const u = await AuthController.verify(req.headers['x-access-token']);
+    const nuages = await NuageController.getUserNuage(u._id);
+    console.log("t")
+    /*const nuages = await NuageController.getAll();
 
     if (nuages === undefined) {
         return res.status(404).end();
     }
     const u = await AuthController.verify(req.headers['x-access-token']);
-    await HistoryController.addToHistory(strings.read, u._id, null, null, 'All Nuages');
+    await HistoryController.addToHistory(strings.read, u._id, null, null, 'All Nuages');*/
     res.json(nuages);
 });
 
