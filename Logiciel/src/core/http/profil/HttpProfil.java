@@ -23,14 +23,15 @@ public class HttpProfil {
             con.setConnectTimeout(60000); //60 secs
             con.setReadTimeout(60000); //60 secs
             int status = con.getResponseCode();
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            Profil answer =(new Gson()).fromJson(in.readLine(), Profil.class);
-            in.close();
-            con.disconnect();
-            return answer;
+            if(status == 200){
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                Profil answer =(new Gson()).fromJson(in.readLine(), Profil.class);
+                in.close();
+                con.disconnect();
+                return answer;
+            }
+
         }catch(ConnectException e ){
             System.out.println("error");
         }

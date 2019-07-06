@@ -141,6 +141,15 @@ public class ControllerFile implements AnnotatedClass {
 
 
          */
+        flowpane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(final ContextMenuEvent event) {
+                for (ContextMenu i : contextMenuArrayList)
+                    i.hide();
+                System.out.println("dd");
+                createRightClickMenuVbox().show(flowpane, event.getScreenX(), event.getScreenY());
+            }
+        });
 
     }
 
@@ -149,16 +158,13 @@ public class ControllerFile implements AnnotatedClass {
         try {
             nuageArray.clear();
             flowpane.getChildren().clear();
-            Profil response = HttpProfil.getProfil();
-            if( response != null) {
-                ArrayList<Nuage> nuageArrayList = HttpNuage.getNuages(response.getNuages());
-                if (nuageArrayList != null)
-                    for (Nuage n : nuageArrayList) {
-                        nuageArray.add(new NuageModel(n.getName(), n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), "15/12/19", "nuages"));
-                        addNuage(n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), n.getName(), "15/12/19", n.getParentEntity(),n.get_id());
-                        //System.out.println(n.getImage());
-                    }
-            }
+            Nuage[] nuageArrayList = HttpNuage.getNuages();
+            if (nuageArrayList != null)
+                for (Nuage n : nuageArrayList) {
+                    nuageArray.add(new NuageModel(n.getName(), n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), "15/12/19", "nuages"));
+                    addNuage(n.getImage() == null ? "/assets/pictures/LN.png" : n.getImage(), n.getName(), "15/12/19", n.getParentEntity(),n.get_id());
+                    //System.out.println(n.getImage());
+                }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -202,7 +208,7 @@ public class ControllerFile implements AnnotatedClass {
         flowpane.getChildren().add(vbox);
     }
 
-    @Usage(description = "Création de menu sur le click droit")
+    @Usage(description = "Création de menu sur le click droit sur un nuage")
     public ContextMenu createRightClickMenu(String nuageName, String id,String nuageId){
         ContextMenu contextMenu = new ContextMenu();
         MenuItem item1 = new MenuItem("S'envoler");
@@ -260,6 +266,25 @@ public class ControllerFile implements AnnotatedClass {
         });
         contextMenu.getItems().addAll(item1, item2,item3,item4,item5);
         contextMenuArrayList.add(contextMenu);
+        return contextMenu;
+    }
+
+    @Usage(description = "Création de menu sur le click droit pour créer un nuage")
+    public ContextMenu createRightClickMenuVbox(){
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("Créer un nuage");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    createNuage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                reload();
+            }
+        });
+        contextMenu.getItems().addAll(item1);
         return contextMenu;
     }
 
@@ -632,7 +657,8 @@ public class ControllerFile implements AnnotatedClass {
 
 
         //refresh labelNuage
-        labelNuage.setText(AuthService.getNuage().getName());
+        if(!AuthService.getNuage().getName().equals(""))
+            labelNuage.setText(AuthService.getNuage().getName());
     }
 
     @FXML
@@ -678,4 +704,27 @@ public class ControllerFile implements AnnotatedClass {
             subStage.show();
     }
 
+
+    @FXML
+    @Usage(description = "Ouverture de la fenetre de création de nuage")
+    public void createNuage() throws IOException {
+        Stage subStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("createNuage.fxml"));
+        Scene scene = new Scene(loader.load());
+        ControllerCreateNuage controllerCreateNuage = loader.getController();
+        controllerCreateNuage.setStage(subStage);
+        subStage.setResizable(false);
+        subStage.setTitle(PluginData.nuageName+" - Créer un nuage");
+        subStage.setScene(scene);
+        subStage.getIcons().add(new Image("pictures/LNb.png"));
+        subStage.initOwner(stage);
+        subStage.initModality(Modality.WINDOW_MODAL);
+        scene.getStylesheets().add("core/stylesheet/stylesheet.css");
+        subStage.show();
+    }
+
 }
+
+
+
+
