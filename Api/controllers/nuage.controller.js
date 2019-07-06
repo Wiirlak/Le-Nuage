@@ -31,7 +31,7 @@ class NuageController {
         
     }
 
-    async add(name, image) {
+    async add(name, image,id) {
         //TODO set default image
         if (!image) {
 
@@ -53,6 +53,16 @@ class NuageController {
             if (e === null) {
                 return undefined;
             }
+
+            console.log("update : ",id)
+            console.log("id nuage : ",n._id)
+            await User.updateOne(
+               { _id: id }, 
+               { $push:
+                    {
+                        nuages : n._id
+                    }
+               })
 
             n.parentEntity = e._id;
 
