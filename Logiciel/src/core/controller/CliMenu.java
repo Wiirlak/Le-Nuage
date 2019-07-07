@@ -145,14 +145,12 @@ public class CliMenu {
 
     private int nOption(String path) {
         Entity[] liste = HttpEntite.getTreeByParentId(path);
-        String[] currItem = new String[2];
         TablePrint print = new TablePrint();
 
         System.out.println("\"" + path + "\":");
         print.setHeaders("Type", "Name", "ID");
         print.setShowVerticalLines(true);
         for(Entity item : liste){
-//            System.out.println(item.getName() + " " + item.getParent() + " ");
             if(item.getType().getName().equals("file"))
                 print.addRow("", item.getName(), item.get_id());
             else
@@ -174,7 +172,7 @@ public class CliMenu {
     }
     
     private int cOption(String name) {
-//        HttpNuage.createNuage(name);
+        HttpNuage.createNuage(name);
         return 0;
     }
 
