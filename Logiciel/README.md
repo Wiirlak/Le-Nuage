@@ -13,12 +13,12 @@ Au sein de votre projet créez une classe nommée LeNuage.java.
 Elle contiendra le  contenu suivant :
 ```java
 public interface LeNuage {
-    String color = "#fffff";
-
     void lnOpen();
     void lnClose();
     void nuageOpen();
     void nuageClose();
+//    Stage returnNewStage(); facultatif
+//    String returnNuageName(); facultatif
 }
 
 ```
@@ -32,9 +32,6 @@ Elle aura  une méthode **main()**.
 ```java
 public class Runnable {
   public Runnable() {
-  }
-
-  public void main(){
       //Do your work here
   }
 }
@@ -57,10 +54,11 @@ il vous faudra utiliser les méthodes définies dans *LeNuage*
 - Close : Sortie d'un nuage
 
 ####Variables
-Ces variables sont liés à l'environnement de l'application et peuvent être utilisés.
-- color : Change la couleur du background
+Ces variables sont liées à l'environnement de l'application et peuvent être utilisés.
+- returnNewStage : retourner une instance javaFx
+- returnNuageName : retourner le nouveau nom de la fenetre
 
-### Etendez de l'Inteface
+### Implémentez de l'Inteface
 ````java
 public class Runnable implements LeNuage{
     //Code..
@@ -85,3 +83,19 @@ public class Runnable implements LeNuage{
 
 ### Utilisez la méthode
 A partir de là, il vous suffit d'appelez vos fonctions dans les points d'entrée désirées.
+
+
+# Utilisation du cli
+Pour lancer **LeNuage** en cli, il vous faudra utiliser l'argument *-dev*
+> java -jar LeNuage.jar -dev -l login pwd -n MonNuage/dev -d project.jar
+
+##Arguments disponibles
+````
+*  -cmd,--cmd            Activate the cmd mode
+*  -d,--download <arg>   download the named file
+*  -g,--getNuage <arg>   get the list of all your Nuages
+*  -l,--login <arg>      Login id
+*  -n,--navigate <arg>   move in your nuage
+*  -p,--password <arg>   Login password
+*  -u,--u <arg>          upload file to the current repertory
+````

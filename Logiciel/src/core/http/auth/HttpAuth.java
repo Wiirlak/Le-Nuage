@@ -25,7 +25,6 @@ public class HttpAuth {
             con.setReadTimeout(60000); //60 secs
             con.setRequestMethod("POST");
             String urlParameters  = "{\"email\":\""+email+"\",\"password\":\""+password+"\"}";
-            //System.out.println(urlParameters);
             con.setRequestProperty("Content-Type", "application/json");
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             wr.writeBytes(urlParameters);
@@ -37,7 +36,6 @@ public class HttpAuth {
                 // Add user to logged user
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(con.getInputStream()));
-                String inputLine;
                 StringBuffer content = new StringBuffer();
                 Auth answer =(new Gson()).fromJson(in.readLine(), Auth.class);
                 in.close();
@@ -62,7 +60,7 @@ public class HttpAuth {
             con.setConnectTimeout(60000); //60 secs
             con.setReadTimeout(60000); //60 secs
             con.setRequestMethod("POST");
-            String urlParameters  = "{\"email\":\""+email+"\",\"password\":\""+password+"\",\"name\":\""+name+"\"}";
+            String urlParameters  = "{\"email\":\""+email+"\",\"password\":\""+password+"\",\"name\":\""+name+"\",\"firstname\":\""+surname+"\",\"date\":\""+birthday+"\"}";
             //System.out.println(urlParameters);
             con.setRequestProperty("Content-Type", "application/json");
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());

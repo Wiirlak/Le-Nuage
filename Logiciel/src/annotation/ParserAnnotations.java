@@ -19,7 +19,7 @@ public class ParserAnnotations
         test.add(new AuthService());
         test.add(new AuthUser());
         test.add(new NuageModel("Test","test","test","test"));
-        test.add(new PluginFxml(new File("t")));
+        test.add(new PluginFxml(new File("t"),true));
         test.add(new SynchroFxml());
         test.add(new User());
 

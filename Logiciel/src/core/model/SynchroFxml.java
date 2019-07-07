@@ -16,6 +16,8 @@ public class SynchroFxml implements AnnotatedClass {
     @FXML
     public CheckBox selected = new CheckBox();
 
+
+
     @FXML
     public Label name;
 
