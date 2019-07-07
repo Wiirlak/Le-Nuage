@@ -31,7 +31,7 @@
             <TextField promptText="Rechercher..." minWidth="250" onKeyPressed="#search" fx:id="recherche"></TextField>
         </HBox>
     </VBox>
-    <TableView maxHeight="300" maxWidth="700" GridPane.rowIndex="3" fx:id="files">
+    <TableView maxHeight="300" maxWidth="750" GridPane.rowIndex="3" fx:id="files">
         <columns>
             <TableColumn fx:id="deleted" minWidth="100">
                 <graphic>
@@ -44,7 +44,7 @@
                     <PropertyValueFactory property="name"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="Taille" fx:id="activated" minWidth="100">
+            <TableColumn text="Taille" fx:id="activated" minWidth="150">
             <cellValueFactory><PropertyValueFactory property="size"/></cellValueFactory>
             </TableColumn>
             <TableColumn text="Dernière modification" fx:id="edited" minWidth="200">

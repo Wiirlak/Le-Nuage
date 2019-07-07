@@ -233,7 +233,7 @@ public class ControllerFile implements AnnotatedClass {
     @Usage(description = "Recuperation de la taille d'un fichier")
     public String getSizeOfFile(double size){
         NumberFormat nf = new DecimalFormat("0.##");
-        String[] data = {"B", "KB", "MB", "GB", "TB"};
+        String[] data = {"o", "Ko", "Mo", "Go", "To"};
         int index = 0;
         while(size > 1024 ) {
             size /= 1024;
@@ -394,8 +394,8 @@ public class ControllerFile implements AnnotatedClass {
                 hbox.getChildren().add(new Label(i.getName()));
                 Pane pane = new Pane();
                 HBox.setHgrow(pane, Priority.ALWAYS);
-                //hbox.getChildren().add(pane);
-                //hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
+                hbox.getChildren().add(pane);
+                hbox.getChildren().add(new Label(getSizeOfFile(i.getSize())));
                 nuageFiles.getChildren().add(hbox);
                 hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                     HttpEntite.download(i.get_id(),i.getName(),label1.getText().equals("")? "":label1.getText(),this);

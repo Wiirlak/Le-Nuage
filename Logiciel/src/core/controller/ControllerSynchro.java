@@ -26,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Status(author = "Bastien NISOLE",
         progression = 50,
@@ -100,7 +101,7 @@ public class ControllerSynchro  implements AnnotatedClass {
             if (i.isFile() && isStrignInArray(distantFilename,i.getName())) {
                 SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-YY HH:mm");
                 String d = dt1.format(new Date(i.lastModified()));
-                masterData.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),"0Kb",d,"no sé"));
+                masterData.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName()),d,getDate(distantFilename,i.getName())));
             }else{
                 //System.out.println(i.getName());
             }
@@ -122,7 +123,7 @@ public class ControllerSynchro  implements AnnotatedClass {
     @Usage(description = "Recuperation de la taille d'un fichier")
     public String getSizeOfFile(double size){
         NumberFormat nf = new DecimalFormat("0.##");
-        String[] data = {"B", "KB", "MB", "GB", "TB"};
+        String[] data = {"o", "Ko", "Mo", "Go", "To"};
         int index = 0;
         while(size > 1024 ) {
             size /= 1024;
@@ -137,6 +138,27 @@ public class ControllerSynchro  implements AnnotatedClass {
                 return true;
         }
         return false;
+    }
+
+    public String getDate(Entity [] array, String id){
+        for(Entity i : array){
+            if(i.getName().equals(id)){
+                SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-YY HH:mm");
+                dt1.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
+                String d = dt1.format(i.getCreated());
+                return d;
+            }
+
+        }
+        return "";
+    }
+
+    public String getSize(Entity [] array, String id){
+        for(Entity i : array){
+            if(i.getName().equals(id))
+                return getSizeOfFile(i.getSize());
+        }
+        return "";
     }
 
     @Usage(description = "Tous cocher ou tous décocher")

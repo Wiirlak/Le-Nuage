@@ -1,16 +1,19 @@
 package core.model;
 
+import java.util.Date;
+
 public class Entity {
     private String is_deleted;
     private String _id;
-    private String created;
+    private Date created;
     private String name;
     private String parent;
     private Type type;
     private int __v;
+    private int size;
 
 
-    public Entity(String is_deleted, String _id, String created, String name, String parent, String nameType, String idType, int __v) {
+    public Entity(String is_deleted, String _id, Date created, String name, String parent, String nameType, String idType, int __v, int size) {
         this.is_deleted = is_deleted;
         this._id = _id;
         this.created = created;
@@ -18,6 +21,7 @@ public class Entity {
         this.parent = parent;
         this.type = new Type(nameType,idType);
         this.__v = __v;
+        this.size = size;
     }
 
     public String getIs_deleted() {
@@ -36,11 +40,11 @@ public class Entity {
         this._id = _id;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
@@ -78,5 +82,14 @@ public class Entity {
 
     public String toString(){
         return this.getName();
+    }
+
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }
