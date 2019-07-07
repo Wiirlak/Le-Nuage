@@ -32,7 +32,7 @@ router.get('/search', async (req, res, next) => {
     if (entity === undefined) {
         return res.status(409).end();
     }
-    return res.json(entity.parent);
+    return res.json(entity);
 });
 
 router.post('/', async (req, res, next) => {
@@ -53,14 +53,25 @@ router.post('/upload', upload.single('somefile'),async (req, res, next) => {
     if (!req.file || !req.body.parentId) {
         return res.status(400).end();
     }
-    console.log(req.file);
+    let e;
+    //console.log(req.file);
     const p = await EntityController.getNuageByEntityId(req.body.parentId);
     if (p === undefined || p.type.name !== 'nuage') {
         return res.status(409).end();
     }
+    const check = await EntityController.checkFile(req.file, req.body.parentId);
+    if (check === undefined) {
+        e = await EntityController.add(req.body.parentId, req.file.originalname, "file", req.file.size, undefined);
+    } else if (check.version === -1) {
+        if (await EntityController.removeFile(req.file.path)) {
+            return res.status(201).json(check.entity).end();
+        }
+        return res.status(201).json(check.entity).end();
+    } else {
+        e = await EntityController.add(req.body.parentId, req.file.originalname, "file", req.file.size, check.version);
+    }
     let extension = req.file.originalname.split('.');
 
-    const e = await EntityController.add(req.body.parentId, req.file.originalname, "file");
     if (e === undefined) {
         return res.status(409).end();
     }
@@ -73,6 +84,7 @@ router.post('/upload', upload.single('somefile'),async (req, res, next) => {
     const u = await AuthController.verify(req.headers['x-access-token']);
     await HistoryController.addToHistory(strings.upload, u._id, e._id, null, strings.entity);
     res.status(201).json(e);
+
 });
 
 router.put('/', async (req, res, next) => {

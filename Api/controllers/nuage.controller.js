@@ -1,18 +1,36 @@
 'use strict';
 
 const Nuage = require('../models').Nuage;
+const User = require('../models').User;
 const fs = require('fs-extra');
 const EntityController = require('./entity.controller');
 
 class NuageController {
     async getAll() {
-        const nuage = await Nuage.find().populate('entities parentEntity');
+        const nuage = await Nuage.find().populate('parentEntity');
         if (nuage.length > 0 && nuage !== null) {
             return nuage;
         }
     }
 
-    async add(name, image) {
+    async getUserNuage(id){
+        const nuage = await User.findById(id).select("nuages -_id").lean()
+        /*await Nuage.find({ "id name": { "$in": nuage } },function(err,items) {
+           // matching results are here
+           console.log(items)
+        })*/
+        //console.log(JSON.parse(nuage));
+        var tmp = JSON.stringify(nuage);
+        var tmp2 = JSON.parse(tmp);
+        const results = [];
+        for(let i = 0 ; i< tmp2.nuages.length;i++)
+            results.push(tmp2.nuages[i]);
+        
+        return await Nuage.find({ _id: { $in : results }, is_deleted: {$exists : true , $eq : false} });
+        
+    }
+
+    async add(name, image, id) {
         //TODO set default image
         if (!image) {
 
@@ -34,6 +52,16 @@ class NuageController {
             if (e === null) {
                 return undefined;
             }
+
+            console.log("update : ",id);
+            console.log("id nuage : ",n._id);
+            await User.updateOne(
+               { _id: id }, 
+               { $push:
+                    {
+                        nuages : n._id
+                    }
+               });
 
             n.parentEntity = e._id;
 
@@ -74,6 +102,16 @@ class NuageController {
         } catch (e) {
             return undefined;
         }
+    }
+
+    async deleteNuage(id) {
+        const nuage = await Nuage.findOneAndUpdate( { _id: id }, { is_deleted: true });
+
+        if (nuage === null) {
+            return undefined;
+        }
+
+        return nuage;
     }
 }
 

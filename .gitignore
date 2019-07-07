@@ -2,3 +2,5 @@
 .idea
 
 Api/\.env
+
+*.iml

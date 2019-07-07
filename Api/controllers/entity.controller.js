@@ -23,10 +23,18 @@ class EntityController {
         }
     }
 
-    async  add(parentId, name, type) {
+    async  add(parentId, name, type, size, version) {
         //let nuage;
         const entity = new Entity();
         entity.name = name;
+        if (size !== undefined) {
+            entity.size = size;
+        } else {
+            entity.size = 0;
+        }
+        if (version !== undefined) {
+            entity.version = version;
+        }
         if (type === 'nuage') {
             entity.parent = parentId;
         } else {
@@ -69,6 +77,14 @@ class EntityController {
     async moveFile(src, dest) {
         try {
             await fs.move(src, dest);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+    async removeFile(src) {
+        try {
+            await fs.unlink(src);
             return true;
         } catch (e) {
             return false;
@@ -122,6 +138,37 @@ class EntityController {
             return await this.getNuageByEntityId(parent.id);
         }
         return undefined;
+    }
+
+    async getEntityByNameAndParent(entityName, parentId) {
+        const entity = await Entity.find({ name: entityName, parent: parentId}).sort({ version: -1 });
+        if (entity === undefined) {
+            return undefined;
+        }
+        return entity;
+    }
+
+    async checkFile(file, parentId) {
+        const entity = await this.getEntityByNameAndParent(file.originalname, parentId);
+        if (entity[0] === undefined) {
+            return undefined;
+        }
+        console.log(entity[0]);
+        const parent = await this.getNuageByEntityId(entity[0]._id);
+        const entityBuffer = await fs.readFile( `${process.env.NUAGE_PATH}${parent._id}/${entity[0]._id}.${entity[0].extension}`);
+        const newBuffer = await fs.readFile(file.path);
+
+        if (entityBuffer.equals(newBuffer)) {
+            return {
+                entity: entity[0],
+                version: -1
+            };
+        }
+
+        return {
+            entity: entity[0],
+            version: entity[0].version + 1
+        };
     }
 
 }

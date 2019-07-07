@@ -28,6 +28,13 @@ const entitySchema = mongoose.Schema({
     },
     extension: {
         type: String
+    },
+    size: {
+        type: Number
+    },
+    version: {
+        default: 0,
+        type: Number
     }
 });
 
