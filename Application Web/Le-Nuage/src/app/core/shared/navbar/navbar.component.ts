@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {ProfilComponent} from '../../../user/components/profil/profil.component';
 import {AuthentificationService} from '../../../admin/services/authentification/authentification.service';
 import {NbMenuService} from '@nebular/theme';
 
@@ -21,7 +20,7 @@ export class NavbarComponent implements OnInit {
         },
         {
           title: 'Nuages partagés',
-          link: ['/shared'], // goes directly into `href` attribute
+          link: ['/home'], // goes directly into `href` attribute
         },
         {
           title: 'Favoris',
@@ -60,7 +59,6 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
-  logged = false;
 
   ngOnInit() {
   }

@@ -31,8 +31,8 @@
   <mat-grid-tile class="cloud" *ngFor="let cloud of cloudstmp">
   <!-- [cloud]="newsPost"-->
 <!--        <mat-grid-list cols="4"-->
-  <mat-card class="z-depth cover" routerLink="/nuage?id=5d0f766742038438d41f5c5c">
-      <img  mat-card-sm-image [src]="toGoodUrl(cloud.img)" class="img">
+  <mat-card class="z-depth cover" routerLink="/nuage/5d0f766742038438d41f5c5c">
+      <img  mat-card-sm-image [src]="cloud.image" class="img">
       <mat-card-header>
           <mat-card-title>{{cloud.name}}</mat-card-title>
           <mat-card-subtitle>{{cloud.date_created}}</mat-card-subtitle>

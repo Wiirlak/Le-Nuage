@@ -6,6 +6,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Globals} from '../../globals/globals';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit {
     this.pageAfter = 0;
     this.search = searched.target.value;
     this.loadNext();
+    console.log(this.cloudstmp);
   }
 
   loadNext() {
@@ -40,12 +42,13 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.cloudsService.load(this.pageAfter, this.pageSize, this.search)
       .subscribe(clouds => {
+        console.log('1');
         this.cloudstmp.push(...clouds);
+        console.log(clouds);
         this.loading = false;
         this.pageAfter ++;
       });
-    /*for(let i = 0 ; i < 100 ; i ++)
-      console.log(this.cloudstmp[i])*/
+
   }
 
   toGoodUrl(str) {
