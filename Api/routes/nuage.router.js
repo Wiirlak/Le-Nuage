@@ -13,7 +13,6 @@ router.use(bodyParser.json());
 router.get('/', async(req, res, next) => {
     const u = await AuthController.verify(req.headers['x-access-token']);
     const nuages = await NuageController.getUserNuage(u._id);
-    console.log("t")
     /*const nuages = await NuageController.getAll();
 
     if (nuages === undefined) {

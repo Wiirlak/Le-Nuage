@@ -41,7 +41,7 @@ class AuthController {
         if (user === undefined) {
             return undefined;
         }
-        console.log(user);
+        //console.log(user);
         const passwordIsValide = await bcrypt.compare(password, user.password);
         if (!passwordIsValide) {
             return undefined;

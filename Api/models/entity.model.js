@@ -31,6 +31,10 @@ const entitySchema = mongoose.Schema({
     },
     size: {
         type: Number
+    },
+    version: {
+        default: 0,
+        type: Number
     }
 });
 

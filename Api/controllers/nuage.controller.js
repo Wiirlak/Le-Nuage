@@ -4,7 +4,6 @@ const Nuage = require('../models').Nuage;
 const User = require('../models').User;
 const fs = require('fs-extra');
 const EntityController = require('./entity.controller');
-const mongoose = require('mongoose');
 
 class NuageController {
     async getAll() {
@@ -23,15 +22,15 @@ class NuageController {
         //console.log(JSON.parse(nuage));
         var tmp = JSON.stringify(nuage);
         var tmp2 = JSON.parse(tmp);
-        const results = []
+        const results = [];
         for(let i = 0 ; i< tmp2.nuages.length;i++)
-            results.push(tmp2.nuages[i])
+            results.push(tmp2.nuages[i]);
         
         return await Nuage.find({ _id: { $in : results } });
         
     }
 
-    async add(name, image,id) {
+    async add(name, image, id) {
         //TODO set default image
         if (!image) {
 
@@ -54,15 +53,15 @@ class NuageController {
                 return undefined;
             }
 
-            console.log("update : ",id)
-            console.log("id nuage : ",n._id)
+            console.log("update : ",id);
+            console.log("id nuage : ",n._id);
             await User.updateOne(
                { _id: id }, 
                { $push:
                     {
                         nuages : n._id
                     }
-               })
+               });
 
             n.parentEntity = e._id;
 
