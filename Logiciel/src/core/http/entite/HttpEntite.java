@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import core.controller.ControllerFile;
+import core.data.GlobalData;
 import core.model.AuthService;
 import core.model.Entity;
 import javafx.application.Platform;
@@ -20,7 +21,6 @@ import java.util.Set;
  */
 public class HttpEntite {
 
-    private static final String apiUrl = "http://localhost:3000";
 
     public static boolean upload(String path, String parentId) throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -34,7 +34,7 @@ public class HttpEntite {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://localhost:3000/entity/upload")
+                .url(GlobalData.url+"/entity/upload")
                 .addHeader("x-access-token", AuthService.getAuthUser().getToken())
                 .post(requestBody)
                 .build();
@@ -73,12 +73,12 @@ public class HttpEntite {
 
     public static Entity[] getTreeByParentId(String parentId){
         try{
-            URL url = new URL(apiUrl+"/tree/"+parentId);
+            URL url = new URL(GlobalData.url+"/tree/"+parentId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             Entity[] answer =  new Entity[0];
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             int status = con.getResponseCode();
             if ( status != 200)
@@ -109,12 +109,12 @@ public class HttpEntite {
             System.out.println(output);
             if(output.equals(""))
                 return false;
-            URL url = new URL(apiUrl+"/entity/download?e="+fileId);
+            URL url = new URL(GlobalData.url+"/entity/download?e="+fileId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             int status = con.getResponseCode();
             if ( status != 200)
                 throw new IOException();
@@ -136,12 +136,12 @@ public class HttpEntite {
 
     public static StringBuffer getOne(String fileId){
         try{
-            URL url = new URL(apiUrl+"/entity/search?e="+fileId);
+            URL url = new URL(GlobalData.url+"/entity/search?e="+fileId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             con.setRequestMethod("GET");
-            con.setConnectTimeout(20000); //20 secs
-            con.setReadTimeout(20000); //20 secs
+            con.setConnectTimeout(GlobalData.timeout); //20 secs
+            con.setReadTimeout(GlobalData.timeout); //20 secs
             if (con.getResponseCode() != 200)
                 return null;
             BufferedReader in = new BufferedReader(
@@ -162,11 +162,11 @@ public class HttpEntite {
 
     public static int createFolder(String name, String parentId){
         try{
-            URL url = new URL(apiUrl+"/entity");
+            URL url = new URL(GlobalData.url+"/entity");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setDoOutput(true);
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestMethod("POST");
             String urlParameters  = "{\"name\":\""+name+"\",\"type\":\"folder\",\"parentId\": \""+parentId+"\"}";
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());

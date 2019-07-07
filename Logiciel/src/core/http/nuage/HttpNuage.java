@@ -2,6 +2,7 @@ package core.http.nuage;
 
 
 import com.google.gson.Gson;
+import core.data.GlobalData;
 import core.model.AuthService;
 
 import java.io.*;
@@ -10,17 +11,15 @@ import java.util.ArrayList;
 
 public class HttpNuage {
 
-    private static final String apiUrl = "http://localhost:3000";
-
     public static Nuage[] getNuages() throws IOException {
         try {
             ArrayList<Nuage> nuageList = new ArrayList<>();
-            URL url = new URL(apiUrl + "/nuage/");
+            URL url = new URL(GlobalData.url + "/nuage/");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             con.setRequestMethod("GET");
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             int status = con.getResponseCode();
             if (status == 200) {
                 /*BufferedReader in = new BufferedReader(
@@ -50,11 +49,11 @@ public class HttpNuage {
 
     public static int rename(String id, String name){
         try{
-            URL url = new URL(apiUrl+"/nuage");
+            URL url = new URL(GlobalData.url+"/nuage");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setDoOutput(true);
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestMethod("PUT");
             String urlParameters  = "{\"id\":\""+id+"\",\"name\":\""+name+"\"}";
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
@@ -82,11 +81,11 @@ public class HttpNuage {
 
     public static int createNuage(String name){
         try{
-            URL url = new URL(apiUrl+"/nuage/");
+            URL url = new URL(GlobalData.url+"/nuage/");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setDoOutput(true);
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestMethod("POST");
             String urlParameters  = "{\"name\":\""+name+"\"}";
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
@@ -114,7 +113,7 @@ public class HttpNuage {
 
     public static int deleteNuage(String id){
         try{
-            URL url = new URL(apiUrl+"/nuage/"+id);
+            URL url = new URL(GlobalData.url+"/nuage/"+id);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setDoOutput(true);
             con.setConnectTimeout(60000); //60 secs

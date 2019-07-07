@@ -425,21 +425,24 @@ public class ControllerFile implements AnnotatedClass {
         File repertoire2 = new File(filename);
         String[] liste = repertoire2.list(fnf);
         File[] tmp = repertoire2.listFiles();
-        for (int i = 0; i < liste.length; i++) {
-            HBox hbox =  new HBox();
-            hbox.setUserData(liste[i]);
-            //hbox.getChildren().add(img);
-            hbox.getChildren().add(new Label(liste[i]));
-            Pane pane = new Pane();
-            HBox.setHgrow(pane, Priority.ALWAYS);
-            hbox.getChildren().add(pane);
-            hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
-            vbox.getChildren().add(hbox);
-            hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                if(label2.getText() != "" )
-                    HttpEntite.threadT(label1.getText()+"\\"+hbox.getUserData().toString(),label2.getUserData().toString(),this);
-            });
+        if(liste != null){
+            for (int i = 0; i < liste.length; i++) {
+                HBox hbox =  new HBox();
+                hbox.setUserData(liste[i]);
+                //hbox.getChildren().add(img);
+                hbox.getChildren().add(new Label(liste[i]));
+                Pane pane = new Pane();
+                HBox.setHgrow(pane, Priority.ALWAYS);
+                hbox.getChildren().add(pane);
+                hbox.getChildren().add(new Label(getSizeOfFile(tmp[i].length())));
+                vbox.getChildren().add(hbox);
+                hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                    if(label2.getText() != "" )
+                        HttpEntite.threadT(label1.getText()+"\\"+hbox.getUserData().toString(),label2.getUserData().toString(),this);
+                });
+            }
         }
+
     }
 
     @Usage(description = "Affecter le chemin par defaut selon l'os")
