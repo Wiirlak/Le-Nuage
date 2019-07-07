@@ -8,11 +8,10 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 router.post('/register', async (req, res, next) => {
-    if (!req.body.name || !req.body.email || !req.body.password) {
+    if (!req.body.name || !req.body.firstname || !req.body.email || !req.body.date || !req.body.password) {
         return res.status(400).end();
     }
-    const auth = await AuthController.register(req.body.name, req.body.email, req.body.password);
-
+    const auth = await AuthController.register(req.body.name, req.body.firstname, req.body.email, req.body.date, req.body.password);
     if (auth === undefined) {
         return res.status(409).end();
     }

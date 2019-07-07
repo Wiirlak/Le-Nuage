@@ -1,12 +1,15 @@
 package core.http.entite;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import core.controller.ControllerFile;
 import core.model.AuthService;
 import core.model.Entity;
 import javafx.application.Platform;
 import okhttp3.*;
 import java.io.*;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Set;
@@ -21,13 +24,14 @@ public class HttpEntite {
 
     private static final String apiUrl = "http://localhost:3000";
 
-
-
-    public static void upload(String file, String parentId) throws IOException {
+    public static boolean upload(String path, String parentId) throws IOException {
         OkHttpClient client = new OkHttpClient();
+        File file = new File(path);
+        if (!file.exists())
+            return false;
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("somefile", file,RequestBody.create(MediaType.parse("text/plain"), new File(file)))
+                .addFormDataPart("somefile", path,RequestBody.create(MediaType.parse("text/plain"), file))
                 .addFormDataPart("parentId", parentId)
                 .build();
 
@@ -40,10 +44,11 @@ public class HttpEntite {
         Response response = client.newCall(request).execute();
         response.close();
         //System.out.println(response);
+        return true;
     }
 
     public static void threadT(String file, String parentId, ControllerFile c) {
-        final String threatname = String.format("%.3f",  System.currentTimeMillis() / 1000.0);;
+        final String threatname = String.format("%.3f",  System.currentTimeMillis() / 1000.0);
         Thread t = new Thread() {
             public void run() {
                 try {
@@ -97,8 +102,15 @@ public class HttpEntite {
     }
 
     public static void download(String fileId,String filename, String output ,ControllerFile c){
+        if (download(fileId, filename, output))
+            Platform.runLater( () ->c.reload());
+    }
+
+    public static boolean download(String fileId,String filename, String output){
         try{
             System.out.println(output);
+            if(output.equals(""))
+                return false;
             URL url = new URL(apiUrl+"/entity/download?e="+fileId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -117,9 +129,35 @@ public class HttpEntite {
                 t.write(buffer, 0, n);
             }
             t.close();
-            Platform.runLater( () ->c.reload());
         }catch(IOException e ){
             System.out.println("error");
+            return false;
+        }
+        return true;
+    }
+
+    public static StringBuffer getOne(String fileId){
+        try{
+            URL url = new URL(apiUrl+"/entity/search?e="+fileId);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
+            con.setRequestMethod("GET");
+            con.setConnectTimeout(20000); //20 secs
+            con.setReadTimeout(20000); //20 secs
+            if (con.getResponseCode() != 200)
+                return null;
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+            con.disconnect();
+            return content;
+        }catch(IOException e ){
+            return null;
         }
     }
 }

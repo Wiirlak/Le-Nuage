@@ -80,9 +80,8 @@ class UserController {
         if (user === null) {
             return undefined;
         }
-        user.password = hashedPassword;
         try {
-            return await user.save();
+            return await user.updateOne({password:hashedPassword});
         } catch (e) {
             return undefined;
         }
@@ -93,9 +92,8 @@ class UserController {
         if (user === null) {
             return undefined;
         }
-        user.email = email;
         try {
-            return await user.save();
+            return await user.updateOne({email:email});
         } catch (e) {
             return undefined;
         }

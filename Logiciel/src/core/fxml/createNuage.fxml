@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="200.0" prefWidth="200.0">
+    <VBox spacing="15">
+
+        <Label text="Création de nuage"></Label>
+        <TextField promptText="Nom du nuage" fx:id="nuageName"></TextField>
+        <Button text="Créer" onAction="#create"></Button>
+    </VBox>
+
+</GridPane>

@@ -3,6 +3,7 @@ package core.controller;
 import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
+import core.data.PluginData;
 import core.http.auth.HttpAuth;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import plugin.PluginManager;
 
 import java.awt.*;
 import java.io.IOException;
@@ -64,7 +66,7 @@ public class ControllerIndex implements AnnotatedClass {
         ControllerSignUp controllerSignUp = loader.getController();
         controllerSignUp.setStage(stage);
         Scene scene = new Scene(root, 900, 700);
-        stage.setTitle("Inscription");
+        stage.setTitle(PluginData.nuageName +" - Inscription");
         stage.setScene(scene);
         scene.getStylesheets().add("core/stylesheet/stylesheet.css");
         stage.show();
@@ -96,7 +98,8 @@ public class ControllerIndex implements AnnotatedClass {
             controllerLoading.setStage(stage);
             Scene scene = new Scene(root);
             stage.setResizable(true);
-            stage.setTitle("Le-Nuage");
+            stage.setTitle(PluginData.nuageName);
+
             stage.setScene(scene);
             scene.getStylesheets().add("core/stylesheet/stylesheet.css");
             stage.show();

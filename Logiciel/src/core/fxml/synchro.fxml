@@ -10,7 +10,6 @@
 <?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="core.controller.ControllerSynchro"
           prefHeight="400.0" prefWidth="800.0" alignment="CENTER">
     <VBox GridPane.rowIndex="1" spacing="10">
         <padding>
@@ -21,11 +20,11 @@
         </HBox>
         <HBox >
             <Label text="Chemin Local : " fx:id="t" ></Label>
-            <Label text="C://tets/pomme/salade" fx:id="s" ></Label>
+            <Label fx:id="localFilePath" ></Label>
         </HBox>
         <HBox >
             <Label text="Chemin Distant : " fx:id="z" ></Label>
-            <Label text="/pomme/pierre" fx:id="w" ></Label>
+            <Label text="/pomme/pierre" fx:id="distantFilePath" ></Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="10">
             <Label text="Rechercher : "></Label>
@@ -40,7 +39,7 @@
                 </graphic>
                 <cellValueFactory><PropertyValueFactory property="selected"/></cellValueFactory>
             </TableColumn>
-            <TableColumn text="Nom" minWidth="100">
+            <TableColumn text="Nom" minWidth="200">
                 <cellValueFactory>
                     <PropertyValueFactory property="name"/>
                 </cellValueFactory>
@@ -48,7 +47,7 @@
             <TableColumn text="Taille" fx:id="activated" minWidth="100">
             <cellValueFactory><PropertyValueFactory property="size"/></cellValueFactory>
             </TableColumn>
-            <TableColumn text="Dernière modification" fx:id="edited" minWidth="300">
+            <TableColumn text="Dernière modification" fx:id="edited" minWidth="200">
                 <cellValueFactory><PropertyValueFactory property="lastEdit"/></cellValueFactory>
             </TableColumn>
         </columns>

@@ -5,6 +5,8 @@ import annotation.ParserAnnotations;
 import annotation.Status;
 import annotation.Usage;
 import com.sun.javafx.application.LauncherImpl;
+import core.controller.CliMenu;
+import core.data.PluginData;
 import core.preloader.Preload;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +15,15 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import core.controller.ControllerIndex;
+import plugin.PluginManager;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
+import javax.sound.sampled.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 @Status(author = "Bastien NISOLE",
         progression = 90,
@@ -28,7 +37,7 @@ public class Main extends Application implements AnnotatedClass {
         Parent root = loader.load();
         ControllerIndex controllerIndex = loader.getController();
         controllerIndex.setStage(primaryStage);
-        primaryStage.setTitle("Le-Nuage");
+        primaryStage.setTitle(PluginData.nuageName);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.toFront();
@@ -45,23 +54,24 @@ public class Main extends Application implements AnnotatedClass {
 
     @Usage(description = "Lancement du projet")
     public static void main(String[] args) throws Exception {
-        //launch(args);
-        //System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
-        /*File folder =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/Lenuage/Plugin");
-        folder.mkdirs();*/
-        /*
-        AuthService.getUser().setNom("slamai");
-        System.out.println(AuthService.getUser().getNom());*/
+        if (args.length != 0){
+                new CliMenu(args);
+        }else {
+            //launch(args);
+            //System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
+            /*File folder =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/Lenuage/Plugin");
+            folder.mkdirs();*/
+            /*
+            AuthService.getUser().setNom("slamai");
+            System.out.println(AuthService.getUser().getNom());*/
 
-        ParserAnnotations t =  new ParserAnnotations();
-        LauncherImpl.launchApplication(Main.class, Preload.class, args);
+            ParserAnnotations t = new ParserAnnotations();
 
-        /*PluginManager a = new PluginManager();
-        a.openJarFile(a.listPlugins[1]);*/
-    }
+            PluginManager a = new PluginManager();
+            a.runSelectedJar("lnOpen");
+            a.runSelectedJar("returnNuageName");
 
-    @Usage(description = "Récuperation du nom de la classe")
-    public String getId() {
-        return "main";
+            LauncherImpl.launchApplication(Main.class, Preload.class, args);
+        }
     }
 }
