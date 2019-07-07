@@ -48,13 +48,6 @@ public class HttpNuage {
         }
     }
 
-
-    public static boolean deleteNuage(String id){
-        return true;
-    }
-
-
-
     public static int rename(String id, String name){
         try{
             URL url = new URL(apiUrl+"/nuage");
@@ -104,6 +97,32 @@ public class HttpNuage {
             wr.close();
             int status = con.getResponseCode();
             if(status == 201)
+                return 1;
+            else
+                return 0;
+        }catch (ConnectException e){
+            return -1;
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
+    public static int deleteNuage(String id){
+        try{
+            URL url = new URL(apiUrl+"/nuage/"+id);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setDoOutput(true);
+            con.setConnectTimeout(60000); //60 secs
+            con.setReadTimeout(60000); //60 secs
+            con.setRequestMethod("DELETE");
+            con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
+            int status = con.getResponseCode();
+            if(status == 200)
                 return 1;
             else
                 return 0;

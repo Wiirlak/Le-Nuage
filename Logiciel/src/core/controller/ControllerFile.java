@@ -201,7 +201,7 @@ public class ControllerFile implements AnnotatedClass {
                 try {
                     Profil response = HttpProfil.getProfil();
                     if( response != null) {
-                         if( HttpNuage.deleteNuage(((MenuItem)event.getSource()).getUserData().toString()) ){
+                         if( HttpNuage.deleteNuage(nuageId) == 1 ){
                              reload();
                              labelNuage.setText("Les fichiers de votre nuage");
                          }
