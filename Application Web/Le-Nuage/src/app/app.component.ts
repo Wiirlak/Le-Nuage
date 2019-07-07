@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthentificationService} from './admin/services/authentification/authentification.service';
 import {Router} from '@angular/router';
 
@@ -7,18 +7,13 @@ import {Router} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  displayNavBar: boolean;
-
+export class AppComponent {
   constructor(private authentificationService: AuthentificationService,
               private router: Router) {}
   title = 'Le-Nuage';
 
-  isLogged() {
-    return this.authentificationService.loggingIn('jean@toto.fr', 'testtest');
+  isLogged(): boolean {
+    return (this.router.url !== '/user/signin' && this.router.url !== '/user/signup');
   }
 
-  ngOnInit(): void {
-    this.displayNavBar = (this.router.url !== '/');
-  }
 }

@@ -4,6 +4,7 @@ import {HomeComponent} from './core/components/home/home.component';
 import {WrongPathComponent} from './core/components/wrong-path/wrong-path.component';
 import {SignInComponent} from './user/components/sign-in/sign-in.component';
 import {AuthGuard} from './admin/guard/auth/auth.guard';
+import {NuageComponent} from './core/components/nuage/nuage.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,11 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuard],
     pathMatch: 'full'
+  },
+  {
+    path: 'nuage/:id',
+    component: NuageComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: '*',

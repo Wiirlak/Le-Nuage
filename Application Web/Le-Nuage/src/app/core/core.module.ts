@@ -19,9 +19,10 @@ import {MatGridListModule, MatCardModule, MatMenuModule, MatButtonModule} from '
 import {FormsModule} from '@angular/forms';
 import { RightbarComponent } from './shared/rightbar/rightbar.component';
 import {NgxFileDropModule} from 'ngx-file-drop';
+import { NuageComponent } from './components/nuage/nuage.component';
 
 @NgModule({
-  declarations: [HomeComponent, WrongPathComponent, HeaderComponent, NavbarComponent, RightbarComponent],
+  declarations: [HomeComponent, WrongPathComponent, HeaderComponent, NavbarComponent, RightbarComponent, NuageComponent],
   imports: [
     CommonModule,
     RouterModule,

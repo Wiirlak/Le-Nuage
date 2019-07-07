@@ -1,13 +1,13 @@
 <nb-layout>
-  <nb-layout-header *ngIf="displayNavBar" fixed >
+  <nb-layout-header *ngIf="isLogged()" fixed >
     <app-header></app-header> <!-- if logged in -->
   </nb-layout-header>
 
-  <nb-sidebar>
+  <nb-sidebar *ngIf="isLogged()">
     <app-navbar></app-navbar> <!-- if logged in -->
   </nb-sidebar>
 
-  <nb-sidebar right style="background: #4b9df8">
+  <nb-sidebar right style="background: #4b9df8" *ngIf="isLogged()">
     <app-rightbar></app-rightbar>
   </nb-sidebar>
 
