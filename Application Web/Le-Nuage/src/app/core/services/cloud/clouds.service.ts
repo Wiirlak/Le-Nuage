@@ -10,9 +10,6 @@ import {filter, flatMap, map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CloudsService {
-  clouddata = new Array();
-  nuages = new Array();
-
   constructor(private globals: Globals, private http: HttpClient, private localService: LocalStorageService) {
   }
 
@@ -22,11 +19,11 @@ export class CloudsService {
       'x-access-token': this.localService.get('currentUser')
     });
     if (word) {
-      return this.http.get<Cloud[]>(this.globals.apiPath + 'nuage', { headers, responseType: 'json' }).pipe(
-        map((cloud: Cloud[]) => cloud.filter(w => w.name.indexOf(word)))
+      return this.http.get<Cloud[]>(this.globals.apiPath + 'nuage?page=' + pageAfter, { headers, responseType: 'json' }).pipe(
+        map((cloud: Cloud[]) => cloud.filter(w => w.name.toLowerCase().indexOf(word.toLowerCase()) >= 0))
       );
     }
-    return this.http.get<Cloud[]>(this.globals.apiPath + 'nuage', { headers, responseType: 'json' });
+    return this.http.get<Cloud[]>(this.globals.apiPath + 'nuage?page=' + pageAfter, { headers, responseType: 'json' });
   }
 
 }

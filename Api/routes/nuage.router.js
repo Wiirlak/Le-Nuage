@@ -12,14 +12,21 @@ router.use(bodyParser.json());
 
 router.get('/', async(req, res, next) => {
     const u = await AuthController.verify(req.headers['x-access-token']);
-    const nuages = await NuageController.getUserNuage(u._id);
-    /*const nuages = await NuageController.getAll();
+    var nuages;
+    var url = require('url');
+    var url_parts = url.parse(req.url, true);
+    if (url_parts.query.page)
+        nuages = await NuageController.getPageNuage(u._id, url_parts.query.page);
+    else
+        nuages = await NuageController.getUserNuage(u._id);
+
+    // const nuages = await NuageController.getAll();
 
     if (nuages === undefined) {
         return res.status(404).end();
     }
-    const u = await AuthController.verify(req.headers['x-access-token']);
-    await HistoryController.addToHistory(strings.read, u._id, null, null, 'All Nuages');*/
+
+    await HistoryController.addToHistory(strings.read, u._id, null, null, 'All Nuages');
     res.json(nuages);
 });
 

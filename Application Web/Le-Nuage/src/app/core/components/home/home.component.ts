@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   cloudstmp = new Array();
   loading = false;
   pageSize = 25;
-  pageAfter = 0;
+  pageAfter = 1;
   search = '';
 
   public files: NgxFileDropEntry[] = [];
@@ -29,12 +29,10 @@ export class HomeComponent implements OnInit {
 
   onKey(searched) {
     this.cloudstmp = new Array();
-    console.log(searched.target.value);
     this.pageSize = 24;
-    this.pageAfter = 0;
+    this.pageAfter = 1;
     this.search = searched.target.value;
     this.loadNext();
-    console.log(this.cloudstmp);
   }
 
   loadNext() {
@@ -42,9 +40,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.cloudsService.load(this.pageAfter, this.pageSize, this.search)
       .subscribe(clouds => {
-        console.log('1');
         this.cloudstmp.push(...clouds);
-        console.log(clouds);
         this.loading = false;
         this.pageAfter ++;
       });

@@ -14,7 +14,7 @@ class NuageController {
     }
 
     async getUserNuage(id){
-        const nuage = await User.findById(id).select("nuages -_id").lean()
+        const nuage = await User.findById(id).select("nuages -_id").lean();
         /*await Nuage.find({ "id name": { "$in": nuage } },function(err,items) {
            // matching results are here
            console.log(items)
@@ -25,9 +25,21 @@ class NuageController {
         const results = [];
         for(let i = 0 ; i< tmp2.nuages.length;i++)
             results.push(tmp2.nuages[i]);
-        
+
         return await Nuage.find({ _id: { $in : results }, is_deleted: {$exists : true , $eq : false} });
-        
+    }
+
+    async getPageNuage(id, page){
+        var perPage = 25;
+        const nuage = await User.findById(id).select("nuages -_id").lean();
+        var tmp = JSON.stringify(nuage);
+        var tmp2 = JSON.parse(tmp);
+        const results = [];
+        console.log('perp: ' + perPage + ' page:' + page);
+        for(let i = 0 ; i< tmp2.nuages.length;i++)
+            results.push(tmp2.nuages[i]);
+
+        return await Nuage.find({ _id: { $in : results }, is_deleted: {$exists : true , $eq : false} }).skip(perPage*(page-1)).limit(perPage);
     }
 
     async add(name, image, id) {
