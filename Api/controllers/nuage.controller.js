@@ -26,7 +26,7 @@ class NuageController {
         for(let i = 0 ; i< tmp2.nuages.length;i++)
             results.push(tmp2.nuages[i]);
         
-        return await Nuage.find({ _id: { $in : results } });
+        return await Nuage.find({ _id: { $in : results }, is_deleted: {$exists : false} });
         
     }
 
