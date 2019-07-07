@@ -4,6 +4,8 @@ import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
 import core.http.nuage.HttpNuage;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -30,6 +32,13 @@ public class ControllerCreateNuage implements AnnotatedClass {
         stage = primaryStage;
     }
 
+
+    @FXML
+    public void initialize(){
+        addTextLimiter();
+    }
+
+
     @Usage(description = "Affecter le stage courant")
     public void create(){
         if(!nuageName.getText().equals("")){
@@ -38,6 +47,18 @@ public class ControllerCreateNuage implements AnnotatedClass {
                 parent.reload();
             }
         }
+    }
+
+    public void addTextLimiter() {
+        nuageName.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
+                if (nuageName.getText().length() > 20) {
+                    String s = nuageName.getText().substring(0, 20);
+                    nuageName.setText(s);
+                }
+            }
+        });
     }
 
 }

@@ -9,9 +9,7 @@ import core.model.Entity;
 import javafx.application.Platform;
 import okhttp3.*;
 import java.io.*;
-import java.net.ConnectException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
 import java.util.Set;
 
 /**
@@ -159,5 +157,38 @@ public class HttpEntite {
         }catch(IOException e ){
             return null;
         }
+    }
+
+
+    public static int createFolder(String name, String parentId){
+        try{
+            URL url = new URL(apiUrl+"/entity");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setDoOutput(true);
+            con.setConnectTimeout(60000); //60 secs
+            con.setReadTimeout(60000); //60 secs
+            con.setRequestMethod("POST");
+            String urlParameters  = "{\"name\":\""+name+"\",\"type\":\"folder\",\"parentId\": \""+parentId+"\"}";
+            con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
+            con.setRequestProperty("Content-Type", "application/json");
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            int status = con.getResponseCode();
+            if(status == 201)
+                return 1;
+            else
+                return 0;
+        }catch (ConnectException e){
+            return -1;
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 1;
     }
 }
