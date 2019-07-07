@@ -23,10 +23,15 @@ class EntityController {
         }
     }
 
-    async  add(parentId, name, type) {
+    async  add(parentId, name, type, size) {
         //let nuage;
         const entity = new Entity();
         entity.name = name;
+        if (size != undefined) {
+            entity.size = size;
+        } else {
+            entity.size = 0;
+        }
         if (type === 'nuage') {
             entity.parent = parentId;
         } else {

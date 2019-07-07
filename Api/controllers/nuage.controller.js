@@ -75,6 +75,16 @@ class NuageController {
             return undefined;
         }
     }
+
+    async deleteNuage(id) {
+        const nuage = await Nuage.findOneAndUpdate( { _id: id }, { is_deleted: true });
+
+        if (nuage === null) {
+            return undefined;
+        }
+
+        return nuage;
+    }
 }
 
 module.exports = new NuageController();

@@ -60,7 +60,7 @@ router.post('/upload', upload.single('somefile'),async (req, res, next) => {
     }
     let extension = req.file.originalname.split('.');
 
-    const e = await EntityController.add(req.body.parentId, req.file.originalname, "file");
+    const e = await EntityController.add(req.body.parentId, req.file.originalname, "file", req.file.size);
     if (e === undefined) {
         return res.status(409).end();
     }

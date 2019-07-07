@@ -65,6 +65,19 @@ router.put('/', async(req, res, next) => {
     res.status(400).end();
 });
 
+router.delete('/:id', async(req, res, next) => {
+    if (!req.params.id) {
+        return res.status(400).end();
+    }
+
+    const n = await NuageController.deleteNuage(req.params.id);
+
+    if (n === undefined) {
+        return res.status(409).end();
+    }
+    res.send();
+});
+
 
 
 module.exports = router;

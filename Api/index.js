@@ -1,6 +1,5 @@
 'use strict';
 require('dotenv').config();
-
 //Import express
 const express = require('express');
 //Import Cors
@@ -11,7 +10,6 @@ const morgan = require('morgan');
 const RouterBuilder = require('./routes');
 //Initialize the app
 const app = express();
-
 //DB config
 //const config = require('./config/config.json')['development'];
 //const config = require('./config/config.json')['production'];

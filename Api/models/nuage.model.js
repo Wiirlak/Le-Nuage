@@ -16,7 +16,11 @@ const nuageSchema = mongoose.Schema({
     parentEntity: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Entity'
-    }
+    },
+    is_deleted: {
+        default: false,
+        type: Boolean
+    },
 });
 
 module.exports = mongoose.model('Nuage', nuageSchema);
