@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
     this.pageAfter = 1;
     this.search = searched.target.value;
     this.loadNext();
+    console.log(this.cloudstmp);
   }
 
   loadNext() {

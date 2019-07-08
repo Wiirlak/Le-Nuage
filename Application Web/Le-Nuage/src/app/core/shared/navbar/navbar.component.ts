@@ -1,6 +1,13 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {AuthentificationService} from '../../../admin/services/authentification/authentification.service';
 import {NbMenuService} from '@nebular/theme';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {CloudsService} from '../../services/cloud/clouds.service';
+
+
+export interface DialogData {
+  name: string;
+}
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +15,9 @@ import {NbMenuService} from '@nebular/theme';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
+  name: string;
+
   navbarContent = [
     {
       title: 'Nuage',
@@ -52,7 +61,10 @@ export class NavbarComponent implements OnInit {
       ],
     },
   ];
-  constructor(private authService: AuthentificationService, private menu: NbMenuService) {
+  constructor(private authService: AuthentificationService,
+              private menu: NbMenuService,
+              private dialog: MatDialog,
+              private cloudsService: CloudsService) {
     menu.onItemClick().subscribe((res) => {
       if (res.item.title === 'Déconnexion') {
         authService.loggingOut();
@@ -60,7 +72,33 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  openDialog(): void {
+    const dial = this.dialog.open(NavbarDialogComponent, {
+      width: '20vw',
+      data: {name: this.name}
+    });
+    dial.afterClosed().subscribe(result => {
+      console.log('...');
+      this.cloudsService.create(result).subscribe( res => {
+        console.log('after');
+      });
+    });
+  }
+
+}
+
+@Component({
+  selector: 'app-navbar-dialog',
+  templateUrl: 'navbar-dialog.component.html',
+})
+export class NavbarDialogComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<NavbarDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }
