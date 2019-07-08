@@ -17,17 +17,31 @@ export class NuageComponent {
   nuage: Cloud;
   entitiestmp = new Array();
   loading = false;
+  done = false;
   pageSize = 25;
   pageAfter = 1;
   search = '';
   public files: NgxFileDropEntry[] = [];
 
-  constructor(private route: ActivatedRoute, private cloudsService: CloudsService, private entitiesService: EntitiesService, private http: HttpClient, private globals: Globals) {
+  constructor(private route: ActivatedRoute,
+              private cloudsService: CloudsService,
+              private entitiesService: EntitiesService,
+              private http: HttpClient,
+              private globals: Globals) {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
-    });
-    this.cloudsService.getOne(this.id).subscribe( param => {
-      this.nuage = param;
+
+      this.cloudsService.getOne(this.id).subscribe( param => {
+        this.nuage = param;
+        this.done = true;
+        this.entitiesService.load(this.pageAfter, this.nuage.parentEntity, this.search)
+          .subscribe(entity => {
+            this.entitiestmp.push(...entity);
+            this.loading = false;
+            this.pageAfter++;
+            console.log(entity);
+          });
+      });
     });
   }
 
@@ -43,15 +57,17 @@ export class NuageComponent {
   loadNext() {
     if (this.loading) { return; }
     this.loading = true;
-    this.entitiesService.load(this.pageAfter, this.nuage.parentEntity, this.search)
-      .subscribe(clouds => {
-        this.entitiestmp.push(...clouds);
-        this.loading = false;
-        this.pageAfter ++;
-      });
-
+    if (this.done) {
+      this.entitiesService.load(this.pageAfter, this.nuage.parentEntity, this.search)
+        .subscribe(clouds => {
+          this.entitiestmp.push(...clouds);
+          this.loading = false;
+          this.pageAfter++;
+        });
+    } else {
+      return;
+    }
   }
-
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
@@ -66,7 +82,7 @@ export class NuageComponent {
           console.log(droppedFile.relativePath, file);
 
           // You could upload it like this:
-          const formData = new FormData()
+          const formData = new FormData();
           formData.append('somefile', file, droppedFile.relativePath);
           formData.append('parentId', '5d0f766742038438d41f5c5c');
 
@@ -96,6 +112,4 @@ export class NuageComponent {
   public fileLeave(event) {
     console.log('pd' + event);
   }
-
-
 }
