@@ -3,6 +3,7 @@
 const Entity = require('../models').Entity;
 const Type = require('../models').Type;
 const fs = require('fs-extra');
+const crypto = require('crypto');
 
 class EntityController {
 
@@ -23,33 +24,50 @@ class EntityController {
         }
     }
 
-    async  add(parentId, name, type, size, version) {
+    hash(path) {
+        const fd = fs.createReadStream(path);
+        const hash = crypto.createHash('sha256').setEncoding('hex');
+        fd.pipe(hash);
+        return new Promise((resolve, reject) => {
+            fd.on('end',  () => {
+                hash.end();
+                //console.log(hash.read());
+                 resolve(hash.read());
+            });
+        });
+
+    }
+
+    async add(parentId, name, type, file, version) {
         //let nuage;
         const entity = new Entity();
         entity.name = name;
-        if (size !== undefined) {
-            entity.size = size;
-        } else {
-            entity.size = 0;
-        }
-        if (version !== undefined) {
-            entity.version = version;
-        }
         if (type === 'nuage') {
             entity.parent = parentId;
         } else {
             entity.parent = await Entity.findOne({ _id: parentId });
         }
-
         if (entity.parent === null) {
             return undefined;
         }
         let extension = entity.name.split('.');
 
         if (type === 'file') {
+            if (file.size !== undefined) {
+                entity.size = file.size;
+            } else {
+                entity.size = 0;
+            }
+            if (version !== undefined) {
+                entity.version = version;
+            }
             entity.extension = extension[extension.length - 1];
+            const sha256 = await this.hash(file.path);
+            console.log(sha256);
+            entity.hash = sha256;
         } else {
             entity.extension = '';
+            entity.size = 0;
         }
 
         //console.log(nuage);
@@ -153,13 +171,12 @@ class EntityController {
         if (entity[0] === undefined) {
             return undefined;
         }
-        console.log(entity[0]);
-        const parent = await this.getNuageByEntityId(entity[0]._id);
-        const entityBuffer = await fs.readFile( `${process.env.NUAGE_PATH}${parent._id}/${entity[0]._id}.${entity[0].extension}`);
-        console.log(entityBuffer);
-        const newBuffer = await fs.readFile(file.path);
-
-        if (entityBuffer.equals(newBuffer)) {
+        //console.log(entity[0]);
+        //const parent = await this.getNuageByEntityId(entity[0]._id);
+        //const entityBuffer = await fs.readFile( `${process.env.NUAGE_PATH}${parent._id}/${entity[0]._id}.${entity[0].extension}`);
+        //console.log(entityBuffer);
+        const newBuffer = await this.hash(file.path);
+        if (entity[0].hash === newBuffer) {
             return {
                 entity: entity[0],
                 version: -1

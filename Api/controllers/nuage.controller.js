@@ -14,7 +14,7 @@ class NuageController {
     }
 
     async getUserNuage(id){
-        const nuage = await User.findById(id).select("nuages -_id").lean()
+        const nuage = await User.findById(id).select("nuages -_id").lean();
         /*await Nuage.find({ "id name": { "$in": nuage } },function(err,items) {
            // matching results are here
            console.log(items)

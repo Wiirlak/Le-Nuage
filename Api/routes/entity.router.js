@@ -39,7 +39,7 @@ router.post('/', async (req, res, next) => {
    if (!req.body.name || !req.body.type || !req.body.parentId) {
        return res.status(400).end();
    }
-   const e = await EntityController.add(req.body.parentId, req.body.name, req.body.type);
+   const e = await EntityController.add(req.body.parentId, req.body.name, req.body.type, undefined, undefined);
    if (e === undefined) {
        return res.status(409).end();
    }
@@ -59,16 +59,18 @@ router.post('/upload', upload.single('somefile'),async (req, res, next) => {
     if (p === undefined || p.type.name !== 'nuage') {
         return res.status(409).end();
     }
+
+    //const hash = EntityController.hash(req.file);
     const check = await EntityController.checkFile(req.file, req.body.parentId);
     if (check === undefined) {
-        e = await EntityController.add(req.body.parentId, req.file.originalname, "file", req.file.size, undefined);
+        e = await EntityController.add(req.body.parentId, req.file.originalname, "file", req.file, undefined);
     } else if (check.version === -1) {
         if (await EntityController.removeFile(req.file.path)) {
             return res.status(201).json(check.entity).end();
         }
         return res.status(201).json(check.entity).end();
     } else {
-        e = await EntityController.add(req.body.parentId, req.file.originalname, "file", req.file.size, check.version);
+        e = await EntityController.add(req.body.parentId, req.file.originalname, "file", req.file, check.version);
     }
     let extension = req.file.originalname.split('.');
 
