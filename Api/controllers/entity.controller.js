@@ -156,6 +156,7 @@ class EntityController {
         console.log(entity[0]);
         const parent = await this.getNuageByEntityId(entity[0]._id);
         const entityBuffer = await fs.readFile( `${process.env.NUAGE_PATH}${parent._id}/${entity[0]._id}.${entity[0].extension}`);
+        console.log(entityBuffer);
         const newBuffer = await fs.readFile(file.path);
 
         if (entityBuffer.equals(newBuffer)) {

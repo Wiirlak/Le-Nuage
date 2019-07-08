@@ -111,4 +111,12 @@ router.get('/download', async (req, res, next) => {
     res.sendFile(path);
 });
 
+router.get('/synchronize', async (req, res, next) => {
+    if (!req.query.e || !req.query.p) {
+        return res.status(400).end();
+    }
+    //TODO upload for synch
+    const check = EntityController.checkFile()
+});
+
 module.exports = router;
