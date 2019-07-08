@@ -8,15 +8,16 @@
 
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Line?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          prefHeight="400.0" prefWidth="800.0" alignment="CENTER">
+          prefHeight="500.0" prefWidth="700.0" alignment="CENTER">
     <VBox GridPane.rowIndex="1" spacing="10">
         <padding>
             <Insets bottom="10.0" left="10.0" right ="10.0" top="10.0"/>
         </padding>
         <HBox  alignment="CENTER" >
-            <Label text="Synchronisation" ></Label>
+            <Label text="Non Synchroniser" ></Label>
         </HBox>
         <HBox >
             <Label text="Chemin Local : " fx:id="t" ></Label>
@@ -31,7 +32,7 @@
             <TextField promptText="Rechercher..." minWidth="250" onKeyPressed="#search" fx:id="recherche"></TextField>
         </HBox>
     </VBox>
-    <TableView maxHeight="300" maxWidth="750" GridPane.rowIndex="3" fx:id="files">
+    <TableView maxHeight="150" maxWidth="750" GridPane.rowIndex="3" fx:id="files">
         <columns>
             <TableColumn fx:id="deleted" minWidth="100">
                 <graphic>
@@ -44,7 +45,7 @@
                     <PropertyValueFactory property="name"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="Taille" fx:id="activated" minWidth="150">
+            <TableColumn text="Taille" fx:id="size" minWidth="150">
             <cellValueFactory><PropertyValueFactory property="size"/></cellValueFactory>
             </TableColumn>
             <TableColumn text="Dernière modification" fx:id="edited" minWidth="200">
@@ -60,4 +61,38 @@
         </padding>
         <Button text="Synchroniser" onMouseClicked="#synchro"></Button>
     </HBox>
+
+    <VBox GridPane.rowIndex="6" spacing="10">
+        <Line strokeWidth="1" startX="0" endX="750" style="-fx-stroke: #337FED;">
+        </Line>
+        <HBox  alignment="CENTER" >
+            <Label text="Synchroniser" ></Label>
+        </HBox>
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Rechercher : "></Label>
+            <TextField promptText="Rechercher..." minWidth="250" onKeyPressed="#searchSynchro" fx:id="rechercheSynchro"></TextField>
+        </HBox>
+        <padding>
+            <Insets bottom="10.0" left="10.0" right ="10.0" top="10.0"/>
+        </padding>
+        <TableView maxHeight="150" maxWidth="750" GridPane.rowIndex="7" fx:id="filesSynchro">
+            <columns>
+                <TableColumn text="Nom" minWidth="200">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="name"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Taille" fx:id="sizeSynchro" minWidth="150">
+                    <cellValueFactory><PropertyValueFactory property="size"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Dernière modification" fx:id="editedSynchro" minWidth="200">
+                    <cellValueFactory><PropertyValueFactory property="lastEdit"/></cellValueFactory>
+                </TableColumn>
+            </columns>
+            <items>
+            </items>
+        </TableView>
+    </VBox>
+
 </GridPane>

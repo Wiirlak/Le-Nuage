@@ -7,17 +7,19 @@ public class Entity {
     private String _id;
     private Date created;
     private String name;
+    private String hash;
     private String parent;
     private Type type;
     private int __v;
     private int size;
 
 
-    public Entity(String is_deleted, String _id, Date created, String name, String parent, String nameType, String idType, int __v, int size) {
+    public Entity(String is_deleted, String _id, Date created, String name, String parent, String nameType, String idType, int __v, int size, String hash) {
         this.is_deleted = is_deleted;
         this._id = _id;
         this.created = created;
         this.name = name;
+        this.hash = hash;
         this.parent = parent;
         this.type = new Type(nameType,idType);
         this.__v = __v;
@@ -91,5 +93,13 @@ public class Entity {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }

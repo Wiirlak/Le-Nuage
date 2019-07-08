@@ -18,8 +18,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -39,11 +44,17 @@ public class ControllerSynchro  implements AnnotatedClass {
     public TableView files;
 
     @FXML
+    public TableView filesSynchro;
+
+    @FXML
     public CheckBox checkAll;
 
 
     @FXML
     public TextField recherche;
+
+    @FXML
+    public TextField rechercheSynchro;
 
 
     public String localFolder;
@@ -59,10 +70,13 @@ public class ControllerSynchro  implements AnnotatedClass {
     @FXML
     public Label distantFilePath;
 
-    @FXML
     public ObservableList<SynchroFxml> masterData = FXCollections.observableArrayList();
 
+    public ObservableList<SynchroFxml> masterDataSynchro = FXCollections.observableArrayList();
+
     public SortedList<SynchroFxml> sortedData;
+
+    public SortedList<SynchroFxml> sortedDataSynchro;
 
     @Usage(description = "Affecter le stage courant")
     public static void setStage(Stage primaryStage){
@@ -85,6 +99,7 @@ public class ControllerSynchro  implements AnnotatedClass {
     public void initialize() throws ParseException {
 
         files.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        filesSynchro.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         /*for( int i = 0 ; i < 50; i ++){
             masterData.add(new SynchroFxml());
         }*/
@@ -101,7 +116,34 @@ public class ControllerSynchro  implements AnnotatedClass {
             if (i.isFile() && isStrignInArray(distantFilename,i.getName())) {
                 SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-YY HH:mm");
                 String d = dt1.format(new Date(i.lastModified()));
-                masterData.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName()),d,getDate(distantFilename,i.getName())));
+                //masterData.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName()),d,getDate(distantFilename,i.getName())));
+                /*
+
+                SHA 256
+
+                 */
+                try {
+                    MessageDigest digest = null;
+                    digest = MessageDigest.getInstance("SHA-256");
+                    byte[] buffer= new byte[8192];
+                    int count;
+                    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(i));
+                    while ((count = bis.read(buffer)) > 0) {
+                        digest.update(buffer, 0, count);
+                    }
+                    bis.close();
+                    byte[] hash = digest.digest();
+                    if(isHashInDistantFile(bytesToHex(hash),distantFilename)){
+                        System.out.println("je passe");
+                        masterDataSynchro.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName()),d,getDate(distantFilename,i.getName())));
+                    }else{
+                        masterData.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName()),d,getDate(distantFilename,i.getName())));
+                    }
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }else{
                 //System.out.println(i.getName());
             }
@@ -114,11 +156,23 @@ public class ControllerSynchro  implements AnnotatedClass {
         //sortedData.addAll(masterData);
         sortedData = new SortedList<>(masterData);
 
+        sortedDataSynchro = new SortedList<>(masterDataSynchro);
+
         files.getItems().addAll(masterData);
+        filesSynchro.getItems().addAll(masterDataSynchro);
 
         //pluginFxmls.get(2).getActivated().setSelected(true);
     }
 
+    private static String bytesToHex(byte[] hash) {
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
 
     @Usage(description = "Recuperation de la taille d'un fichier")
     public String getSizeOfFile(double size){
@@ -229,5 +283,46 @@ public class ControllerSynchro  implements AnnotatedClass {
 
 
         files.setItems(sortedData);
+    }
+
+    @Usage(description = "Rechercher un fichier")
+    public void searchSynchro(){
+        rechercheSynchro.getText();
+        FilteredList<SynchroFxml> filteredList = new FilteredList<>(masterDataSynchro, p-> true);
+
+        rechercheSynchro.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(synchroFxml -> {
+                // If filter text is empty, display all persons.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (synchroFxml.getName().toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (synchroFxml.getName().toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                return false; // Does not match.
+            });
+        });
+
+        sortedDataSynchro = new SortedList<>(filteredList);
+
+        sortedDataSynchro.comparatorProperty().bind(filesSynchro.comparatorProperty());
+
+
+        filesSynchro.setItems(sortedDataSynchro);
+    }
+
+
+    public boolean isHashInDistantFile(String hash,Entity [] array ){
+        for(Entity i : array){
+            if(i.getHash().equals(hash))
+                return true;
+        }
+        return false;
     }
 }
