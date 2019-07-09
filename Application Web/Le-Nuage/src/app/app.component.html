@@ -1,3 +1,4 @@
+dacc
 <nb-layout>
   <nb-layout-header *ngIf="isLogged()" fixed >
     <app-header></app-header> <!-- if logged in -->
@@ -7,15 +8,15 @@
     <app-navbar></app-navbar> <!-- if logged in -->
   </nb-sidebar>
 
-  <nb-sidebar right style="background: #4b9df8" *ngIf="isLogged()">
+  <nb-sidebar right class="nodisplay">
     <app-rightbar></app-rightbar>
   </nb-sidebar>
 
-  <nb-layout-column style="min-width: 80%">
+  <nb-layout-column>
     <router-outlet></router-outlet>
   </nb-layout-column>
 
-<!--  <nb-layout-footer fixed> &lt;!&ndash; if logged in &ndash;&gt;-->
+  <!--  <nb-layout-footer fixed> &lt;!&ndash; if logged in &ndash;&gt;-->
 <!--    &lt;!&ndash; Insert footer here &ndash;&gt;-->
 <!--  </nb-layout-footer>-->
 

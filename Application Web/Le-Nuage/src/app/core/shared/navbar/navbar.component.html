@@ -3,15 +3,15 @@
   Nouveau
 </button>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="openDialog()">
+  <button mat-menu-item (click)="openDialog('nuage')">
     <nb-icon icon="cloud-upload-outline" ></nb-icon>
     <span>Nuage</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="openDialog('dossier')">
     <nb-icon icon="folder-outline"></nb-icon>
     <span>Dossier</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="openDialog('fichier')">
     <nb-icon icon="file-outline"></nb-icon>
     <span>Fichier</span>
   </button>

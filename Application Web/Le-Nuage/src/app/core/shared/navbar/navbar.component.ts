@@ -7,6 +7,7 @@ import {CloudsService} from '../../services/cloud/clouds.service';
 
 export interface DialogData {
   name: string;
+  type: string;
 }
 
 @Component({
@@ -17,6 +18,7 @@ export interface DialogData {
 })
 export class NavbarComponent {
   name: string;
+  type: string;
 
   navbarContent = [
     {
@@ -72,19 +74,25 @@ export class NavbarComponent {
     });
   }
 
-  openDialog(): void {
+  openDialog(where: string): void {
+    this.type = where;
     const dial = this.dialog.open(NavbarDialogComponent, {
-      width: '20vw',
-      data: {name: this.name}
+      width: '28,3vw',
+      data: {name: this.name, type: this.type}
     });
     dial.afterClosed().subscribe(result => {
-      console.log('...');
-      this.cloudsService.create(result).subscribe( res => {
-        console.log('after');
-      });
+      if (where === 'nuage') {
+        this.cloudsService.create(result).subscribe(res => {
+        });
+      } else if (where === 'dossier') {
+        // this.entitiesService.create(result).subscribe( res => {
+        // });
+      } else if (where === 'fichier') {
+        // this.entitiesService.create(result).subscribe( res => {
+        // });
+      }
     });
   }
-
 }
 
 @Component({

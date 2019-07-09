@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { CloudsService} from '../../services/cloud/clouds.service';
 import { Cloud } from '../../models/Cloud';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {RightbarService} from '../../services/rightbar/rightbar.service';
 
 @Component({
   selector: 'app-home',
@@ -10,16 +11,17 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class HomeComponent{
 
-  cloudstmp = new Array();
+  cloudstmp = [];
   loading = false;
   pageSize = 25;
   pageAfter = 1;
   search = '';
 
-  constructor(private cloudsService: CloudsService, private sanitizer: DomSanitizer) { }
+  constructor(private cloudsService: CloudsService, private sanitizer: DomSanitizer, private rightbarService: RightbarService) {
+  }
 
   onKey(searched) {
-    this.cloudstmp = new Array();
+    this.cloudstmp = [];
     this.pageSize = 24;
     this.pageAfter = 1;
     this.search = searched.target.value;
@@ -39,8 +41,8 @@ export class HomeComponent{
 
   }
 
-  toGoodUrl(str) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(str);
+  showRight() {
+    this.rightbarService.toggle();
   }
 
 

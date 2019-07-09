@@ -2,3 +2,12 @@ body{
   margin: 0 ;
   padding: 0;
 }
+
+:host {
+  display: none;
+  color: #4b9df8;
+}
+
+:host.is-open {
+  display: block;
+}
