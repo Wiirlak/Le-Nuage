@@ -25,6 +25,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,9 +33,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.*;
 
 @Status(author = "Bastien NISOLE",
         progression = 50,
@@ -99,7 +98,7 @@ public class ControllerSynchro  implements AnnotatedClass {
 
     @Usage(description = "Traitement réaliser lors de l'initialisation")
     @FXML
-    public void initialize() throws ParseException {
+    public void initialize() throws ParseException, InterruptedException {
 
         files.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         filesSynchro.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -153,49 +152,52 @@ public class ControllerSynchro  implements AnnotatedClass {
 
         File[] listOfFiles = new File(localFilePath.getText()).listFiles();
         for( File i : listOfFiles){
-            StringBuffer content =  HttpEntite.getLastEntityByNameAndParentId(distantFileId,i.getName());
-            if(content != null) {
-                Gson gson = new Gson();
-                JsonArray tmp = gson.fromJson(content.toString(), JsonArray.class);
-                JsonObject entity = tmp.getAsJsonObject();
-                //return temp.get("name").getAsString();
+            if(i.isFile()){
+                System.out.println("--------------");
+                System.out.println("mooo"+ i.getName()+"   id : "+distantFileId);
+                StringBuffer content =  HttpEntite.getLastEntityByNameAndParentId(distantFileId,i.getName());
+                if(content != null) {
+                    System.out.println("Content : "+ content.toString());
+                    Gson gson = new Gson();
+                    JsonObject entity = gson.fromJson(content.toString(), JsonObject.class);
+                    //return temp.get("name").getAsString();
+                    if (entity != null) {
+                        try {
+                            /*
 
-                if (entity != null) {
-                    try {
+                            date
 
+                             */
+                            SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-YY HH:mm");
+                            String d = dt1.format(new Date(i.lastModified()));
 
-                        /*
+                            /*
 
-                        date
+                            sha 256
 
-                         */
-                        SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-YY HH:mm");
-                        String d = dt1.format(new Date(i.lastModified()));
+                             */
+                            MessageDigest digest = null;
+                            digest = MessageDigest.getInstance("SHA-256");
+                            byte[] buffer = new byte[8192];
+                            int count;
+                            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(i));
+                            while ((count = bis.read(buffer)) > 0) {
+                                digest.update(buffer, 0, count);
+                            }
+                            bis.close();
+                            byte[] hash = digest.digest();
+                            String localFileHash = bytesToHex(hash);
 
-                        /*
-
-                        sha 256
-
-                         */
-                        MessageDigest digest = null;
-                        digest = MessageDigest.getInstance("SHA-256");
-                        byte[] buffer = new byte[8192];
-                        int count;
-                        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(i));
-                        while ((count = bis.read(buffer)) > 0) {
-                            digest.update(buffer, 0, count);
+                            if (!entity.get("hash").getAsString().equals(localFileHash)) {
+                                System.out.println(entity.get("created").getAsString());
+                                masterData.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d,entity.get("created").getAsString()  ) );
+                            }
+                            masterDataSynchro.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d, entity.get("created").getAsString()));
+                        } catch (NoSuchAlgorithmException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                        bis.close();
-                        byte[] hash = digest.digest();
-                        String localFileHash = bytesToHex(hash);
-                        if (entity.get("hash").getAsString().equals(localFileHash)) {
-                            masterData.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d, dt1.format(entity.get("created").getAsString())));
-                        }
-                        masterDataSynchro.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d, dt1.format(entity.get("created").getAsString())));
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 }
             }

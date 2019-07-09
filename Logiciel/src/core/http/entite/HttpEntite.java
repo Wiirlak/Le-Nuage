@@ -197,7 +197,7 @@ public class HttpEntite {
 
     public static StringBuffer getLastEntityByNameAndParentId(String parentId, String name) {
         try {
-            Entity answer;
+            name= name.replace(" ","%20");
             URL url = new URL(GlobalData.url + "/entity/last?parentid=" + parentId + "&name=" + name);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setDoOutput(true);
@@ -205,21 +205,22 @@ public class HttpEntite {
             con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestMethod("GET");
             con.setRequestProperty("x-access-token", AuthService.getAuthUser().getToken());
-            if (con.getResponseCode() != 200)
-                return null;
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
+            if (con.getResponseCode() == 200) {
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+                con.disconnect();
+                return content;
             }
-            in.close();
-            con.disconnect();
-            return content;
         } catch (IOException e) {
             return  null;
         }
+        return null;
     }
 
 }
