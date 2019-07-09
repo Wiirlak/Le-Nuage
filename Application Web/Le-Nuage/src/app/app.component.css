@@ -3,11 +3,11 @@ body{
   padding: 0;
 }
 
-:host {
+.nodisplay {
   display: none;
-  color: #4b9df8;
 }
 
-:host.is-open {
-  display: block;
+.is-open {
+  display: flex;
+  background: #4b9df8;
 }

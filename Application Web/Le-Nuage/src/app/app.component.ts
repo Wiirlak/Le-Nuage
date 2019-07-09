@@ -2,6 +2,7 @@ import {Component, HostBinding, OnInit} from '@angular/core';
 import {AuthentificationService} from './admin/services/authentification/authentification.service';
 import {Router} from '@angular/router';
 import {RightbarService} from './core/services/rightbar/rightbar.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-root',

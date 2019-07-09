@@ -29,13 +29,13 @@
   </mat-grid-tile>
 
   <mat-grid-tile colspan="4">
-    Filename.docx
+    {{name}}
   </mat-grid-tile>
   <mat-grid-tile colspan="4">
     <img src="./assets/img/logo.png">
   </mat-grid-tile>
-  <mat-grid-tile colspan="4">
-    Taille : 1.25Mo
+  <mat-grid-tile colspan="4"  *ngIf="size != ''">
+    Taille : {{size}}
   </mat-grid-tile>
   <mat-grid-tile colspan="4">
     Partagé avec :

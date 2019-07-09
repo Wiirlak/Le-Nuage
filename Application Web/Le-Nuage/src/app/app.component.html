@@ -1,4 +1,3 @@
-dacc
 <nb-layout>
   <nb-layout-header *ngIf="isLogged()" fixed >
     <app-header></app-header> <!-- if logged in -->
@@ -8,7 +7,7 @@ dacc
     <app-navbar></app-navbar> <!-- if logged in -->
   </nb-sidebar>
 
-  <nb-sidebar right class="nodisplay">
+  <nb-sidebar  [className]="isOpen ? 'is-open right' : 'nodisplay'" >
     <app-rightbar></app-rightbar>
   </nb-sidebar>
 

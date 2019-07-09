@@ -3,6 +3,8 @@ import {AuthentificationService} from '../../../admin/services/authentification/
 import {NbMenuService} from '@nebular/theme';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CloudsService} from '../../services/cloud/clouds.service';
+import {ActivatedRoute, Router, RoutesRecognized} from '@angular/router';
+import {EntitiesService} from '../../services/entities/entities.service';
 
 
 export interface DialogData {
@@ -19,6 +21,7 @@ export interface DialogData {
 export class NavbarComponent {
   name: string;
   type: string;
+  id;
 
   navbarContent = [
     {
@@ -65,11 +68,20 @@ export class NavbarComponent {
   ];
   constructor(private authService: AuthentificationService,
               private menu: NbMenuService,
+              private route: ActivatedRoute,
+              private router: Router,
               private dialog: MatDialog,
-              private cloudsService: CloudsService) {
+              private cloudsService: CloudsService,
+              private entitiesService: EntitiesService,
+              ) {
     menu.onItemClick().subscribe((res) => {
       if (res.item.title === 'Déconnexion') {
         authService.loggingOut();
+      }
+    });
+    this.router.events.subscribe(val => {
+      if (val instanceof RoutesRecognized) {
+        this.id = val.state.root.firstChild.params.id;
       }
     });
   }
@@ -85,11 +97,12 @@ export class NavbarComponent {
         this.cloudsService.create(result).subscribe(res => {
         });
       } else if (where === 'dossier') {
-        // this.entitiesService.create(result).subscribe( res => {
-        // });
+        console.log(this.id);
+        this.entitiesService.create(result, this.id, 'folder').subscribe( res => {
+        });
       } else if (where === 'fichier') {
-        // this.entitiesService.create(result).subscribe( res => {
-        // });
+        this.entitiesService.create(result, this.id, 'file').subscribe( res => {
+        });
       }
     });
   }

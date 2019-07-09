@@ -3,6 +3,7 @@ import { CloudsService} from '../../services/cloud/clouds.service';
 import { Cloud } from '../../models/Cloud';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import {RightbarService} from '../../services/rightbar/rightbar.service';
+import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.service';
 
 @Component({
   selector: 'app-home',
@@ -15,9 +16,13 @@ export class HomeComponent{
   loading = false;
   pageSize = 25;
   pageAfter = 1;
+  selected: string;
   search = '';
 
-  constructor(private cloudsService: CloudsService, private sanitizer: DomSanitizer, private rightbarService: RightbarService) {
+  constructor(private cloudsService: CloudsService,
+              private sanitizer: DomSanitizer,
+              private rightbarService: RightbarService,
+              private rightbarUpdateService: RightbarUpdateService) {
   }
 
   onKey(searched) {
@@ -41,8 +46,13 @@ export class HomeComponent{
 
   }
 
-  showRight() {
-    this.rightbarService.toggle();
+  showRight(nuage: object) {
+    console.log(nuage._id + ' | ' + this.selected);
+    if (!(this.selected === nuage._id)) {
+      this.selected = nuage._id;
+      this.rightbarService.toggle();
+    }
+    this.rightbarUpdateService.change(nuage.name, '', nuage._id, '', '');
   }
 
 

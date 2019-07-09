@@ -26,4 +26,14 @@ export class EntitiesService {
     return this.http.get<Cloud[]>(this.globals.apiPath + 'nuage?page=' + pageAfter, { headers, responseType: 'json' });
   }
 
+  create(name: string, parentId: string, type: string) {
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'x-access-token': this.localService.get('currentUser')
+    });
+    const body = {name, parentId, type};
+    console.log('nice');
+    return this.http.post<Cloud>(this.globals.apiPath + 'entity', body, { headers, responseType: 'json' });
+  }
+
 }
