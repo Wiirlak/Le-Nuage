@@ -14,6 +14,7 @@ import {EntitiesService} from '../../services/entities/entities.service';
 })
 export class NuageComponent {
   id: string;
+  parentid: string;
   nuage: Cloud;
   entitiestmp = new Array();
   loading = false;
@@ -21,6 +22,8 @@ export class NuageComponent {
   pageSize = 25;
   pageAfter = 1;
   search = '';
+  imgFolder = 'https://cdn.discordapp.com/attachments/468709911321247764/598273310924734475/unnamed.png';
+  imgFile = 'http://www.pngall.com/wp-content/uploads/2018/05/Files-High-Quality-PNG.png';
   public files: NgxFileDropEntry[] = [];
 
   constructor(private route: ActivatedRoute,
@@ -30,6 +33,7 @@ export class NuageComponent {
               private globals: Globals) {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
+      this.parentid = params.get('parentid');
 
       this.cloudsService.getOne(this.id).subscribe( param => {
         this.nuage = param;
@@ -37,9 +41,9 @@ export class NuageComponent {
         this.entitiesService.load(this.pageAfter, this.nuage.parentEntity, this.search)
           .subscribe(entity => {
             this.entitiestmp.push(...entity);
+            console.log(this.entitiestmp);
             this.loading = false;
             this.pageAfter++;
-            console.log(entity);
           });
       });
     });
@@ -51,7 +55,6 @@ export class NuageComponent {
     this.pageAfter = 1;
     this.search = searched.target.value;
     this.loadNext();
-    console.log(this.entitiestmp);
   }
 
   loadNext() {

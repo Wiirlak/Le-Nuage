@@ -23,7 +23,7 @@ export class EntitiesService {
         map((cloud: Cloud[]) => cloud.filter(w => w.name.toLowerCase().indexOf(word.toLowerCase()) >= 0))
       );
     }
-    return this.http.get<Cloud[]>(this.globals.apiPath + 'nuage?page=' + pageAfter, { headers, responseType: 'json' });
+    return this.http.get<Cloud[]>(this.globals.apiPath + 'tree/' + id, { headers, responseType: 'json' });
   }
 
   create(name: string, parentId: string, type: string) {

@@ -22,6 +22,7 @@ export class NavbarComponent {
   name: string;
   type: string;
   id;
+  parentid;
 
   navbarContent = [
     {
@@ -82,6 +83,7 @@ export class NavbarComponent {
     this.router.events.subscribe(val => {
       if (val instanceof RoutesRecognized) {
         this.id = val.state.root.firstChild.params.id;
+        this.parentid = val.state.root.firstChild.params.parentid;
       }
     });
   }
@@ -98,10 +100,10 @@ export class NavbarComponent {
         });
       } else if (where === 'dossier') {
         console.log(this.id);
-        this.entitiesService.create(result, this.id, 'folder').subscribe( res => {
+        this.entitiesService.create(result, this.parentid, 'folder').subscribe( res => {
         });
       } else if (where === 'fichier') {
-        this.entitiesService.create(result, this.id, 'file').subscribe( res => {
+        this.entitiesService.create(result, this.parentid, 'file').subscribe( res => {
         });
       }
     });

@@ -33,14 +33,13 @@
     <!--        <mat-grid-list cols="4"-->
     <mat-card class="z-depth cover">
 <!--    <mat-card class="z-depth cover" routerLink="/entities/{{ent._id}}">-->
-<!--      <img  mat-card-sm-image [src]="ent.image" class="img">-->
+      <img  mat-card-sm-image [src]="ent.type.name == 'folder' ? imgFolder : imgFile" class="img">
       <mat-card-header>
         <mat-card-title>{{ent.name}}</mat-card-title>
         <mat-card-subtitle>{{ent.date_created}}</mat-card-subtitle>
         <!--<mat-card-subtitle>{{cloud.id}}</mat-card-subtitle>-->
       </mat-card-header>
     </mat-card>
-
 
   </mat-grid-tile>
 </mat-grid-list>

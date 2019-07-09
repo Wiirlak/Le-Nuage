@@ -19,7 +19,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'nuage/:id',
+    path: 'nuage/:id/:parentid',
     component: NuageComponent,
     canActivate: [AuthGuard],
   },
