@@ -39,6 +39,7 @@ class NuageController {
         const nuage = new Nuage();
         nuage.name = name;
         nuage.image = image;
+        nuage.owner = id;
 
         try {
             let n = await nuage.save();
