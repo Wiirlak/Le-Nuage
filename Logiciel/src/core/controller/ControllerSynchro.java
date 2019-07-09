@@ -4,6 +4,9 @@ package core.controller;
 import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import core.http.entite.HttpEntite;
 import core.model.Entity;
 import core.model.SynchroFxml;
@@ -106,9 +109,9 @@ public class ControllerSynchro  implements AnnotatedClass {
 
         localFilePath.setText(localFolder);
         distantFilePath.setText(distantFolder);
-        File[] listOfFiles = new File(localFilePath.getText()).listFiles();
 
-        Entity[] distantFilename = HttpEntite.getTreeByParentId(distantFileId);
+
+        /*Entity[] distantFilename = HttpEntite.getTreeByParentId(distantFileId);
 
 
 
@@ -117,11 +120,7 @@ public class ControllerSynchro  implements AnnotatedClass {
                 SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-YY HH:mm");
                 String d = dt1.format(new Date(i.lastModified()));
                 //masterData.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName()),d,getDate(distantFilename,i.getName())));
-                /*
 
-                SHA 256
-
-                 */
                 try {
                     MessageDigest digest = null;
                     digest = MessageDigest.getInstance("SHA-256");
@@ -134,10 +133,11 @@ public class ControllerSynchro  implements AnnotatedClass {
                     bis.close();
                     byte[] hash = digest.digest();
                     if(isHashInDistantFile(bytesToHex(hash),distantFilename)){
-                        System.out.println("je passe");
-                        masterDataSynchro.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName()),d,getDate(distantFilename,i.getName())));
+                        String id = getIdFromHash(bytesToHex(hash),distantFilename);
+                        masterDataSynchro.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName(),id),d,getDate(distantFilename,i.getName(),id)));
                     }else{
-                        masterData.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName()),d,getDate(distantFilename,i.getName())));
+                        String id = getIdFromName(i.getName(),distantFilename);
+                        masterData.add(new SynchroFxml(i.getName(),getSizeOfFile(i.length()),getSize(distantFilename,i.getName(),id),d,getDate(distantFilename,i.getName(),id)));
                     }
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
@@ -148,9 +148,65 @@ public class ControllerSynchro  implements AnnotatedClass {
                 //System.out.println(i.getName());
             }
         }
+
+        */
+
+        File[] listOfFiles = new File(localFilePath.getText()).listFiles();
+        for( File i : listOfFiles){
+            StringBuffer content =  HttpEntite.getLastEntityByNameAndParentId(distantFileId,i.getName());
+            if(content != null) {
+                Gson gson = new Gson();
+                JsonArray tmp = gson.fromJson(content.toString(), JsonArray.class);
+                JsonObject entity = tmp.getAsJsonObject();
+                //return temp.get("name").getAsString();
+
+                if (entity != null) {
+                    try {
+
+
+                        /*
+
+                        date
+
+                         */
+                        SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-YY HH:mm");
+                        String d = dt1.format(new Date(i.lastModified()));
+
+                        /*
+
+                        sha 256
+
+                         */
+                        MessageDigest digest = null;
+                        digest = MessageDigest.getInstance("SHA-256");
+                        byte[] buffer = new byte[8192];
+                        int count;
+                        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(i));
+                        while ((count = bis.read(buffer)) > 0) {
+                            digest.update(buffer, 0, count);
+                        }
+                        bis.close();
+                        byte[] hash = digest.digest();
+                        String localFileHash = bytesToHex(hash);
+                        if (entity.get("hash").getAsString().equals(localFileHash)) {
+                            masterData.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d, dt1.format(entity.get("created").getAsString())));
+                        }
+                        masterDataSynchro.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d, dt1.format(entity.get("created").getAsString())));
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+
+
+
         /*
         - Recuperer tous les fichiers présent dans le dossier local
-        - Récuperer tous les fichiers présent dans le dossier distant du nuage
+        - Récuperer tous les fichiers présent da6ns le dossier distant du nuage
         - Ne conserver que ceux existant dans les 2 tableau
         */
         //sortedData.addAll(masterData);
@@ -186,35 +242,6 @@ public class ControllerSynchro  implements AnnotatedClass {
         return nf.format(size)+" "+data[index];
     }
 
-    public boolean isStrignInArray(Entity [] array, String id){
-        for(Entity i : array){
-            if(i.getName().equals(id))
-                return true;
-        }
-        return false;
-    }
-
-    public String getDate(Entity [] array, String id){
-        for(Entity i : array){
-            if(i.getName().equals(id)){
-                SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-YY HH:mm");
-                dt1.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
-                String d = dt1.format(i.getCreated());
-                return d;
-            }
-
-        }
-        return "";
-    }
-
-    public String getSize(Entity [] array, String id){
-        for(Entity i : array){
-            if(i.getName().equals(id))
-                return getSizeOfFile(i.getSize());
-        }
-        return "";
-    }
-
     @Usage(description = "Tous cocher ou tous décocher")
     public void tickedNoTicked() throws IOException {
         if(checkAll.isSelected()){
@@ -225,8 +252,23 @@ public class ControllerSynchro  implements AnnotatedClass {
         }
     }
 
-    @Usage(description = "Synchronise tous les fichiers sélectionnés")
-    public void synchro(){
+    @Usage(description = "Synchronise tous les fichiers sélectionnés avec la version locale")
+    public void synchroLocal(){
+
+        /*
+
+            Si case choché upload la version sur le nuage
+
+         */
+        for( SynchroFxml sfxml : sortedData){
+            if(sfxml.getSelected().isSelected()){
+                try {
+                    HttpEntite.upload(localFolder+"/"+sfxml.getName(),distantFileId);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         /*
             - Recuperer toutes lignes sélectionnées
             - Pour chaque fichier
@@ -235,16 +277,35 @@ public class ControllerSynchro  implements AnnotatedClass {
                 - Si tout est identique
                     - Ne rien faire
                 - Sinon
+                - Sinon
                     - Télécharger la nouvelle version du fichier sur le pc de l'utilisateur (écrasement)
             - Fermer la fênetre
 
             ******
             Amélioration :
             N'afficher que les fichier different dès le début
-
         */
 
 
+        leave();
+    }
+
+    @Usage(description = "Synchronise tous les fichiers sélectionnés avec la version distante")
+    public void synchroDistant(){
+        /*
+
+            Si case choché téléchargé la version sur le nuage
+
+         */
+        /*for( SynchroFxml sfxml : sortedData){
+            if(sfxml.getSelected().isSelected()){
+                try {
+                    HttpEntite.download();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }*/
         leave();
     }
 
