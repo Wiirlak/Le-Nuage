@@ -191,7 +191,7 @@ class EntityController {
 
     async getLatestEntityByName(parentId, name){
         const entity =  await Entity.find( {parent: parentId , name: name, is_deleted : false}) .sort({created: 'desc'}).limit(1);
-        if(entity === undefined)
+        if(entity[0] === undefined)
             return undefined;
         return entity;
     }
