@@ -121,4 +121,13 @@ router.get('/synchronize', async (req, res, next) => {
     const check = EntityController.checkFile()
 });
 
+// exemple http://localhost:3000/entity/last?parentid=5d245d22e0f1127c70f78b10&name=sdqfqsfd.txt
+router.get('/last',async (req,res, next) => {
+    if (!req.query.parentid || !req.query.name) {
+        return res.status(400).end();
+    }
+    const retour = await EntityController.getLatestEntityByName(req.query.parentid,req.query.name);
+    return res.status(200).json(retour);
+});
+
 module.exports = router;
