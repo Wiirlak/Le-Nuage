@@ -4,6 +4,7 @@ const Entity = require('../models').Entity;
 const Type = require('../models').Type;
 const fs = require('fs-extra');
 const crypto = require('crypto');
+const moment = require('moment');
 
 class EntityController {
 
@@ -190,9 +191,12 @@ class EntityController {
     }
 
     async getLatestEntityByName(parentId, name){
-        const entity =  await Entity.find( {parent: parentId , name: name, is_deleted : false}) .sort({created: 'desc'}).limit(1);
-        if(entity[0] === undefined)
+        let entity =  await Entity.findOne( {parent: parentId , name: name, is_deleted : false}) .sort({created: 'desc'}).lean();
+        if(entity === null)
             return undefined;
+        let date = moment(entity.created, 'DD-MM-YYYY hh:mm');
+        entity.created = date.format('DD-MM-YYYY hh:mm');  
+        console.log(entity.created)      
         return entity;
     }
 

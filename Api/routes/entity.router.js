@@ -128,7 +128,7 @@ router.get('/last',async (req,res, next) => {
     }
     const retour = await EntityController.getLatestEntityByName(req.query.parentid,req.query.name);
     if(retour === undefined)
-        return res.status(400).end();
+        return res.status(404).end();
     return res.status(200).json(retour);
 });
 
