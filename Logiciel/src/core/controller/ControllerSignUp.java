@@ -103,7 +103,7 @@ public class ControllerSignUp  implements AnnotatedClass {
             mdpc.getStyleClass().remove("inputWrong");
         }
 
-        if(date.getValue() == null  ){
+        if(date.getValue() == null || date.getValue().compareTo(LocalDate.now()) > 0  ){
             //date.getStyleClass().add("inputWrong");
             date.setStyle("-fx-border-color: #ed0e24");
             data++;

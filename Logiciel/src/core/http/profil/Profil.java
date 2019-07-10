@@ -10,9 +10,9 @@ public class Profil {
     private String firstname;
     private String email;
     private String password;
-    private String birthdate;
+    private String date;
 
-    public Profil(boolean is_deleted, int capacity_max, int capacity_usage, String[] nuages, String _id, String name, String firstname, String email, String password, String birthdate) {
+    public Profil(boolean is_deleted, int capacity_max, int capacity_usage, String[] nuages, String _id, String name, String firstname, String email, String password, String date) {
         this.is_deleted = is_deleted;
         this.capacity_max = capacity_max;
         this.capacity_usage = capacity_usage;
@@ -22,7 +22,7 @@ public class Profil {
         this.firstname = firstname;
         this.email = email;
         this.password = password;
-        this.birthdate = birthdate;
+        this.date = date;
     }
 
     public boolean isIs_deleted() {
@@ -61,7 +61,7 @@ public class Profil {
         return firstname;
     }
 
-    public String getBirthdate() {
-        return birthdate;
+    public String getDate() {
+        return date;
     }
 }

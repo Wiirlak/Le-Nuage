@@ -74,9 +74,8 @@ public class ControllerProfil  implements AnnotatedClass {
             surname.setText(response.getFirstname());
             email.setText(response.getEmail());
             //ADD EMAIL
-            birthdate.setText(response.getBirthdate());
+            birthdate.setText(response.getDate().split("T")[0]);
 
-            System.out.println("haha : "+response.getBirthdate());
         } catch (IOException e) {
             e.printStackTrace();
         }
