@@ -36,4 +36,15 @@ export class EntitiesService {
     return this.http.post<Cloud>(this.globals.apiPath + 'entity', body, { headers, responseType: 'json' });
   }
 
+  history(parentId: string, name: string, limit: number) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-access-token': this.localService.get('currentUser')
+    });
+    return this.http.get<Cloud[]>(
+      this.globals.apiPath + 'historyfile/?' +
+        'parentid=' + parentId + '' +
+        '&name=' +  name.replace(' ', '%20') + '' +
+        '&limit=' + limit, {headers, responseType: 'json'});
+  }
 }

@@ -16,7 +16,6 @@ export class HomeComponent{
   loading = false;
   pageSize = 25;
   pageAfter = 1;
-  selected: string;
   search = '';
 
   constructor(private cloudsService: CloudsService,
@@ -44,15 +43,6 @@ export class HomeComponent{
         this.pageAfter ++;
       });
 
-  }
-
-  showRight(nuage: object) {
-    console.log(nuage._id + ' | ' + this.selected);
-    if (!(this.selected === nuage._id)) {
-      this.selected = nuage._id;
-      this.rightbarService.toggle();
-    }
-    this.rightbarUpdateService.change(nuage.name, '', nuage._id, '', '');
   }
 
 

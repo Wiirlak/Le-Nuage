@@ -6,6 +6,8 @@ import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'n
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Globals} from '../../globals/globals';
 import {EntitiesService} from '../../services/entities/entities.service';
+import {RightbarService} from '../../services/rightbar/rightbar.service';
+import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.service';
 
 @Component({
   selector: 'app-nuage',
@@ -22,6 +24,8 @@ export class NuageComponent {
   pageSize = 25;
   pageAfter = 1;
   search = '';
+  history: any;
+  selected: string;
   imgFolder = 'https://cdn.discordapp.com/attachments/468709911321247764/598273310924734475/unnamed.png';
   imgFile = 'http://www.pngall.com/wp-content/uploads/2018/05/Files-High-Quality-PNG.png';
   public files: NgxFileDropEntry[] = [];
@@ -30,7 +34,9 @@ export class NuageComponent {
               private cloudsService: CloudsService,
               private entitiesService: EntitiesService,
               private http: HttpClient,
-              private globals: Globals) {
+              private globals: Globals,
+              private rightbarService: RightbarService,
+              private rightbarUpdateService: RightbarUpdateService) {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
       this.parentid = params.get('parentid');
@@ -49,6 +55,19 @@ export class NuageComponent {
     });
   }
 
+  async showRight(entity: any) {
+    if (entity.type.name === 'file') {
+      console.log(entity);
+      if (!(this.selected === entity._id)) {
+        this.selected = entity._id;
+        this.rightbarService.toggle();
+        this.entitiesService.history(entity.parentId, entity.name, 5).subscribe(histo => {
+          this.rightbarUpdateService.change(entity.name, entity.size, entity._id, '', histo, '');
+        });
+      }
+    }
+  }
+
   onKey(searched) {
     this.entitiestmp = new Array();
     this.pageSize = 24;
@@ -62,8 +81,8 @@ export class NuageComponent {
     this.loading = true;
     if (this.done) {
       this.entitiesService.load(this.pageAfter, this.nuage.parentEntity, this.search)
-        .subscribe(clouds => {
-          this.entitiestmp.push(...clouds);
+        .subscribe(entity => {
+          this.entitiestmp.push(...entity);
           this.loading = false;
           this.pageAfter++;
         });

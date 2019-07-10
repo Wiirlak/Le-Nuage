@@ -17,7 +17,7 @@
   [threshold]="500"
   (bottomThreshold)="loadNext()">
   <mat-grid-tile class="cloud" *ngFor="let cloud of cloudstmp">
-    <mat-card class="z-depth cover" routerLink="/nuage/{{cloud._id}}/{{cloud.parentEntity}}" (mouseenter)="showRight(cloud)">
+    <mat-card class="z-depth cover" routerLink="/nuage/{{cloud._id}}/{{cloud.parentEntity}}">
       <img  mat-card-sm-image [src]="cloud.image" class="img">
       <mat-card-header>
           <mat-card-title>{{cloud.name}}</mat-card-title>

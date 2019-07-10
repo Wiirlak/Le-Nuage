@@ -1,6 +1,14 @@
 <mat-grid-list cols="4" class="myHeight">
   <mat-grid-tile class="icon">
-    <nb-icon icon="download-outline"></nb-icon>
+    <button mat-icon-button [matMenuTriggerFor]="downloads" aria-label="Example icon-button with a menu">
+      <nb-icon icon="download-outline"></nb-icon>
+    </button>
+    <mat-menu #downloads="matMenu">
+      <button mat-menu-item *ngFor="let n of [0,1,2,3,4,5,6]">
+        <nb-icon icon="file-text-outline"></nb-icon>
+        <span>17-08-19 15:25 | 15 Mo</span>
+      </button>
+    </mat-menu>
   </mat-grid-tile>
   <mat-grid-tile class="icon">
     <nb-icon icon="share-outline"></nb-icon>
@@ -17,11 +25,11 @@
         <nb-icon icon="info-outline"></nb-icon>
         <span>Informations</span>
       </button>
-      <button mat-menu-item disabled>
+      <button mat-menu-item>
         <nb-icon icon="link-2-outline"></nb-icon>
         <span>Lien direct</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item disabled>
         <nb-icon icon="move-outline"></nb-icon>
         <span>Deplacer</span>
       </button>
@@ -35,7 +43,7 @@
     <img src="./assets/img/logo.png">
   </mat-grid-tile>
   <mat-grid-tile colspan="4"  *ngIf="size != ''">
-    Taille : {{size}}
+    Taille : {{size}}{{sizeU}}
   </mat-grid-tile>
   <mat-grid-tile colspan="4">
     Partagé avec :
@@ -47,7 +55,7 @@
     Dernieres modifications :
   </mat-grid-tile>
   <mat-grid-tile colspan="4" *ngFor="let act of activity">
-    <mat-card>
+    <mat-card class="resize">
       <mat-card-header>
         <mat-card-title>
           {{act[0]}}
