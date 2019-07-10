@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.service';
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-rightbar',
@@ -47,6 +48,10 @@ export class RightbarComponent implements OnInit {
     this.rightbarServicesUpdate.currentshared.subscribe(shared => this.shared = shared);
     this.rightbarServicesUpdate.currenthistory.subscribe(history => this.history = history);
     this.rightbarServicesUpdate.currentversions.subscribe(versions => this.versions = versions);
+  }
+
+  formated(date: string) {
+    return formatDate(date, 'dd-MM-yy HH:mm', 'en-US', 'UTC+2');
   }
 
 }

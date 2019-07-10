@@ -45,6 +45,6 @@ export class EntitiesService {
       this.globals.apiPath + 'historyfile/?' +
         'parentid=' + parentId + '' +
         '&name=' +  name.replace(' ', '%20') + '' +
-        '&limit=' + limit, {headers, responseType: 'json'});
+        '&limit=' + limit, {headers, responseType: 'json'}).toPromise();
   }
 }
