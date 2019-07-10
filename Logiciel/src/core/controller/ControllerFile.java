@@ -415,11 +415,11 @@ public class ControllerFile implements AnnotatedClass {
 
     };
 
-        ImageView img = new ImageView();
+        /*ImageView img = new ImageView();
         img.setImage(new Image("/assets/pictures/file.png"));
         img.setFitHeight(40);
         img.setFitWidth(40);
-        img.setPreserveRatio(true);
+        img.setPreserveRatio(true);*/
 
         //Deroulement
         File repertoire2 = new File(filename);
@@ -640,10 +640,11 @@ public class ControllerFile implements AnnotatedClass {
             listDistantFileByParentId(label2.getText(),label2.getUserData().toString());
         }
         System.out.println("reloaded");
-        if(!label1.getText().equals(""))
+        if(!label1.getText().equals("")){
+            System.out.println("je reload");
+            myFiles.getChildren().removeAll();
             listFileByFolder(myFiles,url1);
-
-
+        }
         //refresh labelNuage
         if(!AuthService.getNuage().getName().equals(""))
             labelNuage.setText(AuthService.getNuage().getName());

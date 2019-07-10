@@ -1,28 +1,23 @@
 package core.http.entite;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import core.controller.ControllerFile;
 import core.data.GlobalData;
 import core.model.AuthService;
 import core.model.Entity;
 import javafx.application.Platform;
 import okhttp3.*;
+import org.apache.commons.io.FileDeleteStrategy;
+
 import java.io.*;
 import java.net.*;
 import java.util.Set;
 
-/**
- * This utility class provides an abstraction layer for sending multipart HTTP
- * POST requests to a web server.
- * @author www.codejava.net
- *
- */
 public class HttpEntite {
 
 
     public static boolean upload(String path, String parentId) throws IOException {
+        System.out.println(path);
         OkHttpClient client = new OkHttpClient();
         File file = new File(path);
         if (!file.exists())
@@ -128,6 +123,7 @@ public class HttpEntite {
             }
             t.close();
         }catch(IOException e ){
+            e.printStackTrace();
             System.out.println("error");
             return false;
         }

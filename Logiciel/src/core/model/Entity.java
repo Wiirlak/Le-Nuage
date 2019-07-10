@@ -26,6 +26,12 @@ public class Entity {
         this.size = size;
     }
 
+
+    public Entity(String name,String _id){
+        this.name = name;
+        this._id = _id;
+    }
+
     public String getIs_deleted() {
         return is_deleted;
     }
