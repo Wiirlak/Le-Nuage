@@ -25,6 +25,14 @@ class EntityController {
         }
     }
 
+    async getEntityByIdNotPopulated(id) {
+        try {
+            return await Entity.findById(id);
+        } catch (e) {
+            return undefined;
+        }
+    }
+
     hash(path) {
         const fd = fs.createReadStream(path);
         const hash = crypto.createHash('sha256').setEncoding('hex');
@@ -201,7 +209,9 @@ class EntityController {
     }
 
     async removeEntityByName(parentId, name){
-        let res = await Entity.find({parent: parentId , name: name, is_deleted : false},{is_deleted : true})
+        let res = await Entity.findAndModify({
+            query: {parent: parentId , name: name, is_deleted : false},
+            update: {is_deleted : true}});
         if(res === null)
             return undefined;
         return res;

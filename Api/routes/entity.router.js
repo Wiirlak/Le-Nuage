@@ -7,6 +7,7 @@ const upload = multer({ dest: process.env.UPLOAD_PATH });
 const EntityController = require('../controllers').EntityController;
 const AuthController = require('../controllers').AuthController;
 const HistoryController = require('../controllers').HistoryController;
+const HistoryFileController = require('../controllers').HistoryFileController;
 const strings = require('../res/strings');
 
 const router = express.Router();
@@ -85,6 +86,7 @@ router.post('/upload', upload.single('somefile'),async (req, res, next) => {
 
     const u = await AuthController.verify(req.headers['x-access-token']);
     await HistoryController.addToHistory(strings.upload, u._id, e._id, null, strings.entity);
+    await HistoryFileController.add("upload",u._id,e._id,req.body.parentId,req.file.originalname);
     res.status(201).json(e);
 
 });
@@ -106,10 +108,13 @@ router.get('/download', async (req, res, next) => {
     }
 
     const path = await EntityController.downloadEntity(req.query.e);
-    console.log(path);
+
+    const newEntity = await EntityController.getEntityByIdNotPopulated(req.query.e);
+    console.log("ici",newEntity)
 
     const u = await AuthController.verify(req.headers['x-access-token']);
     await HistoryController.addToHistory(strings.download, u._id, req.query.e, null, strings.entity);
+    await HistoryFileController.add("download",u._id,req.query.e,newEntity.parent,newEntity.name);
     res.sendFile(path);
 });
 
