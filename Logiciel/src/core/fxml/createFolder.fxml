@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          prefHeight="120.0" prefWidth="140.0">
+    <VBox GridPane.columnIndex="1" alignment="BASELINE_CENTER" spacing="15">
+        <Label text="Création de dossier"></Label>
+        <HBox spacing="10" alignment="BASELINE_CENTER">
+            <Label text="Dossier parent :"></Label>
+            <Label fx:id="folderRootNameLabel"></Label>
+        </HBox>
+        <TextField promptText="Nom du dossier" fx:id="folderName" onAction="#create"></TextField>
+        <Button text="Créer" onAction="#create"></Button>
+    </VBox>
+
+</GridPane>

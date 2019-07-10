@@ -1,30 +1,23 @@
 package core.http.entite;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import core.controller.ControllerFile;
+import core.data.GlobalData;
 import core.model.AuthService;
 import core.model.Entity;
 import javafx.application.Platform;
 import okhttp3.*;
+import org.apache.commons.io.FileDeleteStrategy;
+
 import java.io.*;
-import java.net.ConnectException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
 import java.util.Set;
 
-/**
- * This utility class provides an abstraction layer for sending multipart HTTP
- * POST requests to a web server.
- * @author www.codejava.net
- *
- */
 public class HttpEntite {
 
-    private static final String apiUrl = "http://localhost:3000";
 
     public static boolean upload(String path, String parentId) throws IOException {
+        System.out.println(path);
         OkHttpClient client = new OkHttpClient();
         File file = new File(path);
         if (!file.exists())
@@ -36,7 +29,7 @@ public class HttpEntite {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://localhost:3000/entity/upload")
+                .url(GlobalData.url+"/entity/upload")
                 .addHeader("x-access-token", AuthService.getAuthUser().getToken())
                 .post(requestBody)
                 .build();
@@ -75,12 +68,12 @@ public class HttpEntite {
 
     public static Entity[] getTreeByParentId(String parentId){
         try{
-            URL url = new URL(apiUrl+"/tree/"+parentId);
+            URL url = new URL(GlobalData.url+"/tree/"+parentId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             Entity[] answer =  new Entity[0];
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             int status = con.getResponseCode();
             if ( status != 200)
@@ -111,12 +104,12 @@ public class HttpEntite {
             System.out.println(output);
             if(output.equals(""))
                 return false;
-            URL url = new URL(apiUrl+"/entity/download?e="+fileId);
+            URL url = new URL(GlobalData.url+"/entity/download?e="+fileId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             int status = con.getResponseCode();
             if ( status != 200)
                 throw new IOException();
@@ -130,6 +123,7 @@ public class HttpEntite {
             }
             t.close();
         }catch(IOException e ){
+            e.printStackTrace();
             System.out.println("error");
             return false;
         }
@@ -138,12 +132,12 @@ public class HttpEntite {
 
     public static StringBuffer getOne(String fileId){
         try{
-            URL url = new URL(apiUrl+"/entity/search?e="+fileId);
+            URL url = new URL(GlobalData.url+"/entity/search?e="+fileId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             con.setRequestMethod("GET");
-            con.setConnectTimeout(20000); //20 secs
-            con.setReadTimeout(20000); //20 secs
+            con.setConnectTimeout(GlobalData.timeout); //20 secs
+            con.setReadTimeout(GlobalData.timeout); //20 secs
             if (con.getResponseCode() != 200)
                 return null;
             BufferedReader in = new BufferedReader(
@@ -160,4 +154,69 @@ public class HttpEntite {
             return null;
         }
     }
+
+
+    public static int createFolder(String name, String parentId){
+        try{
+            URL url = new URL(GlobalData.url+"/entity");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setDoOutput(true);
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
+            con.setRequestMethod("POST");
+            String urlParameters  = "{\"name\":\""+name+"\",\"type\":\"folder\",\"parentId\": \""+parentId+"\"}";
+            con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
+            con.setRequestProperty("Content-Type", "application/json");
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+            int status = con.getResponseCode();
+            if(status == 201)
+                return 1;
+            else
+                return 0;
+        }catch (ConnectException e){
+            return -1;
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
+
+
+
+    public static StringBuffer getLastEntityByNameAndParentId(String parentId, String name) {
+        try {
+            name= name.replace(" ","%20");
+            URL url = new URL(GlobalData.url + "/entity/last?parentid=" + parentId + "&name=" + name);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setDoOutput(true);
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
+            con.setRequestMethod("GET");
+            con.setRequestProperty("x-access-token", AuthService.getAuthUser().getToken());
+            if (con.getResponseCode() == 200) {
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer content = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+                con.disconnect();
+                return content;
+            }
+        } catch (IOException e) {
+            return  null;
+        }
+        return null;
+    }
+
 }

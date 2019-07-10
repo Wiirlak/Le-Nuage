@@ -8,11 +8,11 @@
 
 <GridPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            prefHeight="200.0" prefWidth="200.0">
-    <VBox spacing="15">
+            prefHeight="120.0" prefWidth="140.0">
+    <VBox GridPane.columnIndex="1" alignment="BASELINE_CENTER" spacing="15">
 
         <Label text="Création de nuage"></Label>
-        <TextField promptText="Nom du nuage" fx:id="nuageName"></TextField>
+        <TextField promptText="Nom du nuage" fx:id="nuageName" onAction="#create"></TextField>
         <Button text="Créer" onAction="#create"></Button>
     </VBox>
 
