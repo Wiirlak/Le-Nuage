@@ -12,7 +12,7 @@ router.get('/', async (req,res,next) => {
     if (histories === undefined) {
         return res.status(404).end();
     }
-    return res.json(histories).end();
+    return res.status(200).json(histories).end();
 });
 
 module.exports = router;

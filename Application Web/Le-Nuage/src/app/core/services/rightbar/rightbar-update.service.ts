@@ -23,14 +23,13 @@ export class RightbarUpdateService {
     console.log('shared service started');
   }
 
-  change(name: string, size: any, id: string, shared: any, history: any, versions: any) {
+  async change(name: string, size: any, id: string, shared: any, history: any, versions: any) {
     this.name.next(name);
     this.size.next(size);
     this.id.next(id);
     this.shared.next(shared);
     this.history.next(history);
     this.versions.next(versions);
-    console.log(history);
   }
 
   changeName(name: string) {
