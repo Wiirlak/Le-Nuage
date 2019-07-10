@@ -1,0 +1,48 @@
+<input
+  nbInput
+  class="searchbar"
+  type="text"
+  fieldSize="medium"
+  status="info"
+  shape="semi-round"
+  placeholder="Rechercher ici..."
+  (keyup)="onKey($event)">
+
+<ngx-file-drop
+  dropZoneLabel="Drop files here"
+  (onFileDrop)="dropped($event)"
+  (onFileOver)="fileOver($event)"
+  (onFileLeave)="fileLeave($event)"
+  dropZoneClassName="dropped">
+  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+    <p>Deposez vos fichier ici, ou bien cliquez là: </p>
+    <button type="button" mat-button (click)="openFileSelector()">Ajouter...</button>
+  </ng-template>
+</ngx-file-drop>
+
+<mat-grid-list
+  rowHeight="1.2:1"
+  cols="5"
+  id="cloudList"
+  nbInfiniteList
+  listenWindowScroll
+  [threshold]="500"
+  (bottomThreshold)="loadNext()">
+  <mat-grid-tile class="cloud" *ngFor="let ent of entitiestmp">
+    <!-- [cloud]="newsPost"-->
+    <!--        <mat-grid-list cols="4"-->
+    <mat-card
+      class="z-depth cover"
+      [routerLink]="ent.type.name == 'folder' ? '/'+nuage._id+'/'+ent._id+'/'+ent.parentEntity : [] "
+      (mouseup)="showRight(ent)">
+<!--    <mat-card class="z-depth cover" routerLink="/entities/{{ent._id}}">-->
+      <img  mat-card-sm-image [src]="ent.type.name == 'folder' ? imgFolder : imgFile" class="img">
+      <mat-card-header>
+        <mat-card-title>{{ent.name}}</mat-card-title>
+        <mat-card-subtitle>{{ent.date_created}}</mat-card-subtitle>
+        <!--<mat-card-subtitle>{{cloud.id}}</mat-card-subtitle>-->
+      </mat-card-header>
+    </mat-card>
+
+  </mat-grid-tile>
+</mat-grid-list>

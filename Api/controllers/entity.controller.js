@@ -42,6 +42,7 @@ class EntityController {
         }
 
         if (entity.parent === null) {
+            console.log('1');
             return undefined;
         }
         let extension = entity.name.split('.');
@@ -61,6 +62,7 @@ class EntityController {
         entity.type = await Type.findOne({ name: type });
 
         if (entity.type === null) {
+            console.log('2');
             return undefined;
         }
 
@@ -68,6 +70,7 @@ class EntityController {
             const e = await entity.save();
             return e;
         } catch (err) {
+            console.log('3');
             return undefined;
         }
 

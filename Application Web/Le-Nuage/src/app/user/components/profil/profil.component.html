@@ -1,11 +1,11 @@
 <mat-grid-list cols="8" rowHeight="70%">
   <mat-grid-tile>
-    <mat-list role="list">
-      <mat-list-item role="listitem">
-        <img src="https://cdn.pixabay.com/photo/2017/05/13/23/05/img-src-x-2310895_960_720.png">
+    <mat-list role="list" class="myHeight">
+      <mat-list-item role="listitem" style="padding-bottom: 1vh">
+        <img src="https://cdn.pixabay.com/photo/2017/05/13/23/05/img-src-x-2310895_960_720.png" class="imgformat">
       </mat-list-item>
       <mat-list-item role="listitem">
-        <button>Changer d'image</button>
+        <button mat-flat-button>Changer d'image</button>
       </mat-list-item>
     </mat-list>
   </mat-grid-tile>
@@ -27,7 +27,7 @@
         <input matInput formControlName="password" placeholder="Mot de passe" value="Password" type="password">
       </mat-form-field>
 
-      <button mat-button type="submit">Update</button>
+      <button mat-raised-button color="primary" type="submit">Update</button>
     </form>
   </mat-grid-tile>
 </mat-grid-list>

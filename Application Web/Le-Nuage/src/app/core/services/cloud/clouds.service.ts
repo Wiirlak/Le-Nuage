@@ -1,49 +1,48 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import { Cloud } from '../../models/Cloud';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Globals} from '../../globals/globals';
+import {LocalStorageService} from '../localStorage/local-storage.service';
+import {filter, flatMap, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CloudsService {
-  clouddata = new Array();
 
-  constructor() {
-    for (let i = 0 ; i < 120 ; i++) {
-      this.clouddata.push(new Cloud(i,"https://zupimages.net/up/19/26/afo4.png","15/05/2018","J"+i+"ulie"));
+  constructor(private globals: Globals, private http: HttpClient, private localService: LocalStorageService) {
+  }
+
+  load(pageAfter: number, pageSize: number, word: string) {
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'x-access-token': this.localService.get('currentUser')
+    });
+    if (word) {
+      return this.http.get<Cloud[]>(this.globals.apiPath + 'nuage?page=' + pageAfter, { headers, responseType: 'json' }).pipe(
+        map((cloud: Cloud[]) => cloud.filter(w => w.name.toLowerCase().indexOf(word.toLowerCase()) >= 0))
+      );
     }
-    this.clouddata.sort(() => {
-      return .5 - Math.random();
-    });
+    return this.http.get<Cloud[]>(this.globals.apiPath + 'nuage?page=' + pageAfter, { headers, responseType: 'json' });
   }
-  load(actual, pageSize, filter) {
-    return new Observable<Array<Cloud>>((observer) => {
-      /*const namess = new Array();
-      const currentPos = actual * pageSize;
-      let i;
-      for (i = currentPos; i < currentPos + pageSize && i < this.names.length; i ++) {
-        if (filter.length > 0) {
-          if (this.names[i].toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
-            namess.push(this.names[i]);
-          }
-        } else {
-          namess.push(this.names[i]);
-        }
-      }
-      observer.next(namess);*/
-      const clouds = new Array();
-      const currentPos = actual * pageSize;
-      let i;
-      for (i = currentPos; i < currentPos + pageSize && i < this.clouddata.length; i ++) {
-        if (filter.length > 0) {
-            if (this.clouddata[i].name.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
-              clouds.push(this.clouddata[i]);
-            }
-        } else {
-          clouds.push(this.clouddata[i]);
-        }
-      }
-      observer.next(clouds);
+
+  getOne(id: string) {
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'x-access-token': this.localService.get('currentUser')
     });
+    return this.http.get<Cloud>(this.globals.apiPath + 'nuage/' + id, { headers, responseType: 'json' });
   }
+
+  create(name: string) {
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'x-access-token': this.localService.get('currentUser')
+    });
+    const body = {name};
+    console.log('soon done !');
+    return this.http.post<Cloud>(this.globals.apiPath + 'nuage', body, { headers, responseType: 'json' });
+  }
+
 }
