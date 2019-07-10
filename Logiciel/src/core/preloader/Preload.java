@@ -4,12 +4,14 @@ import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
 import javafx.application.Preloader;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import plugin.PluginManager;
 
 
 @Status(author = "Bastien NISOLE",
@@ -20,7 +22,7 @@ public class Preload extends Preloader implements AnnotatedClass {
 
     @Override
     @Usage(description = "Affichage d'une fenetre en attendant que la l'index charge")
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.preloaderStage = primaryStage;
         VBox loading = new VBox(20);
         loading.getChildren().add(new ProgressBar());

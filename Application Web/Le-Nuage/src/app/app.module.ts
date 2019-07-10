@@ -15,6 +15,7 @@ import {NbThemeModule, NbLayoutModule, NbSidebarModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {Globals} from './core/globals/globals';
 import {AuthGuard} from './admin/guard/auth/auth.guard';
+import {NavbarComponent, NavbarDialogComponent} from './core/shared/navbar/navbar.component';
 
 @NgModule({
   declarations: [

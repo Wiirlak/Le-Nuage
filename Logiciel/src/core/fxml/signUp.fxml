@@ -61,7 +61,7 @@
             <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Prenom..." styleClass="input" fx:id="prenom"></TextField>
         </HBox>
         <HBox alignment="CENTER">
-            <DatePicker editable="false" styleClass="datepicker" maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" fx:id="date" promptText="MM/DD/YYYY"></DatePicker>
+            <DatePicker editable="false" styleClass="datepicker" maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" fx:id="date" promptText="DD/MM/YYYY"></DatePicker>
         </HBox>
         <HBox alignment="CENTER">
             <TextField maxWidth="Infinity" minWidth="$HEIGHT2" prefWidth="$HEIGHT2" promptText="Email..." styleClass="input" fx:id="email"></TextField>

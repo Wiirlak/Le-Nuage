@@ -1,6 +1,7 @@
 package core.http.auth;
 
 import com.google.gson.Gson;
+import core.data.GlobalData;
 import core.model.AuthService;
 
 import java.io.*;
@@ -10,22 +11,15 @@ import java.net.URL;
 
 public class HttpAuth {
 
-    private static final String apiUrl = "http://localhost:3000";
-
-    public HttpAuth() {
-
-    }
-
     public static int login(String email, String password) throws IOException {
         try{
-            URL url = new URL(apiUrl+"/auth/login");
+            URL url = new URL(GlobalData.url+"/auth/login");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setDoOutput(true);
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestMethod("POST");
             String urlParameters  = "{\"email\":\""+email+"\",\"password\":\""+password+"\"}";
-            //System.out.println(urlParameters);
             con.setRequestProperty("Content-Type", "application/json");
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             wr.writeBytes(urlParameters);
@@ -37,7 +31,6 @@ public class HttpAuth {
                 // Add user to logged user
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(con.getInputStream()));
-                String inputLine;
                 StringBuffer content = new StringBuffer();
                 Auth answer =(new Gson()).fromJson(in.readLine(), Auth.class);
                 in.close();
@@ -56,13 +49,13 @@ public class HttpAuth {
 
     public static int register(String email, String password, String passwordConfirmed,  String name, String surname, String birthday, boolean cgu) throws IOException {
         try{
-            URL url = new URL(apiUrl+"/auth/register");
+            URL url = new URL(GlobalData.url+"/auth/register");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setDoOutput(true);
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestMethod("POST");
-            String urlParameters  = "{\"email\":\""+email+"\",\"password\":\""+password+"\",\"name\":\""+name+"\"}";
+            String urlParameters  = "{\"email\":\""+email+"\",\"password\":\""+password+"\",\"name\":\""+name+"\",\"firstname\":\""+surname+"\",\"date\":\""+birthday+"\"}";
             //System.out.println(urlParameters);
             con.setRequestProperty("Content-Type", "application/json");
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());

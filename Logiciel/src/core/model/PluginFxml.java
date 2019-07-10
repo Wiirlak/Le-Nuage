@@ -25,50 +25,30 @@ public class PluginFxml implements AnnotatedClass {
     public File name;
 
     @FXML
-    public Button activated = new Button("Lancer");
+    public Button launch = new Button("Lancer");
+
 
     @FXML
-    public CheckBox deleted = new CheckBox();
-
-    @FXML
-    public Button edited = new Button("Ouvrir");
+    public CheckBox activated = new CheckBox();
 
     @Usage(description = "Constructeur de l'objet pluginFxml avec un traitement par defaut pour rentré dans la tableview")
-    public PluginFxml(File named){
+    public PluginFxml(File named,Boolean bool){
         this.name = named;
-        deleted.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("deleted");
-                System.out.println(name.getName());
-                name.delete();
-            }
-        });
-
-        activated.setOnAction(new EventHandler<ActionEvent>() {
+        launch.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("activated");
                 try {
-                    PluginManager.openJarUrl(name.toString());
-                } catch (IOException e) {
+                    //PluginManager.openJarUrl(name.toString());
+                    PluginManager t = new PluginManager();
+                    t.runJar2(named,"returnNewStage");
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-
-        edited.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    Desktop.getDesktop().open(new File(name.getParent()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        activated.setSelected(bool);
     }
-
 
     /*public String getNewPlugin() {
         return newPlugin.getName();
@@ -79,17 +59,12 @@ public class PluginFxml implements AnnotatedClass {
     }
 
     @Usage(description = "Récuperation du bouton d'activation")
-    public Button getActivated() {
+    public Button getLaunch() {
+        return launch;
+    }
+
+    @Usage(description = "Récuperation de la checkbox de l'activation")
+    public CheckBox getActivated() {
         return activated;
-    }
-
-    @Usage(description = "Récuperation de la checkbox de suppression")
-    public CheckBox getDeleted() {
-        return deleted;
-    }
-
-    @Usage(description = "Récuperation du bouton pour l'edition")
-    public Button getEdited() {
-        return edited;
     }
 }

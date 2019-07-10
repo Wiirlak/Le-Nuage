@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="100.0" prefWidth="200.0" alignment="BASELINE_CENTER">
+    <Label text="Nom du nuage" fx:id="nuageName" GridPane.rowIndex="1"></Label>
+    <TextField promptText="Nouveau nom" GridPane.rowIndex="2" fx:id="newNuageName" onAction="#save"></TextField>
+    <Button text="Modifier" GridPane.rowIndex="3" onAction="#save"></Button>
+</GridPane>

@@ -21,6 +21,24 @@ const entitySchema = mongoose.Schema({
     created: {
         default: Date.now,
         type: Date
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    extension: {
+        type: String
+    },
+    size: {
+        type: Number
+    },
+    version: {
+        default: 0,
+        type: Number
+    },
+    hash: {
+        default: null,
+        type: String
     }
 });
 

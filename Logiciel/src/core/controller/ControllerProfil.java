@@ -5,6 +5,7 @@ import annotation.Status;
 import annotation.Usage;
 import core.http.profil.HttpProfil;
 import core.http.profil.Profil;
+import core.model.AuthService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -73,9 +74,8 @@ public class ControllerProfil  implements AnnotatedClass {
             surname.setText(response.getFirstname());
             email.setText(response.getEmail());
             //ADD EMAIL
-            birthdate.setText(response.getBirthdate());
+            birthdate.setText(response.getDate().split("T")[0]);
 
-            System.out.println("haha : "+response.getBirthdate());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -121,7 +121,13 @@ public class ControllerProfil  implements AnnotatedClass {
     @Usage(description = "Fermeture de la fenettre et sauvegarde")
     public void close() throws IOException {
         Profil response = HttpProfil.getProfil();
-        if (HttpProfil.updateProfil(response.getName(),email.getText(),response.getPassword()));
-            stage.close();
+
+        System.out.println("id = "+response.get_id()+" / / "+email.getText()+" : "+ response.getEmail());
+        if(!email.getText().equals(response.getEmail())){
+            if (HttpProfil.updateProfilEmail(response.get_id(),email.getText()) == 1 ){
+                stage.close();
+            }
+        }
+
     }
 }

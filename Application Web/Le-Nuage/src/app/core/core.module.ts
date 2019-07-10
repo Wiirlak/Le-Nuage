@@ -3,7 +3,7 @@ import {WrongPathComponent} from './components/wrong-path/wrong-path.component';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {HeaderComponent} from './shared/header/header.component';
-import {NavbarComponent} from './shared/navbar/navbar.component';
+import {NavbarComponent, NavbarDialogComponent} from './shared/navbar/navbar.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {
@@ -15,13 +15,30 @@ import {
   NbMenuModule,
   NbSidebarModule
 } from '@nebular/theme';
-import {MatGridListModule, MatCardModule, MatMenuModule, MatButtonModule} from '@angular/material';
+import {
+  MatGridListModule,
+  MatCardModule,
+  MatMenuModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDialogModule
+} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import { RightbarComponent } from './shared/rightbar/rightbar.component';
 import {NgxFileDropModule} from 'ngx-file-drop';
+import { NuageComponent } from './components/nuage/nuage.component';
 
 @NgModule({
-  declarations: [HomeComponent, WrongPathComponent, HeaderComponent, NavbarComponent, RightbarComponent],
+  declarations: [
+    HomeComponent,
+    WrongPathComponent,
+    HeaderComponent,
+    NavbarComponent,
+    RightbarComponent,
+    NuageComponent,
+    NavbarDialogComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -40,7 +57,11 @@ import {NgxFileDropModule} from 'ngx-file-drop';
     MatMenuModule,
     MatButtonModule,
     NgxFileDropModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
   ],
+  entryComponents: [NavbarComponent, NavbarDialogComponent],
   exports: [
     HeaderComponent,
     NavbarComponent,

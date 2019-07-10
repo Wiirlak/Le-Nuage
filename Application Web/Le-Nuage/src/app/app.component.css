@@ -2,3 +2,12 @@ body{
   margin: 0 ;
   padding: 0;
 }
+
+.nodisplay {
+  display: none;
+}
+
+.is-open {
+  display: flex;
+  background: #4b9df8;
+}

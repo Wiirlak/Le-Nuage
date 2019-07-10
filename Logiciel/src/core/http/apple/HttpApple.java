@@ -8,9 +8,9 @@ import java.net.*;
 import java.net.URL;
 
 import com.google.gson.Gson;
+import core.data.GlobalData;
 
 public class HttpApple {
-    private static final String apiUrl = "http://localhost:3000";
 
     public HttpApple() {
 
@@ -18,11 +18,11 @@ public class HttpApple {
 
     public StringBuffer getApple(String id) throws IOException {
         try{
-            URL url = new URL(apiUrl+"/pommes/"+id);
+            URL url = new URL(GlobalData.url +"/pommes/"+id);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             int status = con.getResponseCode();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
@@ -43,12 +43,12 @@ public class HttpApple {
 
     public Apple[] getApples() throws IOException {
         try{
-            URL url = new URL(apiUrl+"/pommes/");
+            URL url = new URL(GlobalData.url+"/pommes/");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             Apple[] answer = new Apple[0];
-            con.setConnectTimeout(60000); //60 secs
-            con.setReadTimeout(60000); //60 secs
+            con.setConnectTimeout(GlobalData.timeout); //60 secs
+            con.setReadTimeout(GlobalData.timeout); //60 secs
             int status = con.getResponseCode();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
@@ -69,7 +69,7 @@ public class HttpApple {
     }
 
     public boolean deleteApple(String id) throws IOException {
-        URL url = new URL(apiUrl+"/pommes/"+id);
+        URL url = new URL(GlobalData.url+"/pommes/"+id);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("DELETE");
         int status = con.getResponseCode();
@@ -81,11 +81,11 @@ public class HttpApple {
 
 
     public boolean createApple(String name, int pepins) throws IOException {
-        URL url = new URL(apiUrl+"/pommes/new");
+        URL url = new URL(GlobalData.url+"/pommes/new");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
-        con.setConnectTimeout(60000); //60 secs
-        con.setReadTimeout(60000); //60 secs
+        con.setConnectTimeout(GlobalData.timeout); //60 secs
+        con.setReadTimeout(GlobalData.timeout); //60 secs
         con.setRequestMethod("POST");
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes("name="+name+"&pepins="+pepins);
@@ -99,11 +99,11 @@ public class HttpApple {
     }
 
     public boolean updateApple(String id, String name, int pepins) throws IOException{
-        URL url = new URL(apiUrl+"/pommes/"+id);
+        URL url = new URL(GlobalData.url+"/pommes/"+id);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
-        con.setConnectTimeout(60000); //60 secs
-        con.setReadTimeout(60000); //60 secs
+        con.setConnectTimeout(GlobalData.timeout); //60 secs
+        con.setReadTimeout(GlobalData.timeout); //60 secs
         con.setRequestMethod("PUT");
         con.setRequestProperty("Content-Type", "application/json");
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());

@@ -26,7 +26,7 @@
                 </ImageView>
             </Pane>
             <Button text="Rafraichir" onAction="#refresh"></Button>
-            <Button text="Supprimer" onAction="#delete"></Button>
+            <Button text="Ouvrir le dossier" onAction="#openPluginFolder"></Button>
         </HBox>
         <TableView fx:id="tvPlugin" maxHeight="300.0" minWidth="600.0">
             <columns>
@@ -35,17 +35,14 @@
                         <PropertyValueFactory property="name"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Lancer" fx:id="activated">
-                    <cellValueFactory><PropertyValueFactory property="activated"/></cellValueFactory>
-                </TableColumn>
-                <TableColumn text="Supprimer" fx:id="deleted">
+                <TableColumn text="Activer" fx:id="activated">
                     <graphic>
                         <CheckBox fx:id="checkAll" onMouseClicked="#tickedNoTicked"></CheckBox>
                     </graphic>
-                    <cellValueFactory><PropertyValueFactory property="deleted"/></cellValueFactory>
+                    <cellValueFactory><PropertyValueFactory property="activated"/></cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Ouvrir" fx:id="edited">
-                    <cellValueFactory><PropertyValueFactory property="edited"/></cellValueFactory>
+                <TableColumn text="Lancer" fx:id="laucnh">
+                    <cellValueFactory><PropertyValueFactory property="launch"/></cellValueFactory>
                 </TableColumn>
             </columns>
             <items>
