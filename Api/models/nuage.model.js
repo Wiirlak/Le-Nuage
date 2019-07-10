@@ -21,6 +21,10 @@ const nuageSchema = mongoose.Schema({
         default: false,
         type: Boolean
     },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 module.exports = mongoose.model('Nuage', nuageSchema);

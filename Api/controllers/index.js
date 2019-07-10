@@ -7,5 +7,6 @@ module.exports = {
     NuageController: require('./nuage.controller'),
     TreeController: require('./tree.controller'),
     HistoryController: require('./history.controller'),
+    HistoryFileController: require('./historyFile.controller'),
     ShareController: require('./share.controller')
 };
