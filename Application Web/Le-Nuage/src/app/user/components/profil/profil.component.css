@@ -7,3 +7,15 @@
 .fil{
   width: 100%;
 }
+
+.myHeight .mat-list-item{
+  height: auto;
+}
+
+.imgformat{
+  max-height: 7vw;
+  height: 7vw;
+  max-width: 7vw;
+}
+
+

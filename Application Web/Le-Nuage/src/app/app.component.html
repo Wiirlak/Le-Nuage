@@ -1,20 +1,21 @@
 <nb-layout>
-  <nb-layout-header fixed>
+  <nb-layout-header *ngIf="isLogged()" fixed >
     <app-header></app-header> <!-- if logged in -->
   </nb-layout-header>
 
-  <nb-sidebar>
+  <nb-sidebar *ngIf="isLogged()">
     <app-navbar></app-navbar> <!-- if logged in -->
   </nb-sidebar>
 
-  <nb-layout-column style="min-width: 80%">
+  <nb-sidebar  [className]="isOpen ? 'is-open right' : 'nodisplay'" >
+    <app-rightbar></app-rightbar>
+  </nb-sidebar>
+
+  <nb-layout-column>
     <router-outlet></router-outlet>
   </nb-layout-column>
-  <nb-layout-column>
-    <app-rightbar></app-rightbar>
-  </nb-layout-column>
 
-<!--  <nb-layout-footer fixed> &lt;!&ndash; if logged in &ndash;&gt;-->
+  <!--  <nb-layout-footer fixed> &lt;!&ndash; if logged in &ndash;&gt;-->
 <!--    &lt;!&ndash; Insert footer here &ndash;&gt;-->
 <!--  </nb-layout-footer>-->
 
