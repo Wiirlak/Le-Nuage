@@ -16,6 +16,14 @@ const nuageSchema = mongoose.Schema({
     parentEntity: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Entity'
+    },
+    is_deleted: {
+        default: false,
+        type: Boolean
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

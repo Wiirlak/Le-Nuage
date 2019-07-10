@@ -1,4 +1,22 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Nouveau..." class="menua">
+  <nb-icon icon="plus-outline" [options]="{ animation: { type: 'pulse' } }" ></nb-icon>
+  Nouveau
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="openDialog('nuage')">
+    <nb-icon icon="cloud-upload-outline" ></nb-icon>
+    <span>Nuage</span>
+  </button>
+  <button mat-menu-item (click)="openDialog('dossier')">
+    <nb-icon icon="folder-outline"></nb-icon>
+    <span>Dossier</span>
+  </button>
+  <button mat-menu-item (click)="openDialog('fichier')">
+    <nb-icon icon="file-outline"></nb-icon>
+    <span>Fichier</span>
+  </button>
+</mat-menu>
 <nb-menu
   [items]="navbarContent"
-  autoCollapse="true">
+  autoCollapse="false">
 </nb-menu>

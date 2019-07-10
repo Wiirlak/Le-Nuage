@@ -3,6 +3,8 @@
 const Entity = require('../models').Entity;
 const Type = require('../models').Type;
 const fs = require('fs-extra');
+const crypto = require('crypto');
+const moment = require('moment');
 
 class EntityController {
 
@@ -23,7 +25,29 @@ class EntityController {
         }
     }
 
-    async  add(parentId, name, type) {
+    async getEntityByIdNotPopulated(id) {
+        try {
+            return await Entity.findById(id);
+        } catch (e) {
+            return undefined;
+        }
+    }
+
+    hash(path) {
+        const fd = fs.createReadStream(path);
+        const hash = crypto.createHash('sha256').setEncoding('hex');
+        fd.pipe(hash);
+        return new Promise((resolve, reject) => {
+            fd.on('end',  () => {
+                hash.end();
+                //console.log(hash.read());
+                 resolve(hash.read());
+            });
+        });
+
+    }
+
+    async add(parentId, name, type, file, version) {
         //let nuage;
         const entity = new Entity();
         entity.name = name;
@@ -32,16 +56,28 @@ class EntityController {
         } else {
             entity.parent = await Entity.findOne({ _id: parentId });
         }
-
         if (entity.parent === null) {
+            console.log('1');
             return undefined;
         }
         let extension = entity.name.split('.');
 
         if (type === 'file') {
+            if (file.size !== undefined) {
+                entity.size = file.size;
+            } else {
+                entity.size = 0;
+            }
+            if (version !== undefined) {
+                entity.version = version;
+            }
             entity.extension = extension[extension.length - 1];
+            const sha256 = await this.hash(file.path);
+            console.log(sha256);
+            entity.hash = sha256;
         } else {
             entity.extension = '';
+            entity.size = 0;
         }
 
         //console.log(nuage);
@@ -53,6 +89,7 @@ class EntityController {
         entity.type = await Type.findOne({ name: type });
 
         if (entity.type === null) {
+            console.log('2');
             return undefined;
         }
 
@@ -60,6 +97,7 @@ class EntityController {
             const e = await entity.save();
             return e;
         } catch (err) {
+            console.log('3');
             return undefined;
         }
 
@@ -69,6 +107,14 @@ class EntityController {
     async moveFile(src, dest) {
         try {
             await fs.move(src, dest);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+    async removeFile(src) {
+        try {
+            await fs.unlink(src);
             return true;
         } catch (e) {
             return false;
@@ -122,6 +168,56 @@ class EntityController {
             return await this.getNuageByEntityId(parent.id);
         }
         return undefined;
+    }
+
+    async getEntityByNameAndParent(entityName, parentId) {
+        const entity = await Entity.find({ name: entityName, parent: parentId}).sort({ version: -1 });
+        if (entity === undefined) {
+            return undefined;
+        }
+        return entity;
+    }
+
+    async checkFile(file, parentId) {
+        const entity = await this.getEntityByNameAndParent(file.originalname, parentId);
+        if (entity[0] === undefined) {
+            return undefined;
+        }
+        //console.log(entity[0]);
+        //const parent = await this.getNuageByEntityId(entity[0]._id);
+        //const entityBuffer = await fs.readFile( `${process.env.NUAGE_PATH}${parent._id}/${entity[0]._id}.${entity[0].extension}`);
+        //console.log(entityBuffer);
+        const newBuffer = await this.hash(file.path);
+        if (entity[0].hash === newBuffer) {
+            return {
+                entity: entity[0],
+                version: -1
+            };
+        }
+
+        return {
+            entity: entity[0],
+            version: entity[0].version + 1
+        };
+    }
+
+    async getLatestEntityByName(parentId, name){
+        let entity =  await Entity.findOne( {parent: parentId , name: name, is_deleted : false}) .sort({created: 'desc'}).lean();
+        if(entity === null)
+            return undefined;
+        let date = moment(entity.created, 'DD-MM-YYYY hh:mm');
+        entity.created = date.format('DD-MM-YYYY hh:mm');  
+        console.log(entity.created)      
+        return entity;
+    }
+
+    async removeEntityByName(parentId, name){
+        let res = await Entity.findAndModify({
+            query: {parent: parentId , name: name, is_deleted : false},
+            update: {is_deleted : true}});
+        if(res === null)
+            return undefined;
+        return res;
     }
 
 }

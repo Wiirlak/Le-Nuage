@@ -13,26 +13,36 @@ class NuageController {
         }
     }
 
-    async getUserNuages(id) {
-        try {
-            let nuageRetour = await User.findById(id).select('nuages -_id').toJson;
-            // nuageRetour = nuageRetour.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": ');
-            console.log(nuageRetour);
-            let nuageids = JSON.parse(String(nuageRetour));
+    async getUserNuage(id){
+        const nuage = await User.findById(id).select("nuages -_id").lean();
+        /*await Nuage.find({ "id name": { "$in": nuage } },function(err,items) {
+           // matching results are here
+           console.log(items)
+        })*/
+        //console.log(JSON.parse(nuage));
+        var tmp = JSON.stringify(nuage);
+        var tmp2 = JSON.parse(tmp);
+        const results = [];
+        for(let i = 0 ; i< tmp2.nuages.length;i++)
+            results.push(tmp2.nuages[i]);
 
-            console.log("ENCULER");
-            console.log(nuageids);
-            const tmp = [];
-            // for (let i = 0; i < nuage.length; i++) {
-            //     tmp.push(await Nuage.findById(nuage[i]));
-            // }
-            // return tmp;
-        }catch(err) {
-            return undefined;
-        }
+        return await Nuage.find({ _id: { $in : results }, is_deleted: {$exists : true , $eq : false} });
     }
 
-    async add(name, image) {
+    async getPageNuage(id, page){
+        var perPage = 25;
+        const nuage = await User.findById(id).select("nuages -_id").lean();
+        var tmp = JSON.stringify(nuage);
+        var tmp2 = JSON.parse(tmp);
+        const results = [];
+        console.log('perp: ' + perPage + ' page:' + page);
+        for(let i = 0 ; i< tmp2.nuages.length;i++)
+            results.push(tmp2.nuages[i]);
+
+        return await Nuage.find({ _id: { $in : results }, is_deleted: {$exists : true , $eq : false} }).skip(perPage*(page-1)).limit(perPage);
+    }
+
+    async add(name, image, id) {
         //TODO set default image
         if (!image) {
 
@@ -41,6 +51,7 @@ class NuageController {
         const nuage = new Nuage();
         nuage.name = name;
         nuage.image = image;
+        nuage.owner = id;
 
         try {
             let n = await nuage.save();
@@ -54,6 +65,16 @@ class NuageController {
             if (e === null) {
                 return undefined;
             }
+
+            console.log("update : ",id);
+            console.log("id nuage : ",n._id);
+            await User.updateOne(
+               { _id: id }, 
+               { $push:
+                    {
+                        nuages : n._id
+                    }
+               });
 
             n.parentEntity = e._id;
 
@@ -94,6 +115,16 @@ class NuageController {
         } catch (e) {
             return undefined;
         }
+    }
+
+    async deleteNuage(id) {
+        const nuage = await Nuage.findOneAndUpdate( { _id: id }, { is_deleted: true });
+
+        if (nuage === null) {
+            return undefined;
+        }
+
+        return nuage;
     }
 }
 

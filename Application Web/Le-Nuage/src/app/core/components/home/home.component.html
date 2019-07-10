@@ -8,14 +8,6 @@
   placeholder="Rechercher ici..."
   (keyup)="onKey($event)">
 
-<ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
-               (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-  <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-    Optional custom content that replaces the the entire default content.
-    <button type="button" (click)="openFileSelector()">Browse Files</button>
-  </ng-template>
-</ngx-file-drop>
-
 <mat-grid-list
   rowHeight="1.2:1"
   cols="5"
@@ -25,17 +17,13 @@
   [threshold]="500"
   (bottomThreshold)="loadNext()">
   <mat-grid-tile class="cloud" *ngFor="let cloud of cloudstmp">
-  <!-- [cloud]="newsPost"-->
-<!--        <mat-grid-list cols="4"-->
-  <mat-card class=" cover">
-      <img  mat-card-sm-image [src]="toGoodUrl(cloud.img)" class="img">
+    <mat-card class="z-depth cover" routerLink="/nuage/{{cloud._id}}/{{cloud.parentEntity}}">
+      <img  mat-card-sm-image [src]="cloud.image" class="img">
       <mat-card-header>
           <mat-card-title>{{cloud.name}}</mat-card-title>
           <mat-card-subtitle>{{cloud.date_created}}</mat-card-subtitle>
-          <!--<mat-card-subtitle>{{cloud.id}}</mat-card-subtitle>-->
       </mat-card-header>
   </mat-card>
-
 
   </mat-grid-tile>
 </mat-grid-list>

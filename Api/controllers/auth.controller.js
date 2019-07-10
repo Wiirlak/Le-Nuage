@@ -38,10 +38,10 @@ class AuthController {
 
     async login(email, password) {
         const user = await UserController.getByEmail(email);
-        if (user === null) {
+        if (user === undefined) {
             return undefined;
         }
-
+        //console.log(user);
         const passwordIsValide = await bcrypt.compare(password, user.password);
         if (!passwordIsValide) {
             return undefined;

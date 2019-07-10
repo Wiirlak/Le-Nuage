@@ -26,21 +26,20 @@ class UserController {
             return undefined;
         }
 
-        const nuage = await NuageController.add('Default', null);
-
-        if (nuage === undefined) {
-            return undefined;
-        }
-
         const user = new User();
         user.name = name;
         user.firstname = firstname;
         user.email = email;
         user.date = date;
         user.password = hashedPassword;
-        user.nuages.push(nuage);
+
 
         try {
+            await user.save();
+            const nuage = await NuageController.add('Default', null, user._id);
+            if (nuage === undefined) {
+                return undefined;
+            }
             return await user.save();
         } catch(err) {
             return undefined;
@@ -80,9 +79,8 @@ class UserController {
         if (user === null) {
             return undefined;
         }
-        user.password = hashedPassword;
         try {
-            return await user.save();
+            return await user.updateOne({password:hashedPassword});
         } catch (e) {
             return undefined;
         }
@@ -93,9 +91,8 @@ class UserController {
         if (user === null) {
             return undefined;
         }
-        user.email = email;
         try {
-            return await user.save();
+            return await user.updateOne({email:email});
         } catch (e) {
             return undefined;
         }
