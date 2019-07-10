@@ -132,4 +132,15 @@ router.get('/last',async (req,res, next) => {
     return res.status(200).json(retour);
 });
 
+
+router.delete("/remove", async (req,res,next ) => {
+    if (!req.query.parentid || !req.query.name) {
+        return res.status(400).end();
+    }
+    const retour = await EntityController.removeEntityByName(req.query.parentid,req.query.name);
+    if(retour === undefined)
+        return res.status(404).end();
+    return res.status(200).json(retour);
+});
+
 module.exports = router;

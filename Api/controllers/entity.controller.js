@@ -200,5 +200,12 @@ class EntityController {
         return entity;
     }
 
+    async removeEntityByName(parentId, name){
+        let res = await Entity.find({parent: parentId , name: name, is_deleted : false},{is_deleted : true})
+        if(res === null)
+            return undefined;
+        return res;
+    }
+
 }
 module.exports = new EntityController();
