@@ -54,15 +54,15 @@
   <mat-grid-tile colspan="4">
     Dernieres modifications :
   </mat-grid-tile>
-  <mat-grid-tile colspan="4" *ngFor="let act of activity">
+  <mat-grid-tile colspan="4" *ngFor="let act of history">
     <mat-card class="resize">
       <mat-card-header>
         <mat-card-title>
-          {{act[0]}}
+          {{act.action}}
         </mat-card-title>
         <mat-card-subtitle>
-          {{act[1]}}
-          {{act[2]}}
+          {{act.user.name}} {{act.user.firstname}}
+            {{formated(act.date)}}
         </mat-card-subtitle>
       </mat-card-header>
     </mat-card>

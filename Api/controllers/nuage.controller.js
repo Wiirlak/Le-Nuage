@@ -68,7 +68,7 @@ class NuageController {
 
             console.log("update : ",id);
             console.log("id nuage : ",n._id);
-            await User.updateOne(
+            const user = await User.findByIdAndUpdate(
                { _id: id }, 
                { $push:
                     {
@@ -77,6 +77,7 @@ class NuageController {
                });
 
             n.parentEntity = e._id;
+            n.access.push(user);
 
             n = await n.save();
 
@@ -115,6 +116,17 @@ class NuageController {
         } catch (e) {
             return undefined;
         }
+    }
+
+    async addUser(id, email) {
+        const user = await User.findOne({email: email});
+        if (!user)
+            return undefined;
+        const nuage = await Nuage.findByIdAndUpdate(id, {$push: {access: user}});
+        if (!nuage)
+            return undefined;
+        await user.findOneAndUpdate({_id: user.id}, {$push: {nuages: nuage}});
+        return nuage;
     }
 
     async deleteNuage(id) {

@@ -74,6 +74,22 @@ router.put('/', async(req, res, next) => {
     res.status(400).end();
 });
 
+router.put('/addUser', async (req, res, next) => {
+    if (!req.body.id) {
+        return res.status(400).end();
+    }
+    if (req.body.email && req.body.id) {
+        const nuage = await NuageController.addUser(req.body.id, req.body.email);
+        if (nuage === undefined) {
+            return res.status(409).end();
+        }
+        const u = await AuthController.verify(req.headers['x-access-token']);
+        await HistoryController.addToHistory(strings.update, u._id, null, nuage._id, strings.nuage);
+        return res.json(nuage).end();
+    }
+    res.status(400).end();
+});
+
 router.delete('/:id', async(req, res, next) => {
     if (!req.params.id) {
         return res.status(400).end();
