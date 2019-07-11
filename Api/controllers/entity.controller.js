@@ -221,8 +221,8 @@ class EntityController {
         return res;
     }
 
-    async getEntityByNameAndParentId(parentId, name){
-        let entity =  await Entity.find( {parent: parentId , name: name, is_deleted : false}) .sort({created: 'desc'}).lean();
+    async getEntityByNameAndParentId(parentId, name, limit){
+        let entity =  await Entity.find( {parent: parentId , name: name, is_deleted : false}) .sort({created: 'desc'}).lean().limit(parseInt(limit));
         if(entity === null)
             return undefined;  
         return entity;

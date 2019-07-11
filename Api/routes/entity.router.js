@@ -150,10 +150,10 @@ router.delete("/remove", async (req,res,next ) => {
 
 
 router.get('/version',async (req,res, next) => {
-    if (!req.query.parentid || !req.query.name) {
+    if (!req.query.parentid || !req.query.name || !req.query.limit) {
         return res.status(400).end();
     }
-    const retour = await EntityController.getEntityByNameAndParentId(req.query.parentid,req.query.name);
+    const retour = await EntityController.getEntityByNameAndParentId(req.query.parentid,req.query.name,req.query.limit);
     if(retour === undefined)
         return res.status(404).end();
     return res.status(200).json(retour);
