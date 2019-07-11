@@ -1,26 +1,43 @@
-import {Component, HostListener, OnInit} from '@angular/core';
-import { CloudsService} from '../../services/cloud/clouds.service';
-import { Cloud } from '../../models/Cloud';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {ChangeDetectionStrategy, Component, HostListener, Inject, OnInit, ViewChild} from '@angular/core';
+import {CloudsService} from '../../services/cloud/clouds.service';
+import {Cloud} from '../../models/Cloud';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {RightbarService} from '../../services/rightbar/rightbar.service';
 import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.service';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger} from '@angular/material';
+import {DialogData} from '../../shared/navbar/navbar.component';
+
+
+export interface DialogData {
+  name: string;
+  text: string;
+  where: string;
+}
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent{
+export class HomeComponent {
 
   cloudstmp = [];
   loading = false;
   pageSize = 25;
   pageAfter = 1;
   search = '';
+  name: string;
+  where: string;
+  text: string;
+  current: any;
+  contextMenuPosition = {x: '0px', y: '0px'};
+  // @ts-ignore
+  @ViewChild(MatMenuTrigger)
+  contextMenu: MatMenuTrigger;
 
   constructor(private cloudsService: CloudsService,
-              private sanitizer: DomSanitizer,
               private rightbarService: RightbarService,
+              private dialog: MatDialog,
               private rightbarUpdateService: RightbarUpdateService) {
   }
 
@@ -34,16 +51,79 @@ export class HomeComponent{
   }
 
   loadNext() {
-    if (this.loading) { return; }
+    if (this.loading) {
+      return;
+    }
     this.loading = true;
     this.cloudsService.load(this.pageAfter, this.pageSize, this.search)
       .subscribe(clouds => {
         this.cloudstmp.push(...clouds);
         this.loading = false;
-        this.pageAfter ++;
+        this.pageAfter++;
       });
 
   }
 
+  reload() {
+    this.pageAfter = 1;
+    this.cloudsService.load(this.pageAfter, this.pageSize, this.search)
+      .subscribe(clouds => {
+        this.cloudstmp = new Array();
+        this.cloudstmp.push(...clouds);
+      });
+  }
+
+  onContextMenu($event: MouseEvent, item: any) {
+    $event.preventDefault();
+    this.contextMenuPosition.x = $event.clientX + 'px';
+    this.contextMenuPosition.y = $event.clientY + 'px';
+    this.contextMenu.menuData = {'item': item};
+    this.current = item;
+    this.contextMenu.openMenu();
+  }
+
+  openDialog(where: string, text: string): void {
+    this.where = where;
+    this.text = text;
+    const dial = this.dialog.open(HomeDialogComponent, {
+      width: '28,3vw',
+      data: {name: this.name, text: this.text, where: this.where}
+    });
+    dial.afterClosed().subscribe(result => {
+      if (where === 'delete') {
+        console.log(where);
+        this.cloudsService.delete(this.current._id).subscribe(data => {
+          this.reload();
+        });
+      } else if (where === 'rename') {
+        console.log(where);
+        this.cloudsService.rename(this.current._id, result).subscribe(data => {
+          this.reload();
+        });
+      } else if (where === 'share') {
+        console.log(where);
+        this.cloudsService.addUser(this.current._id, result).subscribe(data => {
+          this.reload();
+        });
+      }
+    });
+  }
+}
+
+
+@Component({
+  selector: 'app-home-dialog',
+  templateUrl: 'home-dialog.component.html',
+})
+export class HomeDialogComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<HomeDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }

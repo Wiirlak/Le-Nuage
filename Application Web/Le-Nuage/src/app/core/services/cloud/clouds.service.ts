@@ -45,4 +45,30 @@ export class CloudsService {
     return this.http.post<Cloud>(this.globals.apiPath + 'nuage', body, { headers, responseType: 'json' });
   }
 
+  delete(id: string) {
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'x-access-token': this.localService.get('currentUser')
+    });
+    return this.http.delete<Cloud>(this.globals.apiPath + 'nuage/' + id, { headers, responseType: 'json' });
+  }
+
+  rename(id: string, name: string) {
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'x-access-token': this.localService.get('currentUser')
+    });
+    const body = {name, id};
+    return this.http.put<Cloud>(this.globals.apiPath + 'nuage/', body, { headers, responseType: 'json' });
+  }
+
+  addUser(id: string, email: string) {
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'x-access-token': this.localService.get('currentUser')
+    });
+    const body = {id, email};
+    return this.http.put<Cloud>(this.globals.apiPath + 'nuage/addUser', body, { headers, responseType: 'json' });
+  }
+
 }
