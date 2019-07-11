@@ -22,7 +22,7 @@ import {
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
-  MatDialogModule
+  MatDialogModule, MatTooltipModule
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import { RightbarComponent } from './shared/rightbar/rightbar.component';
@@ -60,6 +60,7 @@ import { NuageComponent } from './components/nuage/nuage.component';
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    MatTooltipModule,
   ],
   entryComponents: [NavbarComponent, NavbarDialogComponent],
   exports: [

@@ -2,6 +2,19 @@
   color: #f9f9f9;
 }
 
-.resize{
-  width: 200px;
+.resize {
+  background: #f9f9f9;
+  border-radius: 4%;
+  margin-top: 12px;
+}
+
+.resize mat-card-subtitle{
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resize mat-card-title{
+  text-align: center;
 }

@@ -25,10 +25,9 @@ const nuageSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    access: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }
+    access: [{
+        type: String
+    }]
 });
 
 module.exports = mongoose.model('Nuage', nuageSchema);

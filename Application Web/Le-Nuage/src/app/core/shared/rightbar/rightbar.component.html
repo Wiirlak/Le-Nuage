@@ -1,4 +1,4 @@
-<mat-grid-list cols="4" class="myHeight">
+<mat-grid-list cols="4" gutterSize="10px">
   <mat-grid-tile class="icon">
     <button mat-icon-button [matMenuTriggerFor]="downloads" aria-label="Example icon-button with a menu">
       <nb-icon icon="download-outline"></nb-icon>
@@ -46,12 +46,6 @@
     Taille : {{size}}{{sizeU}}
   </mat-grid-tile>
   <mat-grid-tile colspan="4">
-    Partagé avec :
-  </mat-grid-tile>
-  <mat-grid-tile colspan="4" *ngFor="let user of users">
-    {{user}}
-  </mat-grid-tile>
-  <mat-grid-tile colspan="4">
     Dernieres modifications :
   </mat-grid-tile>
   <mat-grid-tile colspan="4" *ngFor="let act of history">
@@ -61,8 +55,8 @@
           {{act.action}}
         </mat-card-title>
         <mat-card-subtitle>
-          {{act.user.name}} {{act.user.firstname}}
-            {{formated(act.date)}}
+          {{cuteName(act.user.name)}} {{act.user.firstname}}
+             - {{formated(act.date)}}
         </mat-card-subtitle>
       </mat-card-header>
     </mat-card>

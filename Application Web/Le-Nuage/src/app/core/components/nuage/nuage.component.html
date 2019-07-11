@@ -22,7 +22,7 @@
 
 <mat-grid-list
   rowHeight="1.2:1"
-  cols="5"
+  cols="{{inline}}"
   id="cloudList"
   nbInfiniteList
   listenWindowScroll
@@ -32,12 +32,12 @@
     <!-- [cloud]="newsPost"-->
     <!--        <mat-grid-list cols="4"-->
     <mat-card
-      class="z-depth cover"
+      class="z-depth tile"
       [routerLink]="ent.type.name == 'folder' ? '/'+nuage._id+'/'+ent._id+'/'+ent.parentEntity : [] "
       (mouseup)="showRight(ent)">
 <!--    <mat-card class="z-depth cover" routerLink="/entities/{{ent._id}}">-->
       <img  mat-card-sm-image [src]="ent.type.name == 'folder' ? imgFolder : imgFile" class="img">
-      <mat-card-header>
+      <mat-card-header matTooltip="{{ent.name}}">
         <mat-card-title>{{ent.name}}</mat-card-title>
         <mat-card-subtitle>{{ent.date_created}}</mat-card-subtitle>
         <!--<mat-card-subtitle>{{cloud.id}}</mat-card-subtitle>-->

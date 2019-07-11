@@ -27,6 +27,7 @@ export class NuageComponent {
   history: any;
   version: any;
   selected: string;
+  inline = 7;
   imgFolder = 'https://cdn.discordapp.com/attachments/468709911321247764/598273310924734475/unnamed.png';
   imgFile = 'http://www.pngall.com/wp-content/uploads/2018/05/Files-High-Quality-PNG.png';
   public files: NgxFileDropEntry[] = [];
@@ -60,11 +61,12 @@ export class NuageComponent {
     if (entity.type.name === 'file') {
       console.log(entity);
       if (!(this.selected === entity._id)) {
+        this.inline = 6;
         this.selected = entity._id;
         this.rightbarService.toggle();
-        this.history = await this.entitiesService.history(entity.parent, entity.name, 5);
+        this.history = await this.entitiesService.history(entity.parent, entity.name, 7);
         this.version = await this.entitiesService.version(entity.parent, entity.name, 10);
-        this.rightbarUpdateService.change(entity.name, entity.size, entity._id, '', this.history, this.version);
+        this.rightbarUpdateService.change(entity.name, entity.size, entity._id, this.history, this.version);
       }
     }
   }

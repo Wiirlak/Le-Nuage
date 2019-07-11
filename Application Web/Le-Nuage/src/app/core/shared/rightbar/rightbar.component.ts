@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.service';
 import {formatDate} from '@angular/common';
-import {EntitiesService} from "../../services/entities/entities.service";
-import { saveAs } from 'file-saver';
+import {EntitiesService} from '../../services/entities/entities.service';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-rightbar',
@@ -14,15 +14,8 @@ export class RightbarComponent implements OnInit {
   size: any;
   sizeU: string;
   id: string;
-  shared: any;
   history: any;
   versions: any;
-  users = ['Mathieu Lepre', 'Jean Nisole', 'Jeanne d\'Arc'];
-  activity = [
-    ['Mathieu Lepre', '25/02/19', '11:50'],
-    ['Jeanne d\'Arc', '15/02/19', '15:36'],
-    ['Jean Nisole', '10/02/19', '22:52'],
-  ];
 
   constructor(private rightbarServicesUpdate: RightbarUpdateService, private entitiService: EntitiesService) {
   }
@@ -47,7 +40,6 @@ export class RightbarComponent implements OnInit {
       this.size = this.size.toFixed(2);
     });
     this.rightbarServicesUpdate.currentid.subscribe(id => this.id = id);
-    this.rightbarServicesUpdate.currentshared.subscribe(shared => this.shared = shared);
     this.rightbarServicesUpdate.currenthistory.subscribe(history => this.history = history);
     this.rightbarServicesUpdate.currentversions.subscribe(versions => this.versions = versions);
   }
@@ -70,10 +62,13 @@ export class RightbarComponent implements OnInit {
         }
       }
     }
-    const str = sizeD.toFixed(2 ) + sizeU;
-    return str;
+    return sizeD.toFixed(2) + sizeU;
   }
 
+
+  cuteName(s: string) {
+    return s.toUpperCase()[0] + '.';
+  }
 
   printData(id) {
     console.log(id);
