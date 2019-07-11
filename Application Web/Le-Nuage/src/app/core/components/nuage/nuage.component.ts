@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Cloud} from '../../models/Cloud';
 import {CloudsService} from '../../services/cloud/clouds.service';
 import {FileSystemDirectoryEntry, FileSystemFileEntry, NgxFileDropEntry} from 'ngx-file-drop';
@@ -8,6 +8,8 @@ import {Globals} from '../../globals/globals';
 import {EntitiesService} from '../../services/entities/entities.service';
 import {RightbarService} from '../../services/rightbar/rightbar.service';
 import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.service';
+import {appRoutingModuleContent} from '@nebular/theme/schematics/ng-add/register-modules/app-routing-module-content';
+import {LocalStorageService} from '../../services/localStorage/local-storage.service';
 
 @Component({
   selector: 'app-nuage',
@@ -15,7 +17,6 @@ import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.ser
   styleUrls: ['./nuage.component.css', '../home/home.component.css']
 })
 export class NuageComponent {
-  id: string;
   parentid: string;
   nuage: Cloud;
   entitiestmp = new Array();
@@ -36,24 +37,22 @@ export class NuageComponent {
               private cloudsService: CloudsService,
               private entitiesService: EntitiesService,
               private http: HttpClient,
+              private router: Router,
               private globals: Globals,
+              private localService: LocalStorageService,
               private rightbarService: RightbarService,
               private rightbarUpdateService: RightbarUpdateService) {
     this.route.paramMap.subscribe(params => {
-      this.id = params.get('id');
       this.parentid = params.get('parentid');
-
-      this.cloudsService.getOne(this.id).subscribe( param => {
-        this.nuage = param;
-        this.done = true;
-        this.entitiesService.load(this.pageAfter, this.nuage.parentEntity, this.search)
-          .subscribe(entity => {
-            this.entitiestmp.push(...entity);
-            console.log(this.entitiestmp);
-            this.loading = false;
-            this.pageAfter++;
-          });
-      });
+      console.log(this.parentid);
+      this.entitiesService.load(this.pageAfter, this.parentid, this.search)
+        .subscribe(entity => {
+          this.done = true;
+          this.entitiestmp.push(...entity);
+          console.log(this.entitiestmp);
+          this.loading = false;
+          this.pageAfter++;
+        });
     });
   }
 
@@ -80,7 +79,9 @@ export class NuageComponent {
   }
 
   loadNext() {
-    if (this.loading) { return; }
+    if (this.loading) {
+      return;
+    }
     this.loading = true;
     if (this.done) {
       this.entitiesService.load(this.pageAfter, this.nuage.parentEntity, this.search)
@@ -109,17 +110,18 @@ export class NuageComponent {
           // You could upload it like this:
           const formData = new FormData();
           formData.append('somefile', file, droppedFile.relativePath);
-          formData.append('parentId', '5d0f766742038438d41f5c5c');
+          formData.append('parentId', this.parentid);
 
           // Headers
           const headers = new HttpHeaders({
-            'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkMGY3NjY3NDIwMzg0MzhkNDFmNWM1ZCIsImlhdCI6MTU2MTkwNzg0OSwiZXhwIjoxNTYxOTA5MDQ5fQ.KGGWu-dHpDi9uqaa0ZsJKQr3BEyfANPdsgIQmYoebfY'
-          })
+            'x-access-token': this.localService.get('currentUser')
+          });
 
-          this.http.post(this.globals.apiPath + 'entity/upload', formData, { headers: headers, responseType: 'blob' })
+          this.http.post(this.globals.apiPath + 'entity/upload', formData, {headers: headers, responseType: 'blob'})
             .subscribe(data => {
               // Sanitized logo returned from backend
               console.log('gg');
+              this.reload();
             });
         });
       } else {
@@ -136,5 +138,23 @@ export class NuageComponent {
 
   public fileLeave(event) {
     console.log('pd' + event);
+  }
+
+  navigateToNewFolder(entity: any) {
+    // [href]="ent.type.name == 'folder' ? globals.apiPath+'nuage/'+ent._id : [] "
+    if (entity.type.name  === 'folder' ) {
+      this.router.navigateByUrl( 'nuage/' + entity._id).then( t => {
+        this.reload();
+        });
+    }
+  }
+
+  reload() {
+    this.pageAfter = 1;
+    this.entitiesService.load(this.pageAfter, this.parentid, this.search)
+      .subscribe(entity => {
+        this.entitiestmp = new Array();
+        this.entitiestmp.push(...entity);
+      });
   }
 }

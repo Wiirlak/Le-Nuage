@@ -48,21 +48,22 @@ export class RightbarComponent implements OnInit {
     return formatDate(date, 'dd-MM-yy HH:mm', 'en-US', 'UTC+2');
   }
   printSize(sizeD: any) {
+    let sizetmp = parseInt(sizeD, 10);
     let sizeU = ' o';
-    sizeD = parseInt(sizeD, 10);
+    sizetmp = parseInt(sizeD, 10);
     if (parseInt(sizeD, 10) > 1024) {
       sizeU = ' Ko';
-      sizeD = parseFloat(sizeD) / 1024;
+      sizetmp = parseFloat(sizeD) / 1024;
       if (parseInt(sizeD, 10) > 1024 * 1024) {
         sizeU = ' Mo';
-        sizeD = parseFloat(sizeD) / (1024 * 1024);
+        sizetmp = parseFloat(sizeD) / (1024 * 1024);
         if (parseInt(sizeD, 10) > 1024 * 1024 * 1024) {
           sizeU = ' Go';
-          sizeD = parseFloat(sizeD) / (1024 * 1024 * 1024);
+          sizetmp = parseFloat(sizeD) / (1024 * 1024 * 1024);
         }
       }
     }
-    return sizeD.toFixed(2) + sizeU;
+    return sizetmp.toFixed(2) + sizeU;
   }
 
 

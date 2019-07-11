@@ -33,7 +33,7 @@
     <!--        <mat-grid-list cols="4"-->
     <mat-card
       class="z-depth tile"
-      [routerLink]="ent.type.name == 'folder' ? '/'+nuage._id+'/'+ent._id+'/'+ent.parentEntity : [] "
+      (click)="navigateToNewFolder(ent)"
       (mouseup)="showRight(ent)">
 <!--    <mat-card class="z-depth cover" routerLink="/entities/{{ent._id}}">-->
       <img  mat-card-sm-image [src]="ent.type.name == 'folder' ? imgFolder : imgFile" class="img">
