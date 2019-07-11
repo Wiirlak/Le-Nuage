@@ -230,10 +230,9 @@ class EntityController {
 
     async getAllLatestEntity(parentId){
         var mongoose = require('mongoose');
-        let entity =  await Entity.aggregate([
-            {$match: {is_deleted : false, parent : mongoose.Types.ObjectId(parentId)}},
-            {$sort: { created : -1}}
-        ])
+        let entity =  await Entity.find(
+            {is_deleted : false, parent : mongoose.Types.ObjectId(parentId)}
+        ).sort({created: "desc"}).populate("type")
         if(entity === null)
             return undefined;  
         return lodash.uniqWith(entity,(entityA,entityB) => {
