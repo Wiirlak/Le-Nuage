@@ -24,6 +24,10 @@ const nuageSchema = mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    shared: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

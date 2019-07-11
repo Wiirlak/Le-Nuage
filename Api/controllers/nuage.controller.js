@@ -117,6 +117,17 @@ class NuageController {
         }
     }
 
+    async addUser(id, email) {
+        const user = await User.findOne({email: email});
+        if (!user)
+            return undefined;
+        const nuage = await Nuage.findByIdAndUpdate(id, {$push: {shared: user._id}});
+        if (!nuage)
+            return undefined;
+        await user.findOneAndUpdate({_id: user.id}, {$push: {nuages: nuage}});
+        return nuage;
+    }
+
     async deleteNuage(id) {
         const nuage = await Nuage.findOneAndUpdate( { _id: id }, { is_deleted: true });
 
