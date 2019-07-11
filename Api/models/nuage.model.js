@@ -25,7 +25,7 @@ const nuageSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    shared: {
+    access: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
