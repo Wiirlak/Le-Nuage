@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.service';
 import {formatDate} from '@angular/common';
+import {EntitiesService} from "../../services/entities/entities.service";
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-rightbar',
@@ -22,7 +24,7 @@ export class RightbarComponent implements OnInit {
     ['Jean Nisole', '10/02/19', '22:52'],
   ];
 
-  constructor(private rightbarServicesUpdate: RightbarUpdateService) {
+  constructor(private rightbarServicesUpdate: RightbarUpdateService, private entitiService: EntitiesService) {
   }
 
   ngOnInit(): void {
@@ -70,5 +72,22 @@ export class RightbarComponent implements OnInit {
     }
     const str = sizeD.toFixed(2 ) + sizeU;
     return str;
+  }
+
+
+  printData(id) {
+    console.log(id);
+  }
+
+  download(id: string, name: string) {
+    this.entitiService.downloadReport(id).subscribe(
+      data => {
+        saveAs(data, name);
+      },
+      err => {
+        alert('Problem while downloading the f ile.');
+        console.error(err);
+      }
+    );
   }
 }

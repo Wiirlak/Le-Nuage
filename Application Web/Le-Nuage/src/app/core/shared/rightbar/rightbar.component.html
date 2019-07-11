@@ -6,7 +6,7 @@
     <mat-menu #downloads="matMenu">
       <button mat-menu-item *ngFor="let n of versions">
         <nb-icon icon="file-text-outline"></nb-icon>
-        <span>{{formated(n.created)}} | {{printSize(n.size)}}</span>
+        <span (click)="download(n._id,n.name)">{{n.version + 1}} - {{formated(n.created)}} | {{printSize(n.size)}}</span>
       </button>
     </mat-menu>
   </mat-grid-tile>

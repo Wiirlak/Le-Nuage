@@ -4,6 +4,7 @@ import {Cloud} from '../../models/Cloud';
 import {map} from 'rxjs/operators';
 import {Globals} from '../../globals/globals';
 import {LocalStorageService} from '../localStorage/local-storage.service';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -49,14 +50,24 @@ export class EntitiesService {
   }
 
 
-  version(parentId: string, name: string) {
+  version(parentId: string, name: string, limit: number) {
     const headers = new HttpHeaders({
       'x-access-token': this.localService.get('currentUser')
     });
     return this.http.get<Cloud[]>(
       this.globals.apiPath + 'entity/version?' +
       'parentid=' + parentId + '' +
-      '&name=' +  name.replace(' ', '%20'),
+      '&name=' +  name.replace(' ', '%20') + '' +
+      '&limit=' + limit,
       {headers, responseType: 'json'}).toPromise();
+  }
+  downloadReport(id): Observable<any> {
+    // Create url
+    const headers = new HttpHeaders({
+      'x-access-token': this.localService.get('currentUser')
+    });
+    return this.http.get<Observable<any>>(
+      this.globals.apiPath + 'entity/download?e=' + id,
+      {headers, responseType: 'blob' as 'json'});
   }
 }
