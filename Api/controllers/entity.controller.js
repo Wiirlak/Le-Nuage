@@ -5,6 +5,7 @@ const Type = require('../models').Type;
 const fs = require('fs-extra');
 const crypto = require('crypto');
 const moment = require('moment');
+const lodash = require('lodash');
 
 class EntityController {
 
@@ -218,6 +219,26 @@ class EntityController {
         if(res === null)
             return undefined;
         return res;
+    }
+
+    async getEntityByNameAndParentId(parentId, name){
+        let entity =  await Entity.find( {parent: parentId , name: name, is_deleted : false}) .sort({created: 'desc'}).lean();
+        if(entity === null)
+            return undefined;  
+        return entity;
+    }
+
+    async getAllLatestEntity(parentId){
+        var mongoose = require('mongoose');
+        let entity =  await Entity.aggregate([
+            {$match: {is_deleted : false, parent : mongoose.Types.ObjectId(parentId)}},
+            {$sort: { created : -1}}
+        ])
+        if(entity === null)
+            return undefined;  
+        return lodash.uniqWith(entity,(entityA,entityB) => {
+            return entityA.name === entityB.name 
+        });
     }
 
 }
