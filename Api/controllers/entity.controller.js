@@ -6,6 +6,7 @@ const fs = require('fs-extra');
 const crypto = require('crypto');
 const moment = require('moment');
 const lodash = require('lodash');
+const mongoose = require('mongoose');
 
 class EntityController {
 
@@ -229,8 +230,7 @@ class EntityController {
     }
 
     async getAllLatestEntity(parentId){
-        var mongoose = require('mongoose');
-        let entity =  await Entity.find(
+        const entity =  await Entity.find(
             {is_deleted : false, parent : mongoose.Types.ObjectId(parentId)}
         ).sort({created: "desc"}).populate("type")
         if(entity === null)
