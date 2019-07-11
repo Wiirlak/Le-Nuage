@@ -4,9 +4,9 @@
       <nb-icon icon="download-outline"></nb-icon>
     </button>
     <mat-menu #downloads="matMenu">
-      <button mat-menu-item *ngFor="let n of [0,1,2,3,4,5,6]">
+      <button mat-menu-item *ngFor="let n of versions">
         <nb-icon icon="file-text-outline"></nb-icon>
-        <span>17-08-19 15:25 | 15 Mo</span>
+        <span>{{formated(n.created)}} | {{printSize(n.size)}}</span>
       </button>
     </mat-menu>
   </mat-grid-tile>

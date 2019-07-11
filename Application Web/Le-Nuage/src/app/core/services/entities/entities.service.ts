@@ -19,11 +19,11 @@ export class EntitiesService {
       'x-access-token': this.localService.get('currentUser')
     });
     if (word) {
-      return this.http.get<Cloud[]>(this.globals.apiPath + 'tree/' + id, { headers, responseType: 'json' }).pipe(
+      return this.http.get<Cloud[]>(this.globals.apiPath + 'entity/all?parentid=' + id, { headers, responseType: 'json' }).pipe(
         map((cloud: Cloud[]) => cloud.filter(w => w.name.toLowerCase().indexOf(word.toLowerCase()) >= 0))
       );
     }
-    return this.http.get<Cloud[]>(this.globals.apiPath + 'tree/' + id, { headers, responseType: 'json' });
+    return this.http.get<Cloud[]>(this.globals.apiPath + 'entity/all?parentid=' + id, { headers, responseType: 'json' });
   }
 
   create(name: string, parentId: string, type: string) {
@@ -46,5 +46,17 @@ export class EntitiesService {
         'parentid=' + parentId + '' +
         '&name=' +  name.replace(' ', '%20') + '' +
         '&limit=' + limit, {headers, responseType: 'json'}).toPromise();
+  }
+
+
+  version(parentId: string, name: string) {
+    const headers = new HttpHeaders({
+      'x-access-token': this.localService.get('currentUser')
+    });
+    return this.http.get<Cloud[]>(
+      this.globals.apiPath + 'entity/version?' +
+      'parentid=' + parentId + '' +
+      '&name=' +  name.replace(' ', '%20'),
+      {headers, responseType: 'json'}).toPromise();
   }
 }

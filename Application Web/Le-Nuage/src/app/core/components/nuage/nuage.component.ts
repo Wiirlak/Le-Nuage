@@ -25,6 +25,7 @@ export class NuageComponent {
   pageAfter = 1;
   search = '';
   history: any;
+  version: any;
   selected: string;
   imgFolder = 'https://cdn.discordapp.com/attachments/468709911321247764/598273310924734475/unnamed.png';
   imgFile = 'http://www.pngall.com/wp-content/uploads/2018/05/Files-High-Quality-PNG.png';
@@ -62,7 +63,8 @@ export class NuageComponent {
         this.selected = entity._id;
         this.rightbarService.toggle();
         this.history = await this.entitiesService.history(entity.parent, entity.name, 5);
-        this.rightbarUpdateService.change(entity.name, entity.size, entity._id, '', this.history, '');
+        this.version = await this.entitiesService.version(entity.parent, entity.name);
+        this.rightbarUpdateService.change(entity.name, entity.size, entity._id, '', this.history, this.version);
       }
     }
   }
