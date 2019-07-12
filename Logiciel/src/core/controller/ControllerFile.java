@@ -162,6 +162,12 @@ public class ControllerFile implements AnnotatedClass {
                 labelNuage.setText(nuageName);
                 labelNuage.setUserData(ParentEntityid);
                 listFile2(nuageFile);
+                PluginManager a = new PluginManager();
+                try {
+                    a.runSelectedJar("nuageOpen");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -179,7 +185,7 @@ public class ControllerFile implements AnnotatedClass {
             public void handle(ActionEvent event) {
                 PluginManager a = new PluginManager();
                 try {
-                    a.runSelectedJar("joinNuage");
+                    a.runSelectedJar("nuageOpen");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -195,7 +201,7 @@ public class ControllerFile implements AnnotatedClass {
             public void handle(ActionEvent event) {
                 PluginManager a = new PluginManager();
                 try {
-                    a.runSelectedJar("leaveNuage");
+                    a.runSelectedJar("nuageLeave");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -217,7 +223,7 @@ public class ControllerFile implements AnnotatedClass {
                     if( response != null) {
                          if( HttpNuage.deleteNuage(nuageId) == 1 ){
                              PluginManager a = new PluginManager();
-                             a.runSelectedJar("deleteNuage");
+                             a.runSelectedJar("nuageDelete");
                              reload();
                              labelNuage.setText("Les fichiers de votre nuage");
                          }

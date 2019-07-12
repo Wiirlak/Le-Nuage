@@ -17,8 +17,14 @@ public interface LeNuage {
     void lnClose();
     void nuageOpen();
     void nuageClose();
+    void nuageDelete();
+    void nuageLeave();
+    void otherUpload();
+    void otherDownload();
+    void otherLeave();
 //    Stage returnNewStage(); facultatif
 //    String returnNuageName(); facultatif
+
 }
 
 ```
@@ -52,6 +58,14 @@ il vous faudra utiliser les méthodes définies dans *LeNuage*
 >Points des nuages
 - Open : Ouverture d'un nuage
 - Close : Sortie d'un nuage
+- Delete : Suppression d'un nuage
+- Leave : Partir d'un nuage
+
+#####other...
+>Points des téléchargement
+- Upload :  Fin d'un chargement
+- Download :  Fin d'un téléchargement
+- Leave :  Quitter l'application
 
 ####Variables
 Ces variables sont liées à l'environnement de l'application et peuvent être utilisés.

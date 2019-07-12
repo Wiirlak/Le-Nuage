@@ -7,13 +7,12 @@ public interface LeNuage {
     void lnClose();
     void nuageOpen();
     void nuageClose();
+    void nuageDelete();
+    void nuageLeave();
+    void otherUpload();
+    void otherDownload();
+    void otherLeave();
     Stage returnNewStage();
     String returnNuageName();
-    void upload();
-    void download();
-    void leave();
-    void deleteNuage();
-    void joinNuage();
-    void leaveNuage();
 }
 

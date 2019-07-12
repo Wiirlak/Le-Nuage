@@ -48,7 +48,7 @@ public class ControllerOption implements AnnotatedClass {
     public void leave(){
         PluginManager a = new PluginManager();
         try {
-            a.runSelectedJar("leave");
+            a.runSelectedJar("otherLeave");
         } catch (Exception e) {
             e.printStackTrace();
         }

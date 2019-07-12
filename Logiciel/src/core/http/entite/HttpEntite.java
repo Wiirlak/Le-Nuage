@@ -48,7 +48,7 @@ public class HttpEntite {
                 try {
                     upload(file, parentId);
                     PluginManager a = new PluginManager();
-                    a.runSelectedJar("lnOpen");
+                    a.runSelectedJar("otherUpload");
                     Set<Thread> setOfThread = Thread.getAllStackTraces().keySet();
                     for(Thread thread : setOfThread){
                         if(thread.getName()==threatname){
@@ -111,7 +111,7 @@ public class HttpEntite {
             download(fileId,filename,output,c);
                 PluginManager a = new PluginManager();
                 try {
-                    a.runSelectedJar("download");
+                    a.runSelectedJar("otherUpload");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
