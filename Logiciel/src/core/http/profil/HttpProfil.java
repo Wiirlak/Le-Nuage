@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import core.data.GlobalData;
 import core.model.AuthService;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.*;
 
 public class HttpProfil {
@@ -49,10 +46,10 @@ public class HttpProfil {
             String urlParameters  = "{\"id\":\""+id+"\",\"email\":\""+email+"\"}";
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             con.setRequestProperty("Content-Type", "application/json");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            bw.write(urlParameters);
+            bw.flush();
+            bw.close();
             int status = con.getResponseCode();
             if(status == 200){
                 con.disconnect();

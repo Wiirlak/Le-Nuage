@@ -37,7 +37,7 @@ let port = process.env.PORT || 3000;
 //app.use('/api', apiRoutes);
 
 //Launch app to listen to specified port
-app.listen(port, () => console.log(`Listening on ${port}...`));
+app.listen(port, () => console.log('Listening on port ' + port + '...'));
 
 
 

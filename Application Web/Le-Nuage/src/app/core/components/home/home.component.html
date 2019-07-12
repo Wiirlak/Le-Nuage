@@ -16,8 +16,11 @@
   listenWindowScroll
   [threshold]="500"
   (bottomThreshold)="loadNext()">
-  <mat-grid-tile class="cloud" *ngFor="let cloud of cloudstmp">
-    <mat-card class="z-depth cover" routerLink="/nuage/{{cloud.parentEntity}}">
+  <mat-grid-tile
+    class="cloud"
+    *ngFor="let cloud of cloudstmp"
+    (contextmenu)="onContextMenu($event, cloud)">
+    <mat-card class="z-depth cover" routerLink="/nuage/{{cloud._id}}/{{cloud.parentEntity}}">
       <img  mat-card-sm-image [src]="cloud.image" class="img">
       <mat-card-header>
           <mat-card-title>{{cloud.name}}</mat-card-title>
@@ -26,4 +29,22 @@
   </mat-card>
 
   </mat-grid-tile>
+  <div style="visibility: hidden; position: fixed"
+       [style.left]="contextMenuPosition.x"
+       [style.top]="contextMenuPosition.y"
+       [matMenuTriggerFor]="contextMenu">
+  </div>
+  <mat-menu #contextMenu="matMenu">
+    <ng-template matMenuContent let-item="item">
+      <button
+        mat-menu-item
+        (click)="openDialog('delete', 'Etes-vous sur ?')">Supprimer</button>
+      <button
+        mat-menu-item
+      (click)="openDialog('rename', 'Nouveau nom')">Renommer</button>
+      <button
+        mat-menu-item
+      (click)="openDialog('share', 'Entrez un email')">Partagez avec..</button>
+    </ng-template>
+  </mat-menu>
 </mat-grid-list>

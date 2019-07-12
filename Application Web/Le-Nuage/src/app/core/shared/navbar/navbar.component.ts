@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {AuthentificationService} from '../../../admin/services/authentification/authentification.service';
 import {NbMenuService} from '@nebular/theme';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CloudsService} from '../../services/cloud/clouds.service';
 import {ActivatedRoute, Router, RoutesRecognized} from '@angular/router';
 import {EntitiesService} from '../../services/entities/entities.service';
+import {RightbarService} from '../../services/rightbar/rightbar.service';
 
 
 export interface DialogData {
@@ -74,6 +75,7 @@ export class NavbarComponent {
               private dialog: MatDialog,
               private cloudsService: CloudsService,
               private entitiesService: EntitiesService,
+              private rightbarService: RightbarService,
               ) {
     menu.onItemClick().subscribe((res) => {
       if (res.item.title === 'Déconnexion') {
@@ -96,17 +98,21 @@ export class NavbarComponent {
     });
     dial.afterClosed().subscribe(result => {
       if (where === 'nuage') {
-        this.cloudsService.create(result).subscribe(res => {
+        this.cloudsService.create(result).subscribe(() => {
         });
       } else if (where === 'dossier') {
-        console.log(this.id);
-        this.entitiesService.create(result, this.parentid, 'folder').subscribe( res => {
+
+        this.entitiesService.create(result, this.parentid, 'folder').subscribe(() => {
         });
       } else if (where === 'fichier') {
-        this.entitiesService.create(result, this.parentid, 'file').subscribe( res => {
+        this.entitiesService.create(result, this.parentid, 'file').subscribe(() => {
         });
       }
     });
+  }
+
+  mask() {
+    this.rightbarService.hide();
   }
 }
 

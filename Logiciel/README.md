@@ -17,13 +17,19 @@ public interface LeNuage {
     void lnClose();
     void nuageOpen();
     void nuageClose();
+    void nuageDelete();
+    void nuageLeave();
+    void otherUpload();
+    void otherDownload();
+    void otherLeave();
 //    Stage returnNewStage(); facultatif
 //    String returnNuageName(); facultatif
+
 }
 
 ```
 
-###Ajout de la classe *Runnable*
+### Ajout de la classe *Runnable*
 Ajoutez une classe **Runnable**, 
 elle fera office de point de lancement de votre plugin dans l'application LeNuage.
 Elle aura  une méthode **main()**.
@@ -37,23 +43,31 @@ public class Runnable {
 }
 ```
 
-##Utilisation des points d'entrée & variables
+## Utilisation des points d'entrée & variables
 Pour utiliser votre plugin a tel ou tel moment de l'execution de l'application ou bien changer des fonctions de l'application, 
 il vous faudra utiliser les méthodes définies dans *LeNuage*
 
-###Glossaire
-####Points d'entrée
-#####ln...
+### Glossaire
+#### Points d'entrée
+##### ln...
 >Points de l'application
 - Open : Démarrage de l'application
 - Close : Sortie de l'application
 
-#####nuage...
+##### nuage...
 >Points des nuages
 - Open : Ouverture d'un nuage
 - Close : Sortie d'un nuage
+- Delete : Suppression d'un nuage
+- Leave : Partir d'un nuage
 
-####Variables
+#####other...
+>Points des téléchargement
+- Upload :  Fin d'un chargement
+- Download :  Fin d'un téléchargement
+- Leave :  Quitter l'application
+
+#### Variables
 Ces variables sont liées à l'environnement de l'application et peuvent être utilisés.
 - returnNewStage : retourner une instance javaFx
 - returnNuageName : retourner le nouveau nom de la fenetre
@@ -89,7 +103,7 @@ A partir de là, il vous suffit d'appelez vos fonctions dans les points d'entré
 Pour lancer **LeNuage** en cli, il vous faudra utiliser l'argument *-dev*
 > java -jar LeNuage.jar -dev -l login pwd -n MonNuage/dev -d project.jar
 
-##Arguments disponibles
+## Arguments disponibles
 ````
 *  -cmd,--cmd            Activate the cmd mode
 *  -d,--download <arg>   download the named file

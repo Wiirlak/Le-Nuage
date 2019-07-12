@@ -58,10 +58,10 @@ public class HttpNuage {
             String urlParameters  = "{\"id\":\""+id+"\",\"name\":\""+name+"\"}";
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             con.setRequestProperty("Content-Type", "application/json");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            bw.write(urlParameters);
+            bw.flush();
+            bw.close();
             int status = con.getResponseCode();
             if(status == 200){
                 con.disconnect();
@@ -90,10 +90,10 @@ public class HttpNuage {
             String urlParameters  = "{\"name\":\""+name+"\"}";
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             con.setRequestProperty("Content-Type", "application/json");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            bw.write(urlParameters);
+            bw.flush();
+            bw.close();
             int status = con.getResponseCode();
             if(status == 201)
                 return 1;

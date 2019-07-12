@@ -55,7 +55,7 @@ router.post('/upload', upload.single('somefile'),async (req, res, next) => {
         return res.status(400).end();
     }
     let e;
-    //console.log(req.file);
+
     const p = await EntityController.getNuageByEntityId(req.body.parentId);
     if (p === undefined || p.type.name !== 'nuage') {
         return res.status(409).end();
@@ -110,7 +110,7 @@ router.get('/download', async (req, res, next) => {
     const path = await EntityController.downloadEntity(req.query.e);
 
     const newEntity = await EntityController.getEntityByIdNotPopulated(req.query.e);
-    console.log("ici",newEntity)
+
 
     const u = await AuthController.verify(req.headers['x-access-token']);
     await HistoryController.addToHistory(strings.download, u._id, req.query.e, null, strings.entity);

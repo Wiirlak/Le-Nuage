@@ -17,9 +17,9 @@ class NuageController {
         const nuage = await User.findById(id).select("nuages -_id").lean();
         /*await Nuage.find({ "id name": { "$in": nuage } },function(err,items) {
            // matching results are here
-           console.log(items)
+
         })*/
-        //console.log(JSON.parse(nuage));
+
         var tmp = JSON.stringify(nuage);
         var tmp2 = JSON.parse(tmp);
         const results = [];
@@ -35,7 +35,7 @@ class NuageController {
         var tmp = JSON.stringify(nuage);
         var tmp2 = JSON.parse(tmp);
         const results = [];
-        console.log('perp: ' + perPage + ' page:' + page);
+
         for(let i = 0 ; i< tmp2.nuages.length;i++)
             results.push(tmp2.nuages[i]);
 
@@ -66,8 +66,8 @@ class NuageController {
                 return undefined;
             }
 
-            console.log("update : ",id);
-            console.log("id nuage : ",n._id);
+
+
             const user = await User.findByIdAndUpdate(
                { _id: id }, 
                { $push:
@@ -83,7 +83,7 @@ class NuageController {
 
             return n;
         } catch (e) {
-            console.log(e);
+
             return undefined;
         }
     }

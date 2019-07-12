@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, Output, EventEmitter} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 
 
@@ -18,7 +18,7 @@ export class RightbarUpdateService {
   currentversions = this.versions.asObservable();
 
   constructor() {
-    console.log('shared service started');
+
   }
 
   async change(name: string, size: any, id: string, history: any, versions: any) {
@@ -28,9 +28,4 @@ export class RightbarUpdateService {
     this.history.next(history);
     this.versions.next(versions);
   }
-
-  changeName(name: string) {
-    this.name.next(name);
-  }
-
 }

@@ -4,7 +4,7 @@ import {Cloud} from '../../models/Cloud';
 import {map} from 'rxjs/operators';
 import {Globals} from '../../globals/globals';
 import {LocalStorageService} from '../localStorage/local-storage.service';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class EntitiesService {
       'x-access-token': this.localService.get('currentUser')
     });
     const body = {name, parentId, type};
-    console.log('nice');
+
     return this.http.post<Cloud>(this.globals.apiPath + 'entity', body, { headers, responseType: 'json' });
   }
 

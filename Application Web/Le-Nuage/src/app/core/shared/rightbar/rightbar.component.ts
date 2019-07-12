@@ -17,6 +17,7 @@ export class RightbarComponent implements OnInit {
   history: any;
   versions: any;
 
+
   constructor(private rightbarServicesUpdate: RightbarUpdateService, private entitiService: EntitiesService) {
   }
 
@@ -47,6 +48,7 @@ export class RightbarComponent implements OnInit {
   formated(date: string) {
     return formatDate(date, 'dd-MM-yy HH:mm', 'en-US', 'UTC+2');
   }
+
   printSize(sizeD: any) {
     let sizetmp = parseInt(sizeD, 10);
     let sizeU = ' o';
@@ -66,13 +68,8 @@ export class RightbarComponent implements OnInit {
     return sizetmp.toFixed(2) + sizeU;
   }
 
-
   cuteName(s: string) {
     return s.toUpperCase()[0] + '.';
-  }
-
-  printData(id) {
-    console.log(id);
   }
 
   download(id: string, name: string) {

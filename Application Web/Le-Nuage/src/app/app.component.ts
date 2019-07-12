@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   isOpen = false;
 
   isLogged(): boolean {
-    return (this.router.url !== '/user/signin' && this.router.url !== '/user/signup');
+    return (this.router.url !== '/user/signin' && this.router.url !== '/user/signup' && this.router.url !== '/');
   }
 
   ngOnInit() {

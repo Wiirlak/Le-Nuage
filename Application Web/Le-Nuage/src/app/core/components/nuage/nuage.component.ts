@@ -1,4 +1,3 @@
-import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Cloud} from '../../models/Cloud';
 import {CloudsService} from '../../services/cloud/clouds.service';
@@ -19,7 +18,7 @@ import {LocalStorageService} from '../../services/localStorage/local-storage.ser
 export class NuageComponent {
   parentid: string;
   nuage: Cloud;
-  entitiestmp = new Array();
+  entitiestmp = [];
   loading = false;
   done = false;
   pageSize = 25;
@@ -44,7 +43,6 @@ export class NuageComponent {
               private rightbarUpdateService: RightbarUpdateService) {
     this.route.paramMap.subscribe(params => {
       this.parentid = params.get('parentid');
-      console.log(this.parentid);
       this.entitiesService.load(this.pageAfter, this.parentid, this.search)
         .subscribe(entity => {
           this.done = true;
@@ -58,7 +56,7 @@ export class NuageComponent {
 
   async showRight(entity: any) {
     if (entity.type.name === 'file') {
-      console.log(entity);
+
       if (!(this.selected === entity._id)) {
         this.inline = 6;
         this.selected = entity._id;
@@ -67,11 +65,13 @@ export class NuageComponent {
         this.version = await this.entitiesService.version(entity.parent, entity.name, 10);
         this.rightbarUpdateService.change(entity.name, entity.size, entity._id, this.history, this.version);
       }
+    } else {
+      this.rightbarService.hide();
     }
   }
 
   onKey(searched) {
-    this.entitiestmp = new Array();
+    this.entitiestmp = [];
     this.pageSize = 24;
     this.pageAfter = 1;
     this.search = searched.target.value;
@@ -103,11 +103,6 @@ export class NuageComponent {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
-
-          // You could upload it like this:
           const formData = new FormData();
           formData.append('somefile', file, droppedFile.relativePath);
           formData.append('parentId', this.parentid);
@@ -120,24 +115,23 @@ export class NuageComponent {
           this.http.post(this.globals.apiPath + 'entity/upload', formData, {headers: headers, responseType: 'blob'})
             .subscribe(data => {
               // Sanitized logo returned from backend
-              console.log('gg');
               this.reload();
             });
         });
       } else {
         // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
+
       }
     }
   }
 
   public fileOver(event) {
-    console.log('ee' + event);
+
   }
 
   public fileLeave(event) {
-    console.log('pd' + event);
+
   }
 
   navigateToNewFolder(entity: any) {
