@@ -48,6 +48,7 @@ export class RightbarComponent implements OnInit {
   formated(date: string) {
     return formatDate(date, 'dd-MM-yy HH:mm', 'en-US', 'UTC+2');
   }
+
   printSize(sizeD: any) {
     let sizeU = ' o';
     sizeD = parseInt(sizeD, 10);
@@ -66,13 +67,8 @@ export class RightbarComponent implements OnInit {
     return sizeD.toFixed(2) + sizeU;
   }
 
-
   cuteName(s: string) {
     return s.toUpperCase()[0] + '.';
-  }
-
-  printData(id) {
-    console.log(id);
   }
 
   download(id: string, name: string) {

@@ -1,9 +1,6 @@
-import {ChangeDetectionStrategy, Component, HostListener, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, ViewChild} from '@angular/core';
 import {CloudsService} from '../../services/cloud/clouds.service';
-import {Cloud} from '../../models/Cloud';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {RightbarService} from '../../services/rightbar/rightbar.service';
-import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger} from '@angular/material';
 import {DialogData} from '../../shared/navbar/navbar.component';
 
@@ -37,8 +34,7 @@ export class HomeComponent {
 
   constructor(private cloudsService: CloudsService,
               private rightbarService: RightbarService,
-              private dialog: MatDialog,
-              private rightbarUpdateService: RightbarUpdateService) {
+              private dialog: MatDialog) {
   }
 
   onKey(searched) {
@@ -47,7 +43,7 @@ export class HomeComponent {
     this.pageAfter = 1;
     this.search = searched.target.value;
     this.loadNext();
-    console.log(this.cloudstmp);
+
   }
 
   loadNext() {
@@ -68,7 +64,7 @@ export class HomeComponent {
     this.pageAfter = 1;
     this.cloudsService.load(this.pageAfter, this.pageSize, this.search)
       .subscribe(clouds => {
-        this.cloudstmp = new Array();
+        this.cloudstmp = [];
         this.cloudstmp.push(...clouds);
       });
   }
@@ -77,7 +73,7 @@ export class HomeComponent {
     $event.preventDefault();
     this.contextMenuPosition.x = $event.clientX + 'px';
     this.contextMenuPosition.y = $event.clientY + 'px';
-    this.contextMenu.menuData = {'item': item};
+    this.contextMenu.menuData = {item};
     this.current = item;
     this.contextMenu.openMenu();
   }
@@ -91,18 +87,18 @@ export class HomeComponent {
     });
     dial.afterClosed().subscribe(result => {
       if (where === 'delete') {
-        console.log(where);
-        this.cloudsService.delete(this.current._id).subscribe(data => {
+
+        this.cloudsService.delete(this.current._id).subscribe(() => {
           this.reload();
         });
       } else if (where === 'rename') {
-        console.log(where);
-        this.cloudsService.rename(this.current._id, result).subscribe(data => {
+
+        this.cloudsService.rename(this.current._id, result).subscribe(() => {
           this.reload();
         });
       } else if (where === 'share') {
-        console.log(where);
-        this.cloudsService.addUser(this.current._id, result).subscribe(data => {
+
+        this.cloudsService.addUser(this.current._id, result).subscribe(() => {
           this.reload();
         });
       }

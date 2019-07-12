@@ -11,8 +11,9 @@ export class RightbarService {
   @Output() change: EventEmitter<boolean> = new EventEmitter();
 
   toggle() {
-    if (!this.isOpen)
+    if (!this.isOpen) {
       this.isOpen = !this.isOpen;
+    }
     this.change.emit(this.isOpen);
   }
 

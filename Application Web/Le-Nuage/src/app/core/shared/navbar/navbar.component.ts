@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {AuthentificationService} from '../../../admin/services/authentification/authentification.service';
 import {NbMenuService} from '@nebular/theme';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
@@ -98,14 +98,14 @@ export class NavbarComponent {
     });
     dial.afterClosed().subscribe(result => {
       if (where === 'nuage') {
-        this.cloudsService.create(result).subscribe(res => {
+        this.cloudsService.create(result).subscribe(() => {
         });
       } else if (where === 'dossier') {
-        console.log(this.id);
-        this.entitiesService.create(result, this.parentid, 'folder').subscribe( res => {
+
+        this.entitiesService.create(result, this.parentid, 'folder').subscribe(() => {
         });
       } else if (where === 'fichier') {
-        this.entitiesService.create(result, this.parentid, 'file').subscribe( res => {
+        this.entitiesService.create(result, this.parentid, 'file').subscribe(() => {
         });
       }
     });

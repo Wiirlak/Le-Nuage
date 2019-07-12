@@ -5,7 +5,7 @@ const HistoryFile = require('../models').HistoryFile;
 class HistoryFileController {
 
 	async getHistoryByParentIdAndName(parentId,name,limit){
-        console.log(parentId,"  ",name)
+
         const histories = await HistoryFile.find({ parentId: parentId, filename:name}).sort({ date : 'desc'}).limit(parseInt(limit)).populate("user");
         if (histories.length > 0 && histories !== null) {
             return histories;

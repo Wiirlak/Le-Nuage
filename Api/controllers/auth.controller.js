@@ -13,7 +13,7 @@ class AuthController {
     async register(name, firstname, email, date, password) {
         const user = await UserController.add(name, firstname, email, date, password);
         if (user === undefined) {
-            console.log('puser');
+
             return undefined;
         }
 
@@ -42,7 +42,7 @@ class AuthController {
         if (user === undefined) {
             return undefined;
         }
-        //console.log(user);
+
         const passwordIsValide = await bcrypt.compare(password, user.password);
         if (!passwordIsValide) {
             return undefined;
