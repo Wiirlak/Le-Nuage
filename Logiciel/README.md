@@ -61,7 +61,7 @@ il vous faudra utiliser les méthodes définies dans *LeNuage*
 - Delete : Suppression d'un nuage
 - Leave : Partir d'un nuage
 
-#####other...
+##### other...
 >Points des téléchargement
 - Upload :  Fin d'un chargement
 - Download :  Fin d'un téléchargement
