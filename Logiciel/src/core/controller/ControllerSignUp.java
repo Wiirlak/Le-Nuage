@@ -131,12 +131,12 @@ public class ControllerSignUp  implements AnnotatedClass {
                 mdpc.getStyleClass().remove("inputWrong");
             }
 
-            System.out.println("Nom :" + user.getNom());
-            System.out.println("Prenom :" + user.getPrenom());
-            System.out.println("Email :" + user.isValidEmail());
-            System.out.println("Date :" + user.getDate());
-            System.out.println("Mot de passe :" + user.pwdEqual());
-            System.out.println("CGU :" + user.getCheck());
+
+
+
+
+
+
 
             try {
 
@@ -144,12 +144,12 @@ public class ControllerSignUp  implements AnnotatedClass {
                 if( access == 1)
                     goBack();
                 else if(access == 0){
-                    System.out.println("Mauvaises infos");
+
                 }else{
-                    System.out.println("Impossible d'atteindre l'api");
+
                 }
             }catch (IOException e ){
-                System.out.println("Error");
+
             }
         }
     }

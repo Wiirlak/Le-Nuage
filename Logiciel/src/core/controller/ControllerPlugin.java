@@ -83,7 +83,7 @@ public class ControllerPlugin  implements AnnotatedClass {
         );
         File selected = fileChooser.showOpenDialog(stage);
         if(selected != null){
-            System.out.println(selected.toURI().toString());
+
             Files.copy(selected.toPath(), Paths.get(FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/Le-Nuage/plugins/"+selected.getName()));
             refresh();
         }
@@ -94,10 +94,10 @@ public class ControllerPlugin  implements AnnotatedClass {
         PluginManager t = new PluginManager();
         for( PluginFxml p : pluginFxmls){
             if(p.activated.isSelected()){
-                System.out.println(p.name+" activated");
+
                 t.conf.addPlugin(p.name);
             }else{
-                System.out.println(p.name+" nope");
+
                 t.conf.removePlugin(p.name);
             }
         }

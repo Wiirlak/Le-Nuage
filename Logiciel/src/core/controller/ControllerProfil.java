@@ -62,12 +62,6 @@ public class ControllerProfil  implements AnnotatedClass {
     @FXML
     @Usage(description = "Affichage des informations de l'utilisateur")
     public void printOutput(){
-        /*System.out.println(AuthService.getAuthUser().getNom());
-        name.setText(AuthService.getUser().getNom());
-        email.setText(AuthService.getUser().getEmail());
-        surname.setText(AuthService.getUser().getPrenom());
-        birthdate.setText(AuthService.getUser().getDate());
-        password.setText(AuthService.getUser().getMdp());*/
         try {
             Profil response = HttpProfil.getProfil();
             name.setText(response.getName());
@@ -95,7 +89,7 @@ public class ControllerProfil  implements AnnotatedClass {
         );
         File selected = fileChooser.showOpenDialog(stage);
         if(selected != null){
-            System.out.println(selected.toURI().toString());
+
             profil.getChildren().remove(0);
             //ImageView img = new ImageView();
             //Image img = new Image(selected.toURI().toString(),128,128,true,true);
@@ -122,7 +116,7 @@ public class ControllerProfil  implements AnnotatedClass {
     public void close() throws IOException {
         Profil response = HttpProfil.getProfil();
 
-        System.out.println("id = "+response.get_id()+" / / "+email.getText()+" : "+ response.getEmail());
+
         if(!email.getText().equals(response.getEmail())){
             if (HttpProfil.updateProfilEmail(response.get_id(),email.getText()) == 1 ){
                 stage.close();

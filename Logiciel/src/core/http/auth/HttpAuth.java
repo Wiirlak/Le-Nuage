@@ -56,7 +56,7 @@ public class HttpAuth {
             con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestMethod("POST");
             String urlParameters  = "{\"email\":\""+email+"\",\"password\":\""+password+"\",\"name\":\""+name+"\",\"firstname\":\""+surname+"\",\"date\":\""+birthday+"\"}";
-            //System.out.println(urlParameters);
+            //
             con.setRequestProperty("Content-Type", "application/json");
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
             bw.write(urlParameters);

@@ -45,13 +45,13 @@ public class ControllerIndex implements AnnotatedClass {
     @FXML
     @Usage(description = "Fonction de log")
     private void log(){
-        System.out.println("Logger");
+
     }
 
     @FXML
     @Usage(description = "Afficher la page d'inscription")
     private void signUp() throws IOException {
-        //System.out.println("Sign in");
+        //
         loadSecondFxml();
 
     }
@@ -106,11 +106,11 @@ public class ControllerIndex implements AnnotatedClass {
         }else if(acces == 0){
             errorLogin.setVisible(true);
             errorLogin.setText("Identifiants de connexion incorrects.");
-            //System.out.println("Mauvais identifiants");
+            //
         }else{
             errorLogin.setVisible(true);
             errorLogin.setText("Impossible d'accéder à l'api. ");
-            //System.out.println("Impossible d'acceder à l'api");
+            //
         }
 
     }

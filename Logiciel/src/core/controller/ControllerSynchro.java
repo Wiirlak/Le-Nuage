@@ -146,7 +146,7 @@ public class ControllerSynchro  implements AnnotatedClass {
                             if (!entity.get("hash").getAsString().equals(localFileHash)) {
                                 masterData.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d,entity.get("created").getAsString()  ) );
                                 idFileDistant.add(new Entity(i.getName(),entity.get("_id").getAsString()));
-                                System.out.println(entity.get("_id").getAsString());
+
                             }
                             masterDataSynchro.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d, entity.get("created").getAsString()));
                         } catch (NoSuchAlgorithmException e) {
@@ -219,7 +219,7 @@ public class ControllerSynchro  implements AnnotatedClass {
             if(sfxml.getSelected().isSelected()){
                 for(Entity i : idFileDistant){
                     if(i.getName().equals(sfxml.getName().getText())){
-                        //System.out.println(i.getName()+i.get_id());
+                        //
                         HttpEntite.download(i.get_id(),i.getName(),localFolder);
                     }
                 }

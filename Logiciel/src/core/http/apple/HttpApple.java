@@ -61,7 +61,7 @@ public class HttpApple {
             in.close();
             con.disconnect();
     //        for(Object str:founderList)
-    //            System.out.println(str);
+    //
             return answer;
         }catch(ConnectException e ){
             return new Apple[0];

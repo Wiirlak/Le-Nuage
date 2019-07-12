@@ -22,19 +22,12 @@ public class HttpNuage {
             con.setReadTimeout(GlobalData.timeout); //60 secs
             int status = con.getResponseCode();
             if (status == 200) {
-                /*BufferedReader in = new BufferedReader(
-                        new InputStreamReader(con.getInputStream()));
-                String t =in.readLine();
-                System.out.println(t);
-                nuageList.add((new Gson()).fromJson(t, Nuage.class));
-                in.close();*/
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
                 String output;
                 StringBuilder sb = new StringBuilder();
                 while ((output = bufferedReader.readLine()) != null) {
                     sb.append(output);
                 }
-                System.out.println("CONTENT / " + sb.toString());
                 Gson gson = new Gson();
                 Nuage[] json = gson.fromJson(sb.toString(), Nuage[].class);
                 con.disconnect();

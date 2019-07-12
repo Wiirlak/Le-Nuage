@@ -29,7 +29,7 @@ public class HttpProfil {
             }
 
         }catch(ConnectException e ){
-            System.out.println("error");
+
         }
         return null;
     }

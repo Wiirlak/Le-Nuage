@@ -18,7 +18,7 @@ public class HttpEntite {
 
 
     public static boolean upload(String path, String parentId) throws IOException {
-        System.out.println(path);
+
         OkHttpClient client = new OkHttpClient();
         File file = new File(path);
         if (!file.exists())
@@ -37,7 +37,7 @@ public class HttpEntite {
 
         Response response = client.newCall(request).execute();
         response.close();
-        //System.out.println(response);
+        //
         return true;
     }
 
@@ -52,7 +52,7 @@ public class HttpEntite {
                     Set<Thread> setOfThread = Thread.getAllStackTraces().keySet();
                     for(Thread thread : setOfThread){
                         if(thread.getName()==threatname){
-                            System.out.println("End : "+threatname);
+
                             Platform.runLater( () ->c.reload());
 
                             thread.interrupt();
@@ -66,7 +66,7 @@ public class HttpEntite {
             }
         };
         t.setName(threatname);
-        System.out.println("Start :  "+threatname);
+
         t.start();
     }
 
@@ -118,13 +118,13 @@ public class HttpEntite {
             }
         };
         t.setName(threatname);
-        System.out.println("Start :  "+threatname);
+
         t.start();
     }
 
     public static boolean download(String fileId,String filename, String output){
         try{
-            System.out.println(output);
+
             if(output.equals(""))
                 return false;
             URL url = new URL(GlobalData.url+"/entity/download?e="+fileId);
@@ -146,7 +146,7 @@ public class HttpEntite {
             }
         }catch(IOException e ){
             e.printStackTrace();
-            System.out.println("error");
+
             return false;
         }
         return true;

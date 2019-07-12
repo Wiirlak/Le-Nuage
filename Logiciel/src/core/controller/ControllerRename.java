@@ -52,7 +52,7 @@ public class ControllerRename implements AnnotatedClass {
     @FXML
     public void initialize(){
         nuageName.setText(oldNuageName);
-        System.out.println(nuageId);
+
         addTextLimiter();
     }
 
@@ -60,12 +60,12 @@ public class ControllerRename implements AnnotatedClass {
     @FXML
     public void save(){
         if(HttpNuage.rename(nuageId,newNuageName.getText()) == 1){
-            System.out.println(oldNuageName+" == "+AuthService.getNuage().getName());
+
             if(AuthService.getNuage().getName().equals(oldNuageName)){
-                System.out.println("je poasse");
+
                 AuthService.getNuage().setName(newNuageName.getText());
             }else{
-                System.out.println("je poasse pas");
+
             }
             stage.close();
             parent.reload();
