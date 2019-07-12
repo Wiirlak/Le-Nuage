@@ -37,6 +37,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import plugin.PluginManager;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -176,6 +177,12 @@ public class ControllerFile implements AnnotatedClass {
         item1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                PluginManager a = new PluginManager();
+                try {
+                    a.runSelectedJar("joinNuage");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 labelNuage.setText(nuageName);
                 labelNuage.setUserData(id);
                 listFile2(nuageFile);
@@ -186,11 +193,18 @@ public class ControllerFile implements AnnotatedClass {
         item3.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                PluginManager a = new PluginManager();
+                try {
+                    a.runSelectedJar("leaveNuage");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 labelNuage.setText("Les fichiers de votre nuage");
                 nuageFiles.getChildren().clear();
                 if(nuageFile.getChildren().size() >= 1 )
                     nuageFile.getChildren().remove(1);
                 label2.setText("");
+
             }
         });
         MenuItem item4 = new MenuItem("Souffler le nuage");
@@ -202,12 +216,16 @@ public class ControllerFile implements AnnotatedClass {
                     Profil response = HttpProfil.getProfil();
                     if( response != null) {
                          if( HttpNuage.deleteNuage(nuageId) == 1 ){
+                             PluginManager a = new PluginManager();
+                             a.runSelectedJar("deleteNuage");
                              reload();
                              labelNuage.setText("Les fichiers de votre nuage");
                          }
 
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

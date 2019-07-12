@@ -9,5 +9,11 @@ public interface LeNuage {
     void nuageClose();
     Stage returnNewStage();
     String returnNuageName();
+    void upload();
+    void download();
+    void leave();
+    void deleteNuage();
+    void joinNuage();
+    void leaveNuage();
 }
 

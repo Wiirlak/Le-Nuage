@@ -8,6 +8,7 @@ import core.model.Entity;
 import javafx.application.Platform;
 import okhttp3.*;
 import org.apache.commons.io.FileDeleteStrategy;
+import plugin.PluginManager;
 
 import java.io.*;
 import java.net.*;
@@ -46,6 +47,8 @@ public class HttpEntite {
             public void run() {
                 try {
                     upload(file, parentId);
+                    PluginManager a = new PluginManager();
+                    a.runSelectedJar("lnOpen");
                     Set<Thread> setOfThread = Thread.getAllStackTraces().keySet();
                     for(Thread thread : setOfThread){
                         if(thread.getName()==threatname){
@@ -56,6 +59,8 @@ public class HttpEntite {
                         }
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -104,6 +109,12 @@ public class HttpEntite {
         Thread t = new Thread() {
             public void run() {
             download(fileId,filename,output,c);
+                PluginManager a = new PluginManager();
+                try {
+                    a.runSelectedJar("download");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         };
         t.setName(threatname);
