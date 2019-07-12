@@ -68,7 +68,7 @@ public class HttpEntite {
 
     public static Entity[] getTreeByParentId(String parentId){
         try{
-            URL url = new URL(GlobalData.url+"/tree/"+parentId);
+            URL url = new URL(GlobalData.url+"/entity/all?parentid="+parentId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             Entity[] answer =  new Entity[0];
