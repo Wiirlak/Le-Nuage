@@ -47,7 +47,6 @@ router.post('/', async(req, res, next) => {
     if (!req.body.name) {
         return res.status(400).end();
     }
-    console.log(req.body.name)
     //TODO set image with right value
     const image = "https://zupimages.net/up/19/26/afo4.png";
     const u = await AuthController.verify(req.headers['x-access-token']);
