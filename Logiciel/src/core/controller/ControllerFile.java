@@ -398,7 +398,7 @@ public class ControllerFile implements AnnotatedClass {
                 hbox.getChildren().add(new Label(getSizeOfFile(i.getSize())));
                 nuageFiles.getChildren().add(hbox);
                 hbox.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                    HttpEntite.download(i.get_id(),i.getName(),label1.getText().equals("")? "":label1.getText(),this);
+                    HttpEntite.threadDownload(i.get_id(),i.getName(),label1.getText().equals("")? "":label1.getText(),this);
                 });
             }
 

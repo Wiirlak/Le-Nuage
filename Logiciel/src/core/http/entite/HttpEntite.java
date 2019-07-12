@@ -99,6 +99,18 @@ public class HttpEntite {
             Platform.runLater( () ->c.reload());
     }
 
+    public static void threadDownload(String fileId,String filename, String output ,ControllerFile c) {
+        final String threatname = String.format("%.3f",  System.currentTimeMillis() / 1000.0);
+        Thread t = new Thread() {
+            public void run() {
+            download(fileId,filename,output,c);
+            }
+        };
+        t.setName(threatname);
+        System.out.println("Start :  "+threatname);
+        t.start();
+    }
+
     public static boolean download(String fileId,String filename, String output){
         try{
             System.out.println(output);
@@ -111,17 +123,16 @@ public class HttpEntite {
             con.setConnectTimeout(GlobalData.timeout); //60 secs
             con.setReadTimeout(GlobalData.timeout); //60 secs
             int status = con.getResponseCode();
-            if ( status != 200)
-                throw new IOException();
-            byte[] buffer = new byte[4096];
-            int n;
+            if ( status == 200) {
+                byte[] buffer = new byte[4096];
+                int n;
 
-            OutputStream t = new FileOutputStream( output+"\\"+filename );
-            while ((n = con.getInputStream().read(buffer)) != -1)
-            {
-                t.write(buffer, 0, n);
+                OutputStream t = new FileOutputStream(output + "\\" + filename);
+                while ((n = con.getInputStream().read(buffer)) != -1) {
+                    t.write(buffer, 0, n);
+                }
+                t.close();
             }
-            t.close();
         }catch(IOException e ){
             e.printStackTrace();
             System.out.println("error");
