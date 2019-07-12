@@ -6,6 +6,7 @@ import {EventEmitter, Injectable, Output} from '@angular/core';
 export class RightbarService {
 
   isOpen = false;
+  force = false;
 
   @Output() change: EventEmitter<boolean> = new EventEmitter();
 
@@ -13,5 +14,10 @@ export class RightbarService {
     if (!this.isOpen)
       this.isOpen = !this.isOpen;
     this.change.emit(this.isOpen);
+  }
+
+  hide() {
+    this.isOpen = false;
+    this.change.emit(this.force);
   }
 }

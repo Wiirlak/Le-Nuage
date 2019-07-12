@@ -18,7 +18,7 @@ export class NuageComponent {
   id: string;
   parentid: string;
   nuage: Cloud;
-  entitiestmp = new Array();
+  entitiestmp = [];
   loading = false;
   done = false;
   pageSize = 25;
@@ -68,11 +68,13 @@ export class NuageComponent {
         this.version = await this.entitiesService.version(entity.parent, entity.name, 10);
         this.rightbarUpdateService.change(entity.name, entity.size, entity._id, this.history, this.version);
       }
+    } else {
+      this.rightbarService.hide();
     }
   }
 
   onKey(searched) {
-    this.entitiestmp = new Array();
+    this.entitiestmp = [];
     this.pageSize = 24;
     this.pageAfter = 1;
     this.search = searched.target.value;
@@ -114,7 +116,7 @@ export class NuageComponent {
           // Headers
           const headers = new HttpHeaders({
             'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkMGY3NjY3NDIwMzg0MzhkNDFmNWM1ZCIsImlhdCI6MTU2MTkwNzg0OSwiZXhwIjoxNTYxOTA5MDQ5fQ.KGGWu-dHpDi9uqaa0ZsJKQr3BEyfANPdsgIQmYoebfY'
-          })
+          });
 
           this.http.post(this.globals.apiPath + 'entity/upload', formData, { headers: headers, responseType: 'blob' })
             .subscribe(data => {

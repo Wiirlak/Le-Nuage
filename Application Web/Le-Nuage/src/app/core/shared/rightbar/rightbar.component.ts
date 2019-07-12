@@ -17,6 +17,7 @@ export class RightbarComponent implements OnInit {
   history: any;
   versions: any;
 
+
   constructor(private rightbarServicesUpdate: RightbarUpdateService, private entitiService: EntitiesService) {
   }
 
