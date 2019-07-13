@@ -111,7 +111,7 @@ public class HttpEntite {
             download(fileId,filename,output,c);
                 PluginManager a = new PluginManager();
                 try {
-                    a.runSelectedJar("otherUpload");
+                    a.runSelectedJar("otherDownload");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

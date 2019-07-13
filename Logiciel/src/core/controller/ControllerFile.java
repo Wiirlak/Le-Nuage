@@ -205,7 +205,7 @@ public class ControllerFile implements AnnotatedClass {
                 }
                 labelNuage.setText("Les fichiers de votre nuage");
                 nuageFiles.getChildren().clear();
-                if(nuageFile.getChildren().size() >= 1 )
+                if(nuageFile.getChildren().size() > 1 )
                     nuageFile.getChildren().remove(1);
                 label2.setText("");
 
