@@ -20,7 +20,7 @@
     class="cloud"
     *ngFor="let cloud of cloudstmp"
     (contextmenu)="onContextMenu($event, cloud)">
-    <mat-card class="z-depth cover" routerLink="/nuage/{{cloud._id}}/{{cloud.parentEntity}}">
+    <mat-card class="z-depth cover" routerLink="/nuage/{{cloud.parentEntity}}">
       <img  mat-card-sm-image [src]="cloud.image" class="img">
       <mat-card-header>
           <mat-card-title>{{cloud.name}}</mat-card-title>

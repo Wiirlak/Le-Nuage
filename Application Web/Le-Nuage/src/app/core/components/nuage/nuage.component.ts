@@ -9,6 +9,7 @@ import {RightbarService} from '../../services/rightbar/rightbar.service';
 import {RightbarUpdateService} from '../../services/rightbar/rightbar-update.service';
 import {appRoutingModuleContent} from '@nebular/theme/schematics/ng-add/register-modules/app-routing-module-content';
 import {LocalStorageService} from '../../services/localStorage/local-storage.service';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-nuage',
