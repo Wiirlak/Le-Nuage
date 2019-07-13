@@ -45,14 +45,7 @@ public class ControllerLoading implements AnnotatedClass {
         root = FXMLLoader.load(getClass().getClassLoader().getResource("file.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("file.fxml"));
         ControllerFile controllerFile = loader.getController();
-
-        //controllerFile.setData(data);
         controllerFile.setStage(stage);
-        //data
-        //
-        //data.user.setEmail(emailIndex.getText());
-        //data.user.setMdp(passwordIndex.getText());
-        //endData
         Scene scene = new Scene(root);
         stage.setResizable(true);
         stage.setHeight(800);

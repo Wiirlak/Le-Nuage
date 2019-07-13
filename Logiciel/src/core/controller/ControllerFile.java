@@ -14,15 +14,12 @@ import core.model.Entity;
 import core.model.FolderEntity;
 import core.model.NuageModel;
 import javafx.animation.RotateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
@@ -33,12 +30,10 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import plugin.PluginManager;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -103,16 +98,8 @@ public class ControllerFile implements AnnotatedClass {
 
     @Usage(description = "Actions faites lors de l'initialisation de la page")
     public  void initialize() {
-
         setUrlFromOs();
-
         getData();
-
-
-
-
-
-
     }
 
     @Usage(description = "Récuperation de nuage")
@@ -168,9 +155,6 @@ public class ControllerFile implements AnnotatedClass {
                 }
             }
         });
-
-
-
         flowpane.getChildren().add(vbox);
     }
 
@@ -208,7 +192,6 @@ public class ControllerFile implements AnnotatedClass {
                 if(nuageFile.getChildren().size() > 1 )
                     nuageFile.getChildren().remove(1);
                 label2.setText("");
-
             }
         });
         MenuItem item4 = new MenuItem("Souffler le nuage");
@@ -225,14 +208,12 @@ public class ControllerFile implements AnnotatedClass {
                              reload();
                              labelNuage.setText("Les fichiers de votre nuage");
                          }
-
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
         MenuItem item5 = new MenuItem("Renomer");
@@ -275,17 +256,14 @@ public class ControllerFile implements AnnotatedClass {
             listFileByFolder(myFiles,url1);
             label1.setText(url1);
         });
-
     }
     @Usage(description = "Récuperation et affichage des dossiers du nuage")
     public void listFile2(VBox vbox) {
-
         vbox.getChildren().clear();
         vbox.getChildren().add(labelNuage);
         TreeView<String> tree;
         TreeItem<String> distant = new TreeItem<String>("Fichiers distants");
         tree = new TreeView<String>(distant);
-
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
@@ -335,7 +313,7 @@ public class ControllerFile implements AnnotatedClass {
     }
 
 
-
+    @Usage(description = "Récuperer l'id par rapport au nom")
     public String getIdFromname(String name){
         for(FolderEntity fe : folderEntityArrayList){
             if(fe.getName().equals(name)){
@@ -346,7 +324,7 @@ public class ControllerFile implements AnnotatedClass {
     }
 
 
-
+    @Usage(description = "Récuperer tous les fichiers depuis un parent")
     public void getAllFolderFromRoot(TreeItem treeItem, String id, TreeView tree){
         treeItem.getChildren().clear();
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
@@ -392,14 +370,8 @@ public class ControllerFile implements AnnotatedClass {
         treeItem.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
     }
 
+    @Usage(description = "Recuperer les fichier distant en fonction du parent")
     public void listDistantFileByParentId(String name,String id){
-
-
-        /*
-        GET SIZE OF FILE
-        CHANGE NAME OF LABEL1 WITH THE Name of the current entitid
-
-         */
         label2.setText(name);
         label2.setUserData(id);
         Entity[]o = HttpEntite.getTreeByParentId(id);
@@ -408,7 +380,6 @@ public class ControllerFile implements AnnotatedClass {
             if(i.getType().getName().equals("file")){
                 HBox hbox =  new HBox();
                 hbox.setUserData(i);
-                //hbox.getChildren().add(img);
                 hbox.getChildren().add(new Label(i.getName()));
                 Pane pane = new Pane();
                 HBox.setHgrow(pane, Priority.ALWAYS);
@@ -419,7 +390,6 @@ public class ControllerFile implements AnnotatedClass {
                     HttpEntite.threadDownload(i.get_id(),i.getName(),label1.getText().equals("")? "":label1.getText(),this);
                 });
             }
-
         }
     }
 
@@ -430,15 +400,7 @@ public class ControllerFile implements AnnotatedClass {
         FilenameFilter fnf = (current, name) -> {
             File file = new File(current, name);
             return !file.isHidden() && !file.isDirectory();
-
     };
-
-        /*ImageView img = new ImageView();
-        img.setImage(new Image("/assets/pictures/file.png"));
-        img.setFitHeight(40);
-        img.setFitWidth(40);
-        img.setPreserveRatio(true);*/
-
         //Deroulement
         File repertoire2 = new File(filename);
         String[] liste = repertoire2.list(fnf);
@@ -460,7 +422,6 @@ public class ControllerFile implements AnnotatedClass {
                 });
             }
         }
-
     }
 
     @Usage(description = "Affecter le chemin par defaut selon l'os")
@@ -471,7 +432,6 @@ public class ControllerFile implements AnnotatedClass {
             for(File file : File.listRoots()){
                 SimpleFileTreeItem To = new SimpleFileTreeItem(new File(String.valueOf(file)));
                 t.getChildren().addAll(To);
-
             }
             TreeView<File> fileViewMine = new TreeView<File>(t);
             myFile.getChildren().add(fileViewMine);
@@ -483,7 +443,6 @@ public class ControllerFile implements AnnotatedClass {
                     listFileByFolder(myFiles,url1);
                     label1.setText(url1);
                 }
-
             });
         }else{ // other
             url1 = "/";

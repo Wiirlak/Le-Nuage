@@ -5,7 +5,6 @@ import annotation.Status;
 import annotation.Usage;
 import core.http.profil.HttpProfil;
 import core.http.profil.Profil;
-import core.model.AuthService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -14,7 +13,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +65,6 @@ public class ControllerProfil  implements AnnotatedClass {
             name.setText(response.getName());
             surname.setText(response.getFirstname());
             email.setText(response.getEmail());
-            //ADD EMAIL
             birthdate.setText(response.getDate().split("T")[0]);
 
         } catch (IOException e) {
@@ -89,12 +86,7 @@ public class ControllerProfil  implements AnnotatedClass {
         );
         File selected = fileChooser.showOpenDialog(stage);
         if(selected != null){
-
             profil.getChildren().remove(0);
-            //ImageView img = new ImageView();
-            //Image img = new Image(selected.toURI().toString(),128,128,true,true);
-           // profilPicture.setImage(img);
-            //profilPicture.getChildren().add(1,img);
             Circle cir2 = new Circle(0,0,64);
             Image img = new Image(selected.toURI().toString());
             cir2.setFill(new ImagePattern(img));
@@ -115,8 +107,6 @@ public class ControllerProfil  implements AnnotatedClass {
     @Usage(description = "Fermeture de la fenettre et sauvegarde")
     public void close() throws IOException {
         Profil response = HttpProfil.getProfil();
-
-
         if(!email.getText().equals(response.getEmail())){
             if (HttpProfil.updateProfilEmail(response.get_id(),email.getText()) == 1 ){
                 stage.close();

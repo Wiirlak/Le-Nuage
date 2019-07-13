@@ -5,7 +5,6 @@ import annotation.AnnotatedClass;
 import annotation.Status;
 import annotation.Usage;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import core.http.entite.HttpEntite;
 import core.model.Entity;
@@ -25,13 +24,10 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -87,7 +83,7 @@ public class ControllerSynchro  implements AnnotatedClass {
         stage = primaryStage;
     }
 
-
+    @Usage(description = "Contructeur")
     public ControllerSynchro(String LocalFolder,String distantFolder, String distantFileId ) {
         this.localFolder = LocalFolder;
         this.distantFolder = distantFolder;
@@ -101,13 +97,10 @@ public class ControllerSynchro  implements AnnotatedClass {
     @Usage(description = "Traitement réaliser lors de l'initialisation")
     @FXML
     public void initialize() {
-
         files.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         filesSynchro.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
         localFilePath.setText(localFolder);
         distantFilePath.setText(distantFolder);
-
         File[] listOfFiles = new File(localFilePath.getText()).listFiles();
         for( File i : listOfFiles){
             if(i.isFile()){
@@ -115,7 +108,6 @@ public class ControllerSynchro  implements AnnotatedClass {
                 if(content != null) {
                     Gson gson = new Gson();
                     JsonObject entity = gson.fromJson(content.toString(), JsonObject.class);
-                    //return temp.get("name").getAsString();
                     if (entity != null) {
                         try {
                             /*
@@ -146,7 +138,6 @@ public class ControllerSynchro  implements AnnotatedClass {
                             if (!entity.get("hash").getAsString().equals(localFileHash)) {
                                 masterData.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d,entity.get("created").getAsString()  ) );
                                 idFileDistant.add(new Entity(i.getName(),entity.get("_id").getAsString()));
-
                             }
                             masterDataSynchro.add(new SynchroFxml(i.getName(), getSizeOfFile(i.length()), getSizeOfFile(entity.get("size").getAsDouble()), d, entity.get("created").getAsString()));
                         } catch (NoSuchAlgorithmException e) {
@@ -167,6 +158,7 @@ public class ControllerSynchro  implements AnnotatedClass {
         filesSynchro.getItems().addAll(masterDataSynchro);
     }
 
+    @Usage(description = "Conversion en hexadecimal des bytes du hash")
     private static String bytesToHex(byte[] hash) {
         StringBuffer hexString = new StringBuffer();
         for (int i = 0; i < hash.length; i++) {
@@ -190,10 +182,9 @@ public class ControllerSynchro  implements AnnotatedClass {
     }
 
     @Usage(description = "Tous cocher ou tous décocher")
-    public void tickedNoTicked() throws IOException {
+    public void tickedNoTicked() {
         if(checkAll.isSelected()){
             sortedData.forEach(c -> c.selected.setSelected(true));
-            //pluginManager.openJarFiles();
         }else{
             sortedData.forEach(c -> c.selected.setSelected(false));
         }
@@ -256,12 +247,8 @@ public class ControllerSynchro  implements AnnotatedClass {
                 return false; // Does not match.
             });
         });
-
         sortedData = new SortedList<>(filteredList);
-
         sortedData.comparatorProperty().bind(files.comparatorProperty());
-
-
         files.setItems(sortedData);
     }
 
@@ -269,17 +256,14 @@ public class ControllerSynchro  implements AnnotatedClass {
     public void searchSynchro(){
         rechercheSynchro.getText();
         FilteredList<SynchroFxml> filteredList = new FilteredList<>(masterDataSynchro, p-> true);
-
         rechercheSynchro.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(synchroFxml -> {
                 // If filter text is empty, display all persons.
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-
                 // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
-
                 if (synchroFxml.getName().toString().toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches first name.
                 } else if (synchroFxml.getName().toString().toLowerCase().contains(lowerCaseFilter)) {
@@ -288,16 +272,12 @@ public class ControllerSynchro  implements AnnotatedClass {
                 return false; // Does not match.
             });
         });
-
         sortedDataSynchro = new SortedList<>(filteredList);
-
         sortedDataSynchro.comparatorProperty().bind(filesSynchro.comparatorProperty());
-
-
         filesSynchro.setItems(sortedDataSynchro);
     }
 
-
+    @Usage(description = "Chercher si le hash d'un fichier existe en base")
     public boolean isHashInDistantFile(String hash,Entity [] array ){
         for(Entity i : array){
             if(i.getHash().equals(hash))

@@ -36,11 +36,12 @@ public class ControllerRename implements AnnotatedClass {
 
     public Stage stage;
 
+    @Usage(description = "Récuperation du stage courant")
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-
+    @Usage(description = "Constructeur")
     public ControllerRename(String oldNuageName, String nuageId, ControllerFile parent) {
         this.oldNuageName = oldNuageName;
         this.nuageId = nuageId;
@@ -58,20 +59,18 @@ public class ControllerRename implements AnnotatedClass {
 
 
     @FXML
+    @Usage(description = "Renomer et quitter la fenetre")
     public void save(){
         if(HttpNuage.rename(nuageId,newNuageName.getText()) == 1){
-
             if(AuthService.getNuage().getName().equals(oldNuageName)){
-
                 AuthService.getNuage().setName(newNuageName.getText());
-            }else{
-
             }
             stage.close();
             parent.reload();
-        };
+        }
     }
 
+    @Usage(description = "Limiter le texte de l'input")
     public void addTextLimiter() {
         newNuageName.textProperty().addListener(new ChangeListener<String>() {
             @Override
