@@ -7,10 +7,12 @@ import {
   ErrorStateMatcher,
   MatButtonModule,
   MatCardModule,
+  MatDatepickerModule,
   MatFormFieldModule,
   MatGridListModule,
-  MatInputModule, MatListModule,
-  ShowOnDirtyErrorStateMatcher
+  MatInputModule,
+  MatListModule, MatNativeDateModule,
+  ShowOnDirtyErrorStateMatcher,
 } from '@angular/material';
 import {NbCardModule, NbListModule} from '@nebular/theme';
 import { SignInComponent } from './components/sign-in/sign-in.component';
@@ -31,11 +33,14 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     MatButtonModule,
     NbCardModule,
     NbListModule,
-    MatListModule
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [],
   providers: [
-    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
+    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
+    MatDatepickerModule,
   ]
 })
 export class UserModule { }

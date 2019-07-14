@@ -39,6 +39,25 @@ export class AuthentificationService {
       });
     return new Observable((observer) => { observer.next(tmp); });
   }
+
+  signIn(name: string, firstname: string, date: string, email: string, password: string): Observable<boolean> {
+    let tmp = false;
+    // You could upload it like this:
+    const body = {name, firstname, date, email, password};
+
+    // Headers
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+    });
+    this.http.post(this.globals.apiPath + 'auth/register', body, { headers: headers, responseType: 'json' })
+      .subscribe(data => {
+        // @ts-ignore
+        this.localService.set('currentUser', data.token);
+        console.log(data);
+        tmp = true;
+      });
+    return new Observable((observer) => { observer.next(tmp); });
+  }
   loggingOut() {
     this.localService.remove('currentUser');
   }
