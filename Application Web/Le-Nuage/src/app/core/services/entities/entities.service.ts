@@ -70,4 +70,13 @@ export class EntitiesService {
       this.globals.apiPath + 'entity/download?e=' + id,
       {headers, responseType: 'blob' as 'json'});
   }
+
+  delete(parentId: string, name: string) {
+    const headers = new HttpHeaders({
+      'x-access-token': this.localService.get('currentUser')
+    });
+    return this.http.delete<Observable<any>>(
+      this.globals.apiPath + 'entity/remove?parentid=' + parentId + '&name=' + name,
+      {headers, responseType: 'json'}).toPromise();
+  }
 }

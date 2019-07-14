@@ -214,10 +214,10 @@ class EntityController {
     }
 
     async removeEntityByName(parentId, name){
-        let res = await Entity.findAndModify({
-            query: {parent: parentId , name: name, is_deleted : false},
-            update: {is_deleted : true}});
-        if(res === null)
+        let res = await Entity.updateMany(
+            {'parent': parentId , 'name': name, 'is_deleted' : false},
+            {$set : {is_deleted: true}});
+        if(res === null)	
             return undefined;
         return res;
     }

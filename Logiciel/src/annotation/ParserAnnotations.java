@@ -45,8 +45,6 @@ public class ParserAnnotations
         test.add(new ControllerSignUp());
         test.add(new ControllerSynchro());
 
-
-
         ParsingProcess process = null;
         try {
             process = new ParsingProcess();

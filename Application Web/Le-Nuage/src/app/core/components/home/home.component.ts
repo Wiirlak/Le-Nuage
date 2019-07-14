@@ -106,7 +106,6 @@ export class HomeComponent {
   }
 }
 
-
 @Component({
   selector: 'app-home-dialog',
   templateUrl: 'home-dialog.component.html',

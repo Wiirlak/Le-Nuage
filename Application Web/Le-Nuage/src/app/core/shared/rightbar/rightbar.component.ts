@@ -16,6 +16,7 @@ export class RightbarComponent implements OnInit {
   id: string;
   history: any;
   versions: any;
+  parentId: string;
 
 
   constructor(private rightbarServicesUpdate: RightbarUpdateService, private entitiService: EntitiesService) {
@@ -43,6 +44,7 @@ export class RightbarComponent implements OnInit {
     this.rightbarServicesUpdate.currentid.subscribe(id => this.id = id);
     this.rightbarServicesUpdate.currenthistory.subscribe(history => this.history = history);
     this.rightbarServicesUpdate.currentversions.subscribe(versions => this.versions = versions);
+    this.rightbarServicesUpdate.currentparentId.subscribe(parentId => this.parentId = parentId);
   }
 
   formated(date: string) {
@@ -80,6 +82,17 @@ export class RightbarComponent implements OnInit {
       err => {
         alert('Problem while downloading the f ile.');
         console.error(err);
+      }
+    );
+  }
+
+  delete() {
+    this.entitiService.delete(this.parentId, this.name).then(
+      data => {
+        alert('Deleted.');
+      },
+      err => {
+        alert('Problem while deleted file.');
       }
     );
   }

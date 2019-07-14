@@ -14,7 +14,9 @@
     <nb-icon icon="share-outline"></nb-icon>
   </mat-grid-tile>
   <mat-grid-tile class="icon">
-    <nb-icon icon="trash-2-outline"></nb-icon>
+    <button mat-button (click)="delete()">
+      <nb-icon icon="trash-2-outline"></nb-icon>
+    </button>
   </mat-grid-tile>
   <mat-grid-tile class="icon">
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">

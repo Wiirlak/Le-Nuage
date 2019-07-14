@@ -64,7 +64,7 @@ export class NuageComponent {
         this.rightbarService.toggle();
         this.history = await this.entitiesService.history(entity.parent, entity.name, 7);
         this.version = await this.entitiesService.version(entity.parent, entity.name, 10);
-        this.rightbarUpdateService.change(entity.name, entity.size, entity._id, this.history, this.version);
+        this.rightbarUpdateService.change(entity.name, entity.size, entity._id, this.history, this.version, this.parentid);
       }
     } else {
       this.rightbarService.hide();
