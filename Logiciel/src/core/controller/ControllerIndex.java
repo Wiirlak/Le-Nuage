@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import plugin.PluginManager;
 
 import java.awt.*;
 import java.io.IOException;
@@ -45,13 +44,13 @@ public class ControllerIndex implements AnnotatedClass {
     @FXML
     @Usage(description = "Fonction de log")
     private void log(){
-        System.out.println("Logger");
+
     }
 
     @FXML
     @Usage(description = "Afficher la page d'inscription")
     private void signUp() throws IOException {
-        //System.out.println("Sign in");
+        //
         loadSecondFxml();
 
     }
@@ -75,19 +74,19 @@ public class ControllerIndex implements AnnotatedClass {
     @FXML
     @Usage(description = "Ouvrir le navigateur avec l'url de facebook")
     public void openFB() throws Exception{
-        Desktop.getDesktop().browse(new URL("http://quedescodes.blogspot.com/2016/04/java-ouvrir-un-lien-dans-le-navigateur.html").toURI());
+        Desktop.getDesktop().browse(new URL("https://www.facebook.com/").toURI());
     }
 
     @FXML
     @Usage(description = "Ouvrir le navigateur avec l'url de twitter")
     public void openTW() throws Exception{
-        Desktop.getDesktop().browse(new URL("https://stackoverflow.com/questions/23032253/how-to-change-the-current-scene-to-another-in-javafx").toURI());
+        Desktop.getDesktop().browse(new URL("https://twitter.com/").toURI());
     }
 
 
     @FXML
     @Usage(description = "Affichage de la fenetre de chargement")
-    public void loading() throws IOException, InterruptedException {
+    public void loading() throws IOException {
         errorLogin.setVisible(false);
         int acces = HttpAuth.login(emailIndex.getText(),passwordIndex.getText());
         if( acces == 1) {
@@ -106,11 +105,9 @@ public class ControllerIndex implements AnnotatedClass {
         }else if(acces == 0){
             errorLogin.setVisible(true);
             errorLogin.setText("Identifiants de connexion incorrects.");
-            //System.out.println("Mauvais identifiants");
         }else{
             errorLogin.setVisible(true);
             errorLogin.setText("Impossible d'accéder à l'api. ");
-            //System.out.println("Impossible d'acceder à l'api");
         }
 
     }

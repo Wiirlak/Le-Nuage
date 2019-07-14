@@ -17,9 +17,9 @@ class NuageController {
         const nuage = await User.findById(id).select("nuages -_id").lean();
         /*await Nuage.find({ "id name": { "$in": nuage } },function(err,items) {
            // matching results are here
-           console.log(items)
+
         })*/
-        //console.log(JSON.parse(nuage));
+
         var tmp = JSON.stringify(nuage);
         var tmp2 = JSON.parse(tmp);
         const results = [];
@@ -35,7 +35,7 @@ class NuageController {
         var tmp = JSON.stringify(nuage);
         var tmp2 = JSON.parse(tmp);
         const results = [];
-        console.log('perp: ' + perPage + ' page:' + page);
+
         for(let i = 0 ; i< tmp2.nuages.length;i++)
             results.push(tmp2.nuages[i]);
 
@@ -66,9 +66,9 @@ class NuageController {
                 return undefined;
             }
 
-            console.log("update : ",id);
-            console.log("id nuage : ",n._id);
-            await User.updateOne(
+
+
+            const user = await User.findByIdAndUpdate(
                { _id: id }, 
                { $push:
                     {
@@ -77,12 +77,13 @@ class NuageController {
                });
 
             n.parentEntity = e._id;
+            n.access.push(user._id);
 
             n = await n.save();
 
             return n;
         } catch (e) {
-            console.log(e);
+
             return undefined;
         }
     }
@@ -115,6 +116,17 @@ class NuageController {
         } catch (e) {
             return undefined;
         }
+    }
+
+    async addUser(id, email) {
+        const user = await User.findOne({email: email});
+        if (!user)
+            return undefined;
+        const nuage = await Nuage.findByIdAndUpdate(id, {$push: {access: user._id}});
+        if (!nuage)
+            return undefined;
+        await User.findOneAndUpdate({_id: user.id}, {$push: {nuages: nuage}});
+        return nuage;
     }
 
     async deleteNuage(id) {

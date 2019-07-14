@@ -1,12 +1,12 @@
-<mat-grid-list cols="4" class="myHeight">
+<mat-grid-list cols="4" gutterSize="10px">
   <mat-grid-tile class="icon">
     <button mat-icon-button [matMenuTriggerFor]="downloads" aria-label="Example icon-button with a menu">
       <nb-icon icon="download-outline"></nb-icon>
     </button>
     <mat-menu #downloads="matMenu">
-      <button mat-menu-item *ngFor="let n of [0,1,2,3,4,5,6]">
+      <button mat-menu-item *ngFor="let n of versions">
         <nb-icon icon="file-text-outline"></nb-icon>
-        <span>17-08-19 15:25 | 15 Mo</span>
+        <span (click)="download(n._id,n.name)">{{n.version + 1}} - {{formated(n.created)}} | {{printSize(n.size)}}</span>
       </button>
     </mat-menu>
   </mat-grid-tile>
@@ -14,7 +14,9 @@
     <nb-icon icon="share-outline"></nb-icon>
   </mat-grid-tile>
   <mat-grid-tile class="icon">
-    <nb-icon icon="trash-2-outline"></nb-icon>
+    <button mat-button (click)="delete()">
+      <nb-icon icon="trash-2-outline"></nb-icon>
+    </button>
   </mat-grid-tile>
   <mat-grid-tile class="icon">
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -39,17 +41,11 @@
   <mat-grid-tile colspan="4">
     {{name}}
   </mat-grid-tile>
-  <mat-grid-tile colspan="4">
+  <mat-grid-tile colspan="4" rowspan="3">
     <img src="./assets/img/logo.png">
   </mat-grid-tile>
   <mat-grid-tile colspan="4"  *ngIf="size != ''">
     Taille : {{size}}{{sizeU}}
-  </mat-grid-tile>
-  <mat-grid-tile colspan="4">
-    Partagé avec :
-  </mat-grid-tile>
-  <mat-grid-tile colspan="4" *ngFor="let user of users">
-    {{user}}
   </mat-grid-tile>
   <mat-grid-tile colspan="4">
     Dernieres modifications :
@@ -61,8 +57,8 @@
           {{act.action}}
         </mat-card-title>
         <mat-card-subtitle>
-          {{act.user.name}} {{act.user.firstname}}
-            {{formated(act.date)}}
+          {{cuteName(act.user.name)}} {{act.user.firstname}}
+             - {{formated(act.date)}}
         </mat-card-subtitle>
       </mat-card-header>
     </mat-card>

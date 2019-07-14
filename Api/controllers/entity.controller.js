@@ -5,6 +5,8 @@ const Type = require('../models').Type;
 const fs = require('fs-extra');
 const crypto = require('crypto');
 const moment = require('moment');
+const lodash = require('lodash');
+const mongoose = require('mongoose');
 
 class EntityController {
 
@@ -40,7 +42,7 @@ class EntityController {
         return new Promise((resolve, reject) => {
             fd.on('end',  () => {
                 hash.end();
-                //console.log(hash.read());
+                
                  resolve(hash.read());
             });
         });
@@ -57,7 +59,7 @@ class EntityController {
             entity.parent = await Entity.findOne({ _id: parentId });
         }
         if (entity.parent === null) {
-            console.log('1');
+            
             return undefined;
         }
         let extension = entity.name.split('.');
@@ -73,14 +75,14 @@ class EntityController {
             }
             entity.extension = extension[extension.length - 1];
             const sha256 = await this.hash(file.path);
-            console.log(sha256);
+            
             entity.hash = sha256;
         } else {
             entity.extension = '';
             entity.size = 0;
         }
 
-        //console.log(nuage);
+        
 
         //if (nuage === null) {
         //    return undefined;
@@ -89,7 +91,7 @@ class EntityController {
         entity.type = await Type.findOne({ name: type });
 
         if (entity.type === null) {
-            console.log('2');
+            
             return undefined;
         }
 
@@ -97,7 +99,7 @@ class EntityController {
             const e = await entity.save();
             return e;
         } catch (err) {
-            console.log('3');
+            
             return undefined;
         }
 
@@ -183,10 +185,10 @@ class EntityController {
         if (entity[0] === undefined) {
             return undefined;
         }
-        //console.log(entity[0]);
+        
         //const parent = await this.getNuageByEntityId(entity[0]._id);
         //const entityBuffer = await fs.readFile( `${process.env.NUAGE_PATH}${parent._id}/${entity[0]._id}.${entity[0].extension}`);
-        //console.log(entityBuffer);
+        
         const newBuffer = await this.hash(file.path);
         if (entity[0].hash === newBuffer) {
             return {
@@ -207,17 +209,35 @@ class EntityController {
             return undefined;
         let date = moment(entity.created, 'DD-MM-YYYY hh:mm');
         entity.created = date.format('DD-MM-YYYY hh:mm');  
-        console.log(entity.created)      
+        
         return entity;
     }
 
     async removeEntityByName(parentId, name){
-        let res = await Entity.findAndModify({
-            query: {parent: parentId , name: name, is_deleted : false},
-            update: {is_deleted : true}});
-        if(res === null)
+        let res = await Entity.updateMany(
+            {'parent': parentId , 'name': name, 'is_deleted' : false},
+            {$set : {is_deleted: true}});
+        if(res === null)	
             return undefined;
         return res;
+    }
+
+    async getEntityByNameAndParentId(parentId, name, limit){
+        let entity =  await Entity.find( {parent: parentId , name: name, is_deleted : false}) .sort({created: 'desc'}).lean().limit(parseInt(limit));
+        if(entity === null)
+            return undefined;  
+        return entity;
+    }
+
+    async getAllLatestEntity(parentId){
+        const entity =  await Entity.find(
+            {is_deleted : false, parent : mongoose.Types.ObjectId(parentId)}
+        ).sort({created: "desc"}).populate("type")
+        if(entity === null)
+            return undefined;  
+        return lodash.uniqWith(entity,(entityA,entityB) => {
+            return entityA.name === entityB.name 
+        });
     }
 
 }

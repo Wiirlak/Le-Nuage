@@ -57,13 +57,6 @@ public class Main extends Application implements AnnotatedClass {
         if (args.length != 0){
                 new CliMenu(args);
         }else {
-            //launch(args);
-            //System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory().getPath());
-            /*File folder =  new File(FileSystemView.getFileSystemView().getDefaultDirectory().getPath()+"/Lenuage/Plugin");
-            folder.mkdirs();*/
-            /*
-            AuthService.getUser().setNom("slamai");
-            System.out.println(AuthService.getUser().getNom());*/
 
             ParserAnnotations t = new ParserAnnotations();
 

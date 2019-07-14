@@ -48,13 +48,13 @@ router.post('/', async(req, res, next) => {
         return res.status(400).end();
     }
     //TODO set image with right value
-    const image = null;
+    const image = "https://zupimages.net/up/19/26/afo4.png";
     const u = await AuthController.verify(req.headers['x-access-token']);
     const n = await NuageController.add(req.body.name, image,u._id);
     if (n === undefined) {
         return res.status(409).end();
     }
-    await HistoryController.addToHistory(strings.create, u._id, null, n._id, strings.nuage);
+    await HistoryController.addToHistory(strings.create, u._id, image, n._id, strings.nuage);
     res.status(201).json(n);
 });
 
@@ -64,6 +64,22 @@ router.put('/', async(req, res, next) => {
     }
     if (req.body.name) {
         const nuage = await NuageController.updateName(req.body.id, req.body.name);
+        if (nuage === undefined) {
+            return res.status(409).end();
+        }
+        const u = await AuthController.verify(req.headers['x-access-token']);
+        await HistoryController.addToHistory(strings.update, u._id, null, nuage._id, strings.nuage);
+        return res.json(nuage).end();
+    }
+    res.status(400).end();
+});
+
+router.put('/addUser', async (req, res, next) => {
+    if (!req.body.id) {
+        return res.status(400).end();
+    }
+    if (req.body.email && req.body.id) {
+        const nuage = await NuageController.addUser(req.body.id, req.body.email);
         if (nuage === undefined) {
             return res.status(409).end();
         }

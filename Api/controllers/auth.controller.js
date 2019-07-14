@@ -12,7 +12,8 @@ class AuthController {
     //req.body.name, req.body.firstname, req.body.email, req.body.date, req.body.password
     async register(name, firstname, email, date, password) {
         const user = await UserController.add(name, firstname, email, date, password);
-        if (user === null) {
+        if (user === undefined) {
+
             return undefined;
         }
 
@@ -41,7 +42,7 @@ class AuthController {
         if (user === undefined) {
             return undefined;
         }
-        //console.log(user);
+
         const passwordIsValide = await bcrypt.compare(password, user.password);
         if (!passwordIsValide) {
             return undefined;

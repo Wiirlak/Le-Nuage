@@ -59,7 +59,7 @@ public class PluginManager {
 
         //Comment under
         /*for(File file : listPlugins) {
-            //System.out.println(file.getName());
+            //
         }*/
     }
 
@@ -106,7 +106,7 @@ public class PluginManager {
                                 PluginData.nuageName = (String) m.invoke((doRun));
                             }else{
                                 final String threatname = String.format("%.3f",  System.currentTimeMillis() / 1000.0);
-                                //System.out.println("start");
+                                //
                                 Thread t = new Thread() {
                                     public void run() {
                                         try {
@@ -114,7 +114,7 @@ public class PluginManager {
                                             Set<Thread> setOfThread = Thread.getAllStackTraces().keySet();
                                             for(Thread thread : setOfThread) {
                                                 if (thread.getName() == threatname) {
-                                                    //System.out.println("End : " + threatname);
+                                                    //
                                                     thread.interrupt();
                                                 }
                                             }
@@ -126,7 +126,7 @@ public class PluginManager {
                                     }
                                 };
                                 t.setName(threatname);
-                                //System.out.println("Start :  "+threatname);
+                                //
                                 t.start();
                             }
                             break;
@@ -135,7 +135,7 @@ public class PluginManager {
                 }
             }
         }
-        //System.out.println(classPlugin);
+        //
     }
 
     public static void runJar(String fp) throws IOException {
@@ -156,7 +156,7 @@ public class PluginManager {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //System.out.println(p.exitValue());
+            //
         }, 1, TimeUnit.SECONDS);
 
     }

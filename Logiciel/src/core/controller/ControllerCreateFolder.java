@@ -31,14 +31,20 @@ public class ControllerCreateFolder implements AnnotatedClass {
     @FXML
     public Label folderRootNameLabel;
 
+    @Usage(description = "Constructeur")
     public ControllerCreateFolder(ControllerFile parent, String folderRootId,String folderRootName) {
         this.parent = parent;
         this.folderRootId = folderRootId;
         this.folderRootName = folderRootName;
     }
 
+    @Usage(description = "Constructeur")
+    public ControllerCreateFolder() {
+    }
+
 
     @FXML
+    @Usage(description = "Action faite à l'initialisation")
     public void initialize(){
         folderRootNameLabel.setText(folderRootName);
         addTextLimiter();
@@ -59,6 +65,7 @@ public class ControllerCreateFolder implements AnnotatedClass {
         }
     }
 
+    @Usage(description = "Limiter le texte de l'input")
     public void addTextLimiter() {
         folderName.textProperty().addListener(new ChangeListener<String>() {
             @Override

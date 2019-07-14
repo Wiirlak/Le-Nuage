@@ -17,6 +17,13 @@
             <input matInput placeholder="Email" formControlName="email" required>
           </mat-form-field>
           <mat-form-field class="fil">
+            <span (click)="dp3.open()">
+              <input formControlName="birthdate" matInput [matDatepicker]="dp3" placeholder="01/01/2020" disabled required>
+            </span>
+              <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="fil">
             <input matInput placeholder="Mot de passe" type="password" formControlName="password" required>
           </mat-form-field>
           <mat-form-field class="fil">

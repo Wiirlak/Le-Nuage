@@ -1,4 +1,4 @@
-import {HomeComponent} from './components/home/home.component';
+import {HomeComponent, HomeDialogComponent} from './components/home/home.component';
 import {WrongPathComponent} from './components/wrong-path/wrong-path.component';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
@@ -22,12 +22,12 @@ import {
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
-  MatDialogModule
+  MatDialogModule, MatTooltipModule
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
-import { RightbarComponent } from './shared/rightbar/rightbar.component';
+import {RightbarComponent} from './shared/rightbar/rightbar.component';
 import {NgxFileDropModule} from 'ngx-file-drop';
-import { NuageComponent } from './components/nuage/nuage.component';
+import {NuageComponent} from './components/nuage/nuage.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,8 @@ import { NuageComponent } from './components/nuage/nuage.component';
     NavbarComponent,
     RightbarComponent,
     NuageComponent,
-    NavbarDialogComponent
+    NavbarDialogComponent,
+    HomeDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -60,14 +61,16 @@ import { NuageComponent } from './components/nuage/nuage.component';
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    MatTooltipModule,
   ],
-  entryComponents: [NavbarComponent, NavbarDialogComponent],
+  entryComponents: [NavbarComponent, NavbarDialogComponent, HomeComponent, HomeDialogComponent],
   exports: [
     HeaderComponent,
     NavbarComponent,
-    RightbarComponent
+    HomeComponent,
+    RightbarComponent,
   ],
-  providers: []
+  providers: [],
 })
 export class CoreModule {
 

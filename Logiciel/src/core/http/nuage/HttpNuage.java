@@ -22,19 +22,12 @@ public class HttpNuage {
             con.setReadTimeout(GlobalData.timeout); //60 secs
             int status = con.getResponseCode();
             if (status == 200) {
-                /*BufferedReader in = new BufferedReader(
-                        new InputStreamReader(con.getInputStream()));
-                String t =in.readLine();
-                System.out.println(t);
-                nuageList.add((new Gson()).fromJson(t, Nuage.class));
-                in.close();*/
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
                 String output;
                 StringBuilder sb = new StringBuilder();
                 while ((output = bufferedReader.readLine()) != null) {
                     sb.append(output);
                 }
-                System.out.println("CONTENT / " + sb.toString());
                 Gson gson = new Gson();
                 Nuage[] json = gson.fromJson(sb.toString(), Nuage[].class);
                 con.disconnect();
@@ -58,10 +51,10 @@ public class HttpNuage {
             String urlParameters  = "{\"id\":\""+id+"\",\"name\":\""+name+"\"}";
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             con.setRequestProperty("Content-Type", "application/json");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            bw.write(urlParameters);
+            bw.flush();
+            bw.close();
             int status = con.getResponseCode();
             if(status == 200){
                 con.disconnect();
@@ -90,10 +83,10 @@ public class HttpNuage {
             String urlParameters  = "{\"name\":\""+name+"\"}";
             con.setRequestProperty ("x-access-token", AuthService.getAuthUser().getToken());
             con.setRequestProperty("Content-Type", "application/json");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            bw.write(urlParameters);
+            bw.flush();
+            bw.close();
             int status = con.getResponseCode();
             if(status == 201)
                 return 1;

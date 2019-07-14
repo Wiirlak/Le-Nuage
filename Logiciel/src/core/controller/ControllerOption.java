@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import plugin.PluginManager;
 
 import java.io.IOException;
 
@@ -45,6 +46,12 @@ public class ControllerOption implements AnnotatedClass {
 
     @Usage(description = "Quitter l'application")
     public void leave(){
+        PluginManager a = new PluginManager();
+        try {
+            a.runSelectedJar("otherLeave");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Stage close = (Stage) stage.getOwner().getScene().getWindow();
         close.close();
     }

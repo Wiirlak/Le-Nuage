@@ -35,16 +35,16 @@ public class PluginConfig {
             Gson gson = new Gson();
             String[] items = gson.fromJson(new FileReader(pluginConfPath.getPath()), String[].class);
             for (String i: items) {
-                //System.out.println(this.pluginPath.getPath() + "\\" + i);
+                //
                 String tmpName = this.pluginPath.getPath() + "\\" + i;
                 File tmp = new File(tmpName);
                 if (tmp.exists() && !listExecutedPlugins.contains(tmp)) {
-                    System.out.println(tmp.getPath());
+
                     listExecutedPlugins.add(tmp);
                     listExecutedPluginsName.add(tmp.getName());
                 }
             }
-//          System.out.println(gson.toJson(items));
+//
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -53,14 +53,14 @@ public class PluginConfig {
     public void addPlugin(String path){
         File tmp = new File(path);
         if (tmp.exists()) {
-            System.out.println(tmp.getPath());
+
             listExecutedPlugins.add(tmp);
             listExecutedPluginsName.add(tmp.getName());
         }
     }
 
     public void addPlugin(File file){
-        System.out.println(file.getPath());
+
         listExecutedPlugins.add(file);
         listExecutedPluginsName.add(file.getName());
     }
@@ -106,7 +106,7 @@ public class PluginConfig {
         try{
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String content = gson.toJson(listExecutedPluginsName);
-            //System.out.println(content);
+            //
             FileOutputStream tmp= new FileOutputStream(this.pluginConfPath);
             tmp.write(content.getBytes());
             tmp.flush();

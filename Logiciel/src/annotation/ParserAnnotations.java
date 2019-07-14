@@ -18,9 +18,12 @@ public class ParserAnnotations
         //Modele
         test.add(new AuthService());
         test.add(new AuthUser());
+        test.add(new Entity());
+        test.add(new FolderEntity());
         test.add(new NuageModel("Test","test","test","test"));
         test.add(new PluginFxml(new File("t"),true));
         test.add(new SynchroFxml());
+        test.add(new Type());
         test.add(new User());
 
         //Preloader
@@ -30,15 +33,17 @@ public class ParserAnnotations
         test.add(new Main());
 
         //controller
+        test.add(new ControllerCreateFolder());
+        test.add(new ControllerCreateNuage());
         test.add(new ControllerFile());
         test.add(new ControllerIndex());
         test.add(new ControllerLoading());
+        test.add(new ControllerOption());
         test.add(new ControllerPlugin());
         test.add(new ControllerProfil());
         test.add(new ControllerSignUp());
+        test.add(new ControllerSignUp());
         test.add(new ControllerSynchro());
-
-
 
         ParsingProcess process = null;
         try {

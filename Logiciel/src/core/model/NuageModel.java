@@ -32,6 +32,7 @@ public class NuageModel implements AnnotatedClass {
         this.lastEdit = lasEdit;
         this.type = type;
     }
+    @Usage(description = "Constructeur")
     public NuageModel(){
         this.name = "";
         this.imagePath = "";
@@ -72,31 +73,37 @@ public class NuageModel implements AnnotatedClass {
         return nuageId;
     }
 
-
+    @Usage(description = "Recuperation du nom du nuage")
     public void setName(String name) {
         this.name = name;
     }
 
+    @Usage(description = "Assignation de l'image")
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
+    @Usage(description = "Assigntaion de la derniere modification")
     public void setLastEdit(String lastEdit) {
         this.lastEdit = lastEdit;
     }
 
+    @Usage(description = "Assignation du type")
     public void setType(String type) {
         this.type = type;
     }
 
+    @Usage(description = "Assgination de la parent entity")
     public void setParentEntiteid(String parentEntiteid) {
         this.parentEntiteid = parentEntiteid;
     }
 
+    @Usage(description = "Assignation de l'id")
     public void setNuageId(String nuageId) {
         this.nuageId = nuageId;
     }
 
+    @Usage(description = "Modifier toutes les valeurs")
     public void setAll(String name, String imagePath, String lasEdit, String type, String parentEntiteid,String nuageId){
         this.name = name;
         this.imagePath = imagePath;

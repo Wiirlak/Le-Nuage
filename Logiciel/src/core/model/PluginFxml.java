@@ -37,7 +37,6 @@ public class PluginFxml implements AnnotatedClass {
         launch.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("activated");
                 try {
                     //PluginManager.openJarUrl(name.toString());
                     PluginManager t = new PluginManager();

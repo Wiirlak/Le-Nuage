@@ -21,10 +21,10 @@ public class HttpAuth {
             con.setRequestMethod("POST");
             String urlParameters  = "{\"email\":\""+email+"\",\"password\":\""+password+"\"}";
             con.setRequestProperty("Content-Type", "application/json");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            bw.write(urlParameters);
+            bw.flush();
+            bw.close();
             int status = con.getResponseCode();
             if(status == 200){
 
@@ -56,12 +56,12 @@ public class HttpAuth {
             con.setReadTimeout(GlobalData.timeout); //60 secs
             con.setRequestMethod("POST");
             String urlParameters  = "{\"email\":\""+email+"\",\"password\":\""+password+"\",\"name\":\""+name+"\",\"firstname\":\""+surname+"\",\"date\":\""+birthday+"\"}";
-            //System.out.println(urlParameters);
+            //
             con.setRequestProperty("Content-Type", "application/json");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+            bw.write(urlParameters);
+            bw.flush();
+            bw.close();
             int status = con.getResponseCode();
             if(status == 201)
                 return 1;

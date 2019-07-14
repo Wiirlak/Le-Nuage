@@ -36,7 +36,7 @@ class UserController {
 
         try {
             await user.save();
-            const nuage = await NuageController.add('Default', null, user._id);
+            const nuage = await NuageController.add('Default', "https://zupimages.net/up/19/26/afo4.png", user._id);
             if (nuage === undefined) {
                 return undefined;
             }

@@ -23,8 +23,14 @@ public class ControllerCreateNuage implements AnnotatedClass {
     @FXML
     public TextField nuageName;
 
+    @Usage(description = "Constructeur")
     public ControllerCreateNuage(ControllerFile parent) {
         this.parent = parent;
+    }
+
+    @Usage(description = "Constructeur")
+    public ControllerCreateNuage() {
+
     }
 
     @Usage(description = "Affecter le stage courant")
@@ -34,6 +40,7 @@ public class ControllerCreateNuage implements AnnotatedClass {
 
 
     @FXML
+    @Usage(description = "Action faite à l'initialisation")
     public void initialize(){
         addTextLimiter();
     }
@@ -49,6 +56,7 @@ public class ControllerCreateNuage implements AnnotatedClass {
         }
     }
 
+    @Usage(description = "Limiter le texte de l'input")
     public void addTextLimiter() {
         nuageName.textProperty().addListener(new ChangeListener<String>() {
             @Override

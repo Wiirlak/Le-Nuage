@@ -10,7 +10,7 @@ router.get('/', async (req,res,next) => {
 		return res.status(400).end();
     const histories = await HistoryFileController.getHistoryByParentIdAndName(req.query.parentid,req.query.name,req.query.limit);
     if (histories === undefined) {
-        return res.status(404).end();
+        return res.status(200).json([]).end();
     }
     return res.status(200).json(histories).end();
 });

@@ -29,7 +29,7 @@ public class ParsingProcess {
 
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
-        //System.out.println(formatter.format(date));
+        //
         printInFile(formatter.format(date)+"\n");
 
         for (AnnotatedClass a : ac) {
@@ -42,7 +42,7 @@ public class ParsingProcess {
         /*
         CLASS
         */
-        //System.out.println(" --- Class: " + ac.getClass().getName());
+        //
         printInFile("\n --- Class: " + ac.getClass().getName()+"\n");
         //Annotation[] a = ac.getClass().getAnnotations();
         if (ac.getClass().isAnnotationPresent(Status.class)) {
@@ -51,56 +51,56 @@ public class ParsingProcess {
             {
                 DecimalFormat v = new DecimalFormat("0.00");
 
-                //System.out.println("   - Auteur:        " + a.author());
+                //
                 printInFile("   - Auteur:        " + a.author()+"\n");
-                //System.out.println("   - Finished:      " + (a.finished() ? "Yes" : "No"));
+                //
                 printInFile("   - Finished:      " + (a.finished() ? "Yes" : "No")+"\n");
                 if (!a.finished()){
-                    //System.out.println("   - Progression:   " + a.progression() + "%");
+                    //
                     printInFile("   - Progression:   " + a.progression() + "%"+"\n");
                 }
-                //System.out.println("   - Verion:        v" + v.format(a.version()));
+                //
                 printInFile("   - Verion:        v" + v.format(a.version())+"\n");
             }
             catch (SecurityException e)
             {
                 e.printStackTrace();
             }
-            //System.out.println();
+            //
 
             /*
             FIELD
             */
-            //System.out.println(" --- Fields ");
+            //
             printInFile(" --- Fields "+"\n");
             Field[] f = ac.getClass().getDeclaredFields();
             for (Field field : f) {
                 if(field.isAnnotationPresent(Usage.class)){
                     Usage fa = field.getAnnotation(Usage.class);
-                    //System.out.println("  -- Field:        " + field.getName());
+                    //
                     printInFile("  -- Field:        " + field.getName()+"\n");
-                    //System.out.println("   - Description:  " + fa.description());
+                    //
                     printInFile("   - Description:  " + fa.description()+"\n");
                 }
             }
-            //System.out.println();
+            //
 
             /*
             METHOD
             */
-            //System.out.println(" --- Methods ");
+            //
             printInFile("\n --- Methods "+"\n");
             Method[] m = ac.getClass().getMethods();
             for (Method method : m) {
                 if(method.isAnnotationPresent(Usage.class)){
                     Usage fa = method.getAnnotation(Usage.class);
-                    //System.out.println("  -- Method:       " + method.getName());
+                    //
                     printInFile("\n  -- Method:       " + method.getName()+"\n");
-                    //System.out.println("   - Description:  " + fa.description());
+                    //
                     printInFile("   - Description:  " + fa.description()+"\n");
                 }
             }
-            //System.out.println();
+            //
         }
         return true;
     }

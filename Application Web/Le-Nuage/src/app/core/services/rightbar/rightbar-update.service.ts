@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, Output, EventEmitter} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 
 
@@ -9,31 +9,26 @@ export class RightbarUpdateService {
   private name = new BehaviorSubject('default');
   private size = new BehaviorSubject('');
   private id = new BehaviorSubject('default');
-  private shared = new BehaviorSubject([]);
   private history = new BehaviorSubject([]);
   private versions = new BehaviorSubject([]);
+  private parentId = new BehaviorSubject('');
   currentname = this.name.asObservable();
   currentsize = this.size.asObservable();
   currentid = this.id.asObservable();
-  currentshared = this.shared.asObservable();
   currenthistory = this.history.asObservable();
   currentversions = this.versions.asObservable();
+  currentparentId = this.parentId.asObservable();
 
   constructor() {
-    console.log('shared service started');
+
   }
 
-  async change(name: string, size: any, id: string, shared: any, history: any, versions: any) {
+  async change(name: string, size: any, id: string, history: any, versions: any, parentId: string) {
     this.name.next(name);
     this.size.next(size);
     this.id.next(id);
-    this.shared.next(shared);
     this.history.next(history);
     this.versions.next(versions);
+    this.parentId.next(parentId);
   }
-
-  changeName(name: string) {
-    this.name.next(name);
-  }
-
 }
