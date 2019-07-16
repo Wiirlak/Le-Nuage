@@ -55,6 +55,22 @@ export class NuageComponent {
     });
   }
 
+  chooseIcon(type: string) {
+    if (type === 'txt' || type === 'docx') {
+      return 'http://www.pngall.com/wp-content/uploads/2018/05/Files-High-Quality-PNG.png';
+    }
+    if (type === 'exe' || type === 'msi') {
+      return 'https://image.flaticon.com/icons/png/512/29/29614.png';
+    }
+    if (type === 'svg' || type === 'png' || type === 'jpg' || type === 'jpeg') {
+      return 'https://udemyfree.net/static/images/image.png';
+    }
+    if (type === 'zip' || type === 'rar' || type === '7zip' || type === 'tar.gz') {
+      return 'https://www.freeiconspng.com/uploads/file-zip-icon-6.png'
+    }
+    return 'https://img.icons8.com/pastel-glyph/2x/file.png';
+  }
+
   async showRight(entity: any) {
     if (entity.type.name === 'file') {
 
