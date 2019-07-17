@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import core.http.auth.HttpAuth;
 import core.http.entite.HttpEntite;
 import core.http.nuage.HttpNuage;
+import core.http.nuage.Nuage;
 import core.model.AuthService;
 import core.model.Entity;
 import org.apache.commons.cli.*;
@@ -114,7 +115,9 @@ public class CliMenu {
 
     private int gOption(){
         try {
-            HttpNuage.getNuages();
+            Nuage[] nuageArray = HttpNuage.getNuages();
+            for(Nuage nuage : nuageArray)
+                System.out.println(nuage.getName()+ " - " +nuage.get_id());
         } catch (IOException e) {
             e.printStackTrace();
         }
